@@ -1,0 +1,1374 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CS4335 Midterm 溫習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: one reading column on faint graph paper; lecture tabs stick to the top; each lab sits right where its topic is taught. Light-only, as requested. */
+:root{
+  --paper:#F4F7FB;
+  --paper-glass:rgba(244,247,251,.93);
+  --grid:#E5EBF3;
+  --card:#FFFFFF;
+  --ink:#1C2532;
+  --muted:#5A6577;
+  --line:#D6DEE9;
+  --edge:#9AA7B8;
+  --blue:#1D5DA6;
+  --blue-soft:#E7EFF9;
+  --on-blue:#FFFFFF;
+  --mark:#FFEC8F;
+  --ok:#2C7650; --ok-soft:#E1F1E7;
+  --no:#A63A3A; --no-soft:#F9E6E6;
+  --warn:#9A6200; --warn-soft:#FFF3D6;
+  --f-display:"Bitter",Georgia,"Times New Roman",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper);scroll-padding-top:64px}
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 80px;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;max-width:900px;margin:0 auto;background:var(--paper-glass);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topnav .inner{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+.topnav a{flex:none;font-size:13.5px;line-height:1.4;text-decoration:none;color:var(--muted);padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.topnav a:hover{color:var(--blue);border-color:var(--blue)}
+main{max-width:900px;margin:0 auto}
+
+h1,h2,h3{font-family:var(--f-display);line-height:1.25;text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:clamp(2.1rem,7vw,3.3rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,4.2vw,1.95rem);font-weight:700}
+h3{font-size:1.2rem;font-weight:700;margin-top:1.8em}
+h4{font-size:1rem;margin:1.2em 0 .2em}
+p,li{max-width:72ch}
+p{margin:.6em 0}
+ul,ol{padding-left:1.4em;margin:.5em 0}
+li{margin:.2em 0}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin:0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+mark{background:linear-gradient(transparent 52%,var(--mark) 52%);color:inherit;padding:0 1px}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--blue-soft);padding:1px 5px;border-radius:4px}
+pre{font-family:var(--f-mono);font-size:13.5px;line-height:1.6;background:var(--blue-soft);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:.8em 0;white-space:pre}
+pre code{background:none;padding:0;font-size:inherit}
+
+section{padding-block:44px 8px;border-top:1px solid var(--line)}
+section>header{display:grid;gap:4px;margin-bottom:14px}
+
+.hero{padding-block:36px 28px;display:grid;gap:14px}
+.lede{font-size:1.08rem;margin:0}
+.hero-grid{display:grid;grid-template-columns:minmax(150px,200px) 1fr;gap:16px;align-items:start}
+.count{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:2px}
+.count b{font-family:var(--f-display);font-size:3.2rem;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.count small{font-size:13.5px;color:var(--muted)}
+.range{display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;line-height:1.35;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.chip.no{background:var(--no-soft);border-color:transparent;color:var(--no);text-decoration:line-through;text-decoration-thickness:1px}
+@media (max-width:560px){.hero-grid{grid-template-columns:1fr}}
+
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:1em 0}
+.box>.tag{display:inline-block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 8px;border-radius:4px;margin-bottom:4px}
+.box.must>.tag{background:var(--mark);color:var(--ink)}
+.box.trap>.tag{background:var(--no-soft);color:var(--no)}
+.box.write>.tag{background:var(--blue-soft);color:var(--blue)}
+.box.ans>.tag{background:var(--ok-soft);color:var(--ok)}
+.box p:first-of-type{margin-top:.2em}
+.proof{font-family:var(--f-body);font-size:14.5px;line-height:1.7;background:var(--paper);border:1px dashed var(--line);border-radius:8px;padding:10px 14px;margin:.6em 0}
+.proof ol{margin:.2em 0}
+
+.tbl{overflow-x:auto;margin:.8em 0}
+table{border-collapse:collapse;font-size:14.5px;font-variant-numeric:tabular-nums;width:100%}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top;background:var(--card)}
+th{background:var(--blue-soft);font-weight:600;white-space:nowrap}
+td.mono,th.mono{font-family:var(--f-mono);font-size:13.5px}
+td.inS{background:var(--blue-soft)}
+td.cur{background:var(--mark);font-weight:700}
+td.yes{color:var(--ok);font-weight:600}
+td.no{color:var(--no);font-weight:600}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.twocol>*{min-width:0}
+@media (max-width:640px){.twocol{grid-template-columns:1fr}}
+
+.lab{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:1.4em 0;display:grid;gap:12px}
+.lab>*{min-width:0}
+.lab-head{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.lab-title{font-family:var(--f-display);font-weight:700;font-size:1.08rem}
+.lab-title::before{content:"LAB";font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--blue);border:1px solid var(--blue);border-radius:4px;padding:0 5px;margin-right:8px;vertical-align:2px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:inherit;font-size:14px;line-height:1.3;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:8px;cursor:pointer}
+.btn:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.btn.primary:hover:not(:disabled){color:var(--on-blue);filter:brightness(1.08)}
+.btn[aria-pressed="true"],.tab[aria-selected="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
+.stepcount{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+label.fld{display:grid;gap:3px;font-size:13.5px;color:var(--muted);flex:1 1 220px}
+input[type=text],textarea{font-family:var(--f-mono);font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:100%}
+textarea{resize:vertical;min-height:2.6em}
+.steptext{background:var(--paper);border-radius:8px;padding:10px 12px;font-size:14.5px;min-height:3em}
+.out{font-size:14.5px}
+.out .result{font-weight:700;color:var(--ok)}
+.out .err{color:var(--no)}
+ol.log{font-size:14px;margin:.2em 0;max-height:300px;overflow:auto;padding-left:1.8em}
+ol.log li{max-width:none}
+.edgelist{display:flex;flex-wrap:wrap;gap:5px}
+.edgelist span{font-family:var(--f-mono);font-size:12.5px;padding:2px 7px;border-radius:5px;border:1px solid var(--line);background:var(--paper)}
+.edgelist span.ok{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.edgelist span.rej{background:var(--no-soft);border-color:transparent;color:var(--no);text-decoration:line-through}
+.edgelist span.now{outline:2px solid var(--warn);outline-offset:1px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+
+.figwrap{overflow-x:auto}
+svg.graph{width:100%;max-width:540px;height:auto;display:block;margin:0 auto}
+svg.timeline{width:100%;min-width:520px;height:auto;display:block}
+.g-edge{stroke:var(--edge);stroke-width:2;fill:none}
+.g-edge.chosen{stroke:var(--blue);stroke-width:4.5}
+.g-edge.rej{stroke:var(--no);stroke-width:2.5;stroke-dasharray:6 5}
+.g-edge.cand{stroke:var(--warn);stroke-width:2.5;stroke-dasharray:5 4}
+.g-edge.pick{stroke:var(--warn);stroke-width:4.5}
+.ah{fill:var(--edge)}
+.ah.ah-chosen{fill:var(--blue)}
+.ah.ah-cand,.ah.ah-pick{fill:var(--warn)}
+.g-lblbg{fill:var(--card);stroke:var(--line);stroke-width:1}
+.g-lbl{font:600 13px var(--f-mono);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.g-node circle{fill:var(--card);stroke:var(--ink);stroke-width:1.6}
+.g-node text{font:700 15px var(--f-display);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.g-node.in circle{fill:var(--blue);stroke:var(--blue)}
+.g-node.in text{fill:var(--on-blue)}
+.g-node.cur circle{fill:var(--mark);stroke:var(--warn);stroke-width:2.5}
+.g-node.cur text{fill:var(--ink)}
+.g-sub{font:600 11.5px var(--f-mono);fill:var(--blue);text-anchor:middle}
+.tl-grid{stroke:var(--grid);stroke-width:1}
+.tl-tick{font:11px var(--f-mono);fill:var(--muted)}
+.tl-row{font:12px var(--f-mono);fill:var(--muted)}
+.tl-bar{fill:var(--paper);stroke:var(--edge);stroke-width:1}
+.tl-bar.sel{fill:var(--blue);stroke:var(--blue)}
+.tl-txt{font:11px var(--f-mono);fill:var(--muted);text-anchor:middle;dominant-baseline:central}
+.tl-txt.sel{fill:var(--on-blue);font-weight:600}
+
+details.answer{margin:.6em 0;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:8px 14px}
+details.answer>summary{cursor:pointer;color:var(--blue);font-weight:600;font-size:14.5px}
+details.answer[open]>summary{margin-bottom:6px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:1em 0}
+.q>p:first-child{margin-top:0}
+.q .pts{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+
+.plan{list-style:none;padding:0;display:grid;gap:8px}
+.plan li{max-width:none;display:grid;grid-template-columns:auto 6.2em 1fr;gap:10px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.plan input{margin-top:6px;width:18px;height:18px;accent-color:var(--blue)}
+.plan .day{font-family:var(--f-mono);font-size:13px;color:var(--blue);padding-top:3px;font-variant-numeric:tabular-nums}
+.plan .day b{display:block;font-family:var(--f-display);font-size:15px;color:var(--ink)}
+.plan li.exam{border-color:var(--blue);background:var(--blue-soft)}
+.plan input:checked~div{color:var(--muted);text-decoration:line-through}
+
+.files{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.files>div{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.files h4{margin:.8em 0 .2em;font-family:var(--f-mono);font-size:12.5px;color:var(--muted);font-weight:600}
+.files ul{list-style:none;padding:0;margin:0;font-size:14px}
+.files li{max-width:none;overflow-wrap:anywhere}
+@media (max-width:640px){.files{grid-template-columns:1fr}}
+footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="章節">
+  <div class="inner">
+    <a href="#top">考試</a><a href="#map">2022 卷</a><a href="#plan">7 日計劃</a>
+    <a href="#l1">L1 Euler</a><a href="#l2">L2 Interval</a><a href="#l3">L3 MST</a><a href="#l4">L4 Dijkstra</a><a href="#l5">L5 Greedy++</a><a href="#l6">L6 D&amp;C</a>
+    <a href="#proof">證明模板</a><a href="#cheat">時間複雜度</a><a href="#mock">模擬題</a><a href="#files">檔案</a>
+  </div>
+</nav>
+
+<main>
+<header class="hero" id="top">
+  <p class="eyebrow">CS4335 Design and Analysis of Algorithms · Sem A 2026/27</p>
+  <h1>Midterm 溫習</h1>
+  <p class="lede">考試在 <strong>Week 8 星期五，10 月 23 日，3:00–5:00 pm</strong>，佔總分 12%。範圍出自 Lecture 5 第 2 頁：<mark>Greedy approach + Divide-and-conquer approach</mark>，Dynamic Programming 不考。</p>
+  <div class="hero-grid">
+    <div class="count" aria-live="polite"><b id="days">–</b><small id="days-label">日後考試</small></div>
+    <div class="range" aria-label="考試範圍">
+      <span class="chip ok">✓ L1 Euler circuit</span>
+      <span class="chip ok">✓ L2 Interval scheduling / partitioning</span>
+      <span class="chip ok">✓ L3 MST · Kruskal · Prim</span>
+      <span class="chip ok">✓ L4 Dijkstra · Boat rescue</span>
+      <span class="chip ok">✓ L5 Knapsack · Lateness · Waiting time</span>
+      <span class="chip ok">✓ L6 Merge sort · Recurrence · Inversions</span>
+      <span class="chip no">L7 Dynamic programming</span>
+      <span class="chip no">Karatsuba multiplication</span>
+      <span class="chip no">Hierholzer 實作 · Graph representation (Fun)</span>
+    </div>
+  </div>
+  <p class="small muted">課程分四級：Basic（合格必識）、Moderate（B 以上）、Hard（A/A+）、Fun（不考）。Tutorial 答案標明：「寫 algorithm」是 Moderate，「證明 correct」是 Hard。</p>
+</header>
+
+<section id="map">
+  <header><p class="eyebrow">師兄資料 · 2022 Midterm (with solution).pdf</p><h2>2022 年 Midterm 拆解</h2></header>
+  <p>2022 年的卷有 6 題，共 100 分。除了一題 DP，其餘全部都在今年範圍內，題型很大機會重複出現。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>題目</th><th>內容</th><th>分數</th><th>今年考?</th><th>本頁位置</th></tr></thead>
+    <tbody>
+      <tr><td>Q1(a)</td><td>Interval scheduling：寫出步驟、答案、running time</td><td>10</td><td class="yes">考</td><td><a href="#l2">L2</a></td></tr>
+      <tr><td>Q1(b)(c)</td><td>Interval partitioning：最少課室數＋depth</td><td>8+2</td><td class="yes">考</td><td><a href="#l2">L2</a></td></tr>
+      <tr><td>Q2(a)</td><td>MST，答案用 Prim 由 s 開始逐步加邊（7 幅圖）</td><td>10</td><td class="yes">考</td><td><a href="#l3">L3</a></td></tr>
+      <tr><td>Q2(b)</td><td>Manhattan Tourist（DP）</td><td>10</td><td class="no">不考</td><td>—</td></tr>
+      <tr><td>Q3</td><td>Dijkstra s→v：每步一個 d/π 表＋backtracking</td><td>15</td><td class="yes">考</td><td><a href="#l4">L4</a></td></tr>
+      <tr><td>Q4(a)</td><td>兩個已排序的半邊，用 O(n) 數 cross inversions（答案 16）</td><td>10</td><td class="yes">考</td><td><a href="#l6">L6</a></td></tr>
+      <tr><td>Q4(b)</td><td>T(n)=T(n−2)+n，用 big-O 表示</td><td>5</td><td class="yes">考</td><td><a href="#l6">L6</a></td></tr>
+      <tr><td>Q5</td><td>用 Divide-and-conquer 找最大和第二大，O(n)，寫 recurrence</td><td>15</td><td class="yes">考</td><td><a href="#l6">L6</a></td></tr>
+      <tr><td>Q6</td><td>SJF 最小化 total waiting time，要寫 algorithm 和證明（做不到可改答 6a：interval scheduling＋證明，最多 6 分）</td><td>15</td><td class="yes">考</td><td><a href="#l5">L5</a></td></tr>
+    </tbody>
+  </table></div>
+  <div class="box write"><span class="tag">考試寫法</span>
+    <p>題目寫「main steps / intermediate steps are required」，就是要你把過程寫出來。只寫答案會失分。</p>
+    <ul>
+      <li><strong>Greedy 計算題</strong>：Step 1 寫排序後的完整 list，Step 2 逐個寫選了／略過哪個，最後寫答案和 running time。</li>
+      <li><strong>Dijkstra</strong>：每次 EXTRACT-MIN 畫一行 <code>d / π</code> 表，寫出 S；最後寫 backtracking（<code>v ← c ← d ← s</code>）和路徑總長。</li>
+      <li><strong>MST</strong>：寫明加邊的次序。Kruskal 拒絕某條邊時要寫原因（會形成 cycle）。</li>
+      <li><strong>證明</strong>：直接用下面 <a href="#proof">證明模板</a> 的英文句式。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="plan">
+  <header><p class="eyebrow">今日 10 月 17 日（六）→ 10 月 23 日（五）</p><h2>7 日溫習計劃</h2></header>
+  <p class="small muted">剔完會記在這部機的瀏覽器裡。</p>
+  <ul class="plan">
+    <li><input type="checkbox" id="p1" aria-label="10/17 完成"><span class="day"><b>10/17</b>Sat</span><div><strong>L1 + L2</strong>：Euler theorem 與證明；interval scheduling／partitioning。用 Lab 做 Tutorial 1 兩題和 2022 Q1。</div></li>
+    <li><input type="checkbox" id="p2" aria-label="10/18 完成"><span class="day"><b>10/18</b>Sun</span><div><strong>L3 MST</strong>：背熟 cut property 證明；Kruskal 和 Prim 各手做兩次（lecture 圖、M3）。</div></li>
+    <li><input type="checkbox" id="p3" aria-label="10/19 完成"><span class="day"><b>10/19</b>Mon</span><div><strong>L4</strong>：Dijkstra 表格做 3 幅圖（lecture、In-lecture Ex.4、2022 Q3）；correctness 歸納證明；Boat rescue。</div></li>
+    <li><input type="checkbox" id="p4" aria-label="10/20 完成"><span class="day"><b>10/20</b>Tue</span><div><strong>L5</strong>：Fractional knapsack、EDF lateness、SJF waiting time。背 inversion／adjacent swap 證明。</div></li>
+    <li><input type="checkbox" id="p5" aria-label="10/21 完成"><span class="day"><b>10/21</b>Wed</span><div><strong>L6</strong>：Merge sort recurrence 展開；merge-and-count（2022 Q4）；D&amp;C 設計題：max、最大＋第二大、max subarray。</div></li>
+    <li><input type="checkbox" id="p6" aria-label="10/22 完成"><span class="day"><b>10/22</b>Thu</span><div><strong>模擬考</strong>：限時 2 小時做 2022 卷（遮住答案），跳過 Q2(b)；再做本頁 <a href="#mock">模擬題</a>。</div></li>
+    <li class="exam"><input type="checkbox" id="p7" aria-label="10/23 完成"><span class="day"><b>10/23</b>Fri</span><div>早上看一遍 <a href="#cheat">時間複雜度表</a> 和 <a href="#proof">證明模板</a>。<strong>3:00 pm 開考。</strong></div></li>
+  </ul>
+</section>
+
+<!-- ============================ L1 ============================ -->
+<section id="l1">
+  <header><p class="eyebrow">Lecture 1 · W01 L1-26.pdf</p><h2>Euler Circuit</h2></header>
+  <div class="twocol">
+    <div class="box"><span class="tag" style="background:var(--blue-soft);color:var(--blue)">Euler circuit</span><p>一個 circuit <strong>每條邊剛好用一次</strong>，頂點可以重複經過。<br>屬於 P：有 polynomial-time algorithm。</p></div>
+    <div class="box"><span class="tag" style="background:var(--warn-soft);color:var(--warn)">Hamiltonian cycle</span><p>一個 cycle <strong>每個頂點剛好經過一次</strong>，最後回到起點。<br>Decision problem 是 NP-complete。</p></div>
+  </div>
+  <p>Lecture 用這兩題說明一個重點：兩個問題描述看起來差不多，複雜度可以完全不同。</p>
+  <div class="box must"><span class="tag">必背 Theorem</span>
+    <p><mark>A connected graph has an Euler circuit if and only if every vertex has even degree.</mark></p>
+    <p class="small muted">Parallel edges 要分開計，每條都要走一次，也各自計入 degree。</p>
+  </div>
+  <h3>證明（英文，考試照寫）</h3>
+  <div class="proof">
+    <p><strong>(⇒) Necessity.</strong> Going through the circuit, each time a vertex is visited we enter by one edge and leave by another, so its degree increases by 2. Hence every vertex has even degree.</p>
+    <p><strong>(⇐) Sufficiency.</strong> Suppose G is connected and every vertex has even degree.</p>
+    <ol>
+      <li>Whenever the walk enters a vertex v (other than the start), there is an unused edge to leave v, because deg(v) is even.</li>
+      <li>So the walk eventually returns to the starting vertex and forms a circuit C.</li>
+      <li>If no vertex on C has an unused edge, C is an Euler circuit (G is connected).</li>
+      <li>Otherwise, pick a vertex v on C with an unused edge. In the unused edges every degree is still even, so we can build another circuit C′ from v and merge C′ into C.</li>
+      <li>Repeating this, every edge of G is used.</li>
+    </ol>
+  </div>
+  <h3>Algorithm</h3>
+<pre><code>1. Start at any vertex with nonzero degree; follow unused edges until
+   returning to the start. This forms a circuit C.
+2. If C contains every edge, return C.
+3. Otherwise choose a vertex v on C incident to an unused edge. From v,
+   form another circuit C' using only unused edges.
+4. Merge C' into C (at v) and repeat from Step 2.</code></pre>
+  <p>Slides 例子：C1 = a→b→c→a，C2 = b→d→e→f→b，在 b 合併得 C3 = a→b→d→e→f→b→c→a；再加 C4 = e→i→j→h→c→g→e，最後 C = a→b→d→e→i→j→h→c→g→e→f→b→c→a。答案不唯一。</p>
+
+  <div class="lab" id="eu-lab">
+    <div class="lab-head"><span class="lab-title">Euler circuit 檢查器</span><span class="small muted">每條邊寫兩個字母，例如 <code>ab</code>，或 <code>a-b</code></span></div>
+    <div class="controls">
+      <button class="btn" data-eu="ab bc ca bd de ef fb ei ij jh hc cg ge">Slides 例子</button>
+      <button class="btn" data-eu="ab ab ac ac ad bd cd">Königsberg 七橋</button>
+      <button class="btn" data-eu="ab ac bc bd cd ce de">模擬題 M13</button>
+    </div>
+    <label class="fld">Edges<textarea id="eu-in" rows="2">ab bc ca bd de ef fb ei ij jh hc cg ge</textarea></label>
+    <div class="controls"><button class="btn primary" id="eu-run">檢查並構造</button></div>
+    <div class="out" id="eu-out"></div>
+  </div>
+
+  <div class="box trap"><span class="tag">常見陷阱</span>
+    <ul>
+      <li>要同時寫兩個條件：<strong>connected</strong> 和 <strong>每個 degree 是 even</strong>。</li>
+      <li>地圖題：每個區域是頂點，每條共同邊界是一條邊。Slides 例子 deg(A)=2、deg(B)=3、deg(C)=2、deg(D)=3，所以沒有 Euler circuit。</li>
+      <li>「每個省份剛好經過一次再回到起點」是 Hamiltonian circuit，不是 Euler。</li>
+      <li>Hierholzer 的 O(|V|+|E|) 實作和 adjacency list／matrix 屬於 Fun／Not tested。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ L2 ============================ -->
+<section id="l2">
+  <header><p class="eyebrow">Lecture 2 · W02 L2-26.pdf · Tutorial 1</p><h2>Greedy：Interval Scheduling 與 Partitioning</h2></header>
+  <p>Greedy algorithm 每一步都揀當下最好的選擇。要想出一條規則很容易，<mark>難的是證明它一定 optimal</mark>，考試的 Hard 分就在證明。</p>
+
+  <h3>Interval Scheduling：最多可以做幾份 job</h3>
+  <p>Job j 由 s<sub>j</sub> 開始、f<sub>j</sub> 結束；兩份 job 不重疊就是 compatible。目標是揀出最多份互相 compatible 的 job。</p>
+  <div class="twocol">
+    <div class="box trap"><span class="tag">錯的規則</span>
+      <ul class="small">
+        <li><strong>Earliest start</strong>：(0,10), (1,2), (3,4) → 揀了 (0,10) 就只有 1 份，最優是 2 份。</li>
+        <li><strong>Shortest job</strong>：(0,5), (4,6), (5,10) → 揀了 (4,6) 只有 1 份，最優是 (0,5), (5,10)。</li>
+        <li><strong>Fewest conflicts</strong>：同樣有反例（見 slides p.10）。</li>
+      </ul>
+    </div>
+    <div class="box must"><span class="tag">正確規則</span>
+      <p><mark>Earliest finish time first</mark>：按 f 由小到大排序，跟之前已選的 compatible 就選。</p>
+      <p class="small">Sorting O(n log n) + 掃描 O(n) = <strong>O(n log n)</strong></p>
+    </div>
+  </div>
+<pre><code>INTERVAL_SCHEDULE
+1. Sort the jobs so that f1 ≤ f2 ≤ ... ≤ fn.
+2. A ← ∅; let j* be the last selected job.
+3. for j = 1 to n:
+       if A = ∅ or s_j ≥ f_j*:  A ← A ∪ {j};  j* ← j
+4. return A</code></pre>
+  <h4>證明：Exchange argument</h4>
+  <div class="proof">
+    <p>Let G = i<sub>1</sub>, …, i<sub>k</sub> be the greedy solution and OPT = j<sub>1</sub>, …, j<sub>m</sub> an optimal solution, both sorted by finish time, so m ≥ k. Assume i<sub>1</sub> = j<sub>1</sub>, …, i<sub>r</sub> = j<sub>r</sub> and i<sub>r+1</sub> ≠ j<sub>r+1</sub>.</p>
+    <p>Greedy picks the compatible job that finishes earliest, so i<sub>r+1</sub> finishes no later than j<sub>r+1</sub>. Replacing j<sub>r+1</sub> with i<sub>r+1</sub> in OPT keeps all jobs compatible and keeps the size m, so we get another optimal solution that shares r+1 jobs with G.</p>
+    <p>Repeat until OPT = i<sub>1</sub>, …, i<sub>k</sub>, j<sub>k+1</sub>, …, j<sub>m</sub>. If m &gt; k, job j<sub>k+1</sub> starts after i<sub>k</sub> finishes, so greedy would have selected it, a contradiction. Hence m = k and G is optimal.</p>
+  </div>
+  <p class="small muted">注意：要證明的是 |G| = |OPT|，不是 G = OPT（optimal solution 可以有很多個）。</p>
+
+  <h3>Interval Partitioning：最少要幾間課室</h3>
+  <div class="box must"><span class="tag">必背</span>
+    <p><strong>Depth</strong> = 同一時間最多有幾堂重疊（open intervals）。任何安排都需要 <mark>至少 depth 間課室</mark>。</p>
+    <p><strong>Greedy</strong>：按 <mark>start time</mark> 由小到大排序；放入任何一間可以容納的現有課室，放不下才開新課室。用 priority queue 記每間課室最後一堂的 finish time，<strong>O(n log n)</strong>。</p>
+  </div>
+  <h4>證明：Structural bound</h4>
+  <div class="proof">
+    <p>Let d be the number of classrooms the greedy algorithm allocates. Classroom d is opened because lecture j cannot be held in any of the first d−1 classrooms. Since lectures are processed by start time, each of those d−1 classrooms holds a lecture that starts no later than s<sub>j</sub> and finishes after s<sub>j</sub>. Together with j, d lectures overlap at time s<sub>j</sub>, so d ≤ depth. Every schedule needs at least depth classrooms, so greedy is optimal.</p>
+  </div>
+
+  <div class="lab" id="iv-lab">
+    <div class="lab-head"><span class="lab-title">Interval Lab</span><span class="small muted">格式：<code>(s,f),(s,f),…</code>；結束時間 = 下一份開始時間算 compatible</span></div>
+    <div class="controls" role="group" aria-label="模式">
+      <button class="btn" id="iv-m-s" aria-pressed="true">Scheduling（最多 jobs）</button>
+      <button class="btn" id="iv-m-p" aria-pressed="false">Partitioning（最少課室）</button>
+    </div>
+    <div class="controls" id="iv-presets"></div>
+    <label class="fld">Jobs / lectures<textarea id="iv-in" rows="2"></textarea></label>
+    <div class="controls"><button class="btn primary" id="iv-run">執行 Greedy</button></div>
+    <div class="out" id="iv-out"></div>
+    <div class="figwrap"><svg class="timeline" id="iv-svg" role="img" aria-label="時間線"></svg></div>
+  </div>
+
+  <details class="answer"><summary>Tutorial 1 答案（先自己做）</summary>
+    <p><strong>Ex.1</strong> 按 f 排序：(1,2) (0,5) (2,5) (6,7) (6,7) (3,8) (4,11) (3,13)。選 (1,2) → (2,5) → (6,7)，共 <strong>3</strong> 份。</p>
+    <p><strong>Ex.2</strong> 按 s 排序：(1,2) (2,3) (2,7) (3,6) (4,6) (5,7) (5,8)。Room 1：(1,2)(2,3)(3,6)；Room 2：(2,7)；Room 3：(4,6)；Room 4：(5,7)；Room 5：(5,8)。需要 <strong>5</strong> 間，因為時間 5.5 有 5 堂重疊（depth = 5）。</p>
+    <p><strong>2022 Q1</strong>：(a) 選 (0,2), (3,4), (6,7) 共 3 份，O(n log n)；(b) 3 間課室；(c) depth = 3，例如時間在 (2,4) 之間。</p>
+  </details>
+</section>
+
+<!-- ============================ L3 ============================ -->
+<section id="l3">
+  <header><p class="eyebrow">Lecture 3 · W03 2026-L3.pdf · Tutorial 2</p><h2>Minimum Spanning Tree</h2></header>
+  <ul>
+    <li><strong>Tree</strong>：connected 且沒有 cycle。n 個頂點的 connected graph 是 tree ⇔ 有 n−1 條邊。</li>
+    <li><strong>Spanning tree</strong>：包含所有頂點的 tree。<strong>MST</strong>：總重量最小的 spanning tree。</li>
+    <li><strong>Cut</strong> (S, V−S)：把頂點分成兩邊。一條邊兩端在不同邊就是 <em>crossing</em>；crossing 邊中最輕的叫 <em>light edge</em>。</li>
+    <li>Edge set A 是 <strong>good</strong>：A 包含在某個 MST 裡。加入後 A 仍然 good 的邊叫 <strong>safe edge</strong>。</li>
+  </ul>
+  <div class="box must"><span class="tag">必背 Cut Property</span>
+    <p>Let A be good and (S, V−S) a cut that no edge of A crosses. <mark>Then any light edge crossing the cut is safe for A.</mark></p>
+  </div>
+  <h4>證明</h4>
+  <div class="proof">
+    <p>Let ℓ = (u, v) be a light edge crossing the cut, and T an MST containing A.</p>
+    <ol>
+      <li>If ℓ ∈ T, then A ∪ {ℓ} ⊆ T, so ℓ is safe.</li>
+      <li>Otherwise, adding ℓ to T creates exactly one cycle.</li>
+      <li>The path in T from u to v must cross the cut at another edge ℓ′ on this cycle.</li>
+      <li>No edge of A crosses the cut, so ℓ′ ∉ A. Since ℓ is light, w(ℓ) ≤ w(ℓ′).</li>
+      <li>T′ = T − {ℓ′} + {ℓ} is a spanning tree containing A ∪ {ℓ}, and w(T′) = w(T) − w(ℓ′) + w(ℓ) ≤ w(T). So T′ is also an MST, and ℓ is safe for A.</li>
+    </ol>
+  </div>
+  <div class="twocol">
+    <div class="box"><span class="tag" style="background:var(--blue-soft);color:var(--blue)">Kruskal</span>
+      <p>A 是一個 <strong>forest</strong>。所有邊由輕到重排序；邊的兩端在不同 component 就加入，否則拒絕（會形成 cycle）。選夠 |V|−1 條就停。</p>
+      <p class="small">用 disjoint set（MAKE_SET／FIND_SET／UNION）檢查 cycle。<br><strong>O(|E| log |E|)</strong></p>
+    </div>
+    <div class="box"><span class="tag" style="background:var(--blue-soft);color:var(--blue)">Prim</span>
+      <p>A 是<strong>一棵 tree</strong>，由 root r 開始。每步加入離開 tree 最輕的邊，即 cut (S, V−S) 的 light edge。</p>
+      <p class="small">Priority queue 記 key[v]、parent[v]。<br>Binary heap <strong>O(|E| log |V|)</strong>；Fibonacci heap O(|E| + |V| log |V|)</p>
+    </div>
+  </div>
+  <p>兩個 algorithm 每步揀的都是「一個沒有被 A 跨越的 cut 的 light edge」，所以都是 generic MST algorithm 的特例，正確性都來自 cut property。</p>
+
+  <div class="lab" id="mst-lab">
+    <div class="lab-head"><span class="lab-title">MST 逐步示範</span><span class="stepcount" id="mst-count"></span></div>
+    <div class="controls">
+      <button class="btn" id="mst-a-k" aria-pressed="true">Kruskal</button>
+      <button class="btn" id="mst-a-p" aria-pressed="false">Prim</button>
+      <span class="muted small">圖：</span>
+      <button class="btn" id="mst-g-lecture" aria-pressed="true">Lecture 3（A–J）</button>
+      <button class="btn" id="mst-g-mock" aria-pressed="false">模擬題 M3</button>
+    </div>
+    <div class="figwrap"><svg class="graph" id="mst-svg" role="img" aria-label="MST 圖"></svg></div>
+    <div class="edgelist" id="mst-list" aria-label="邊的狀態"></div>
+    <div class="steptext" id="mst-text"></div>
+    <div class="controls"><button class="btn" id="mst-prev">← 上一步</button><button class="btn primary" id="mst-next">下一步 →</button><button class="btn" id="mst-end">跳到最後</button><button class="btn" id="mst-reset">重設</button></div>
+  </div>
+
+  <div class="box trap"><span class="tag">常見陷阱</span>
+    <ul>
+      <li>題目問「indicate the order」就要寫加邊次序，例如 AD(1), CF(1), CE(2), …。</li>
+      <li>重量相同時次序可以不同，MST 也可能不止一個。Lecture 圖總重是 22。</li>
+      <li>Challenge：所有重量都不同時 MST 唯一；把 min 換成 max，Kruskal 和 Prim 都可以求 maximum spanning tree。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ L4 ============================ -->
+<section id="l4">
+  <header><p class="eyebrow">Lecture 4 · W04 2006-L4.pdf · In-lecture Ex.4 · Tutorial 3</p><h2>Shortest Path：Dijkstra 與 Boat Rescue</h2></header>
+  <ul>
+    <li>δ(u, v) = 最短路徑的重量；沒有路就是 ∞。有 negative-weight cycle 時最短路徑可能不存在。<strong>Dijkstra 假設所有 w(e) ≥ 0。</strong></li>
+    <li><strong>Optimal substructure</strong>：最短路徑的 subpath 也是最短路徑（否則換成更短的 subpath 會得到更短的路）。</li>
+    <li>d[v]：目前找到的最短長度；π[v]：路徑上 v 的前一個頂點。用 π 由終點倒推（backtracking）得出路徑。</li>
+  </ul>
+<pre><code>RELAX(u, v, w)
+  if d[v] &gt; d[u] + w(u, v)
+      d[v] ← d[u] + w(u, v);   π[v] ← u
+
+DIJKSTRA(G, w, s)
+  d[s] ← 0;  for each v ≠ s: d[v] ← ∞, π[v] ← NIL
+  S ← ∅;  Q ← V                      // priority queue keyed by d
+  while Q ≠ ∅
+      u ← EXTRACT-MIN(Q);  S ← S ∪ {u}
+      for each v ∈ Adj[u]:  RELAX(u, v, w)</code></pre>
+
+  <div class="lab" id="dj-lab">
+    <div class="lab-head"><span class="lab-title">Dijkstra 表格示範</span><span class="stepcount" id="dj-count"></span></div>
+    <div class="controls" id="dj-presets"></div>
+    <div class="figwrap"><svg class="graph" id="dj-svg" role="img" aria-label="有向圖"></svg></div>
+    <div class="steptext" id="dj-text"></div>
+    <div class="controls"><button class="btn" id="dj-prev">← 上一步</button><button class="btn primary" id="dj-next">下一步 →</button><button class="btn" id="dj-end">跳到最後</button><button class="btn" id="dj-reset">重設</button></div>
+    <div class="tbl" id="dj-table"></div>
+    <p class="small muted">表格就是考試寫法：每格寫 <code>d/π</code>；藍底是已在 S；黃底是該步 EXTRACT-MIN 取出的頂點。</p>
+  </div>
+
+  <h4>Correctness（歸納法，考試照寫）</h4>
+  <div class="proof">
+    <p><strong>Claim.</strong> At any time, for each v ∈ S, d[v] is the length of a true shortest s–v path. Induction on |S|. Base: |S| = 1, d[s] = 0. Step: assume it holds for |S| = k, and the algorithm adds v with the smallest d[v]. Let P be any s–v path, and x the last node of P in S.</p>
+    <p><strong>Case 1</strong> (x is right before v): w(P) ≥ d[x] + w(x, v) ≥ d[v], by relaxation.</p>
+    <p><strong>Case 2</strong> ((x, y) is the first edge of P leaving S, y ≠ v): w(P) ≥ d[x] + w(x, y) ≥ d[y] ≥ d[v], since relaxation gives d[y] ≤ d[x] + w(x, y), the algorithm chose the smallest d so d[y] ≥ d[v], and the remaining edges are non-negative.</p>
+    <p>So no path is shorter than d[v].</p>
+  </div>
+  <div class="twocol">
+    <div class="box"><span class="tag" style="background:var(--blue-soft);color:var(--blue)">Running time</span>
+      <p class="small">Array：EXTRACT-MIN O(|V|) × |V| 次 + |E| 次 relax → <strong>O(|V|²)</strong></p>
+      <p class="small">Heap：每次 EXTRACT-MIN／更新 O(log |V|) → <strong>O(|E| log |V|)</strong>，sparse graph 較快</p>
+    </div>
+    <div class="box trap"><span class="tag">Negative edge 反例</span>
+      <p class="small">s→u = 2，s→v = 1，u→v = −10。Dijkstra 先定 d[v] = 1，但 s→u→v = −8 更短。</p>
+    </div>
+  </div>
+
+  <h3>Boat Rescue（Lecture 4 尾段）</h3>
+  <p>每隻船最多載 2 人，載重上限 W。求最少船數。</p>
+  <div class="box must"><span class="tag">Greedy</span>
+    <p>排序後用兩個 pointer：<mark>最重的人配最輕的人</mark>，w<sub>l</sub> + w<sub>r</sub> ≤ W 就一齊上船，否則最重的人獨自一船。O(n log n)。</p>
+  </div>
+  <div class="proof">
+    <p><strong>Case 1</strong>: w<sub>l</sub> + w<sub>r</sub> &gt; W. Since w<sub>l</sub> is the lightest, w<sub>r</sub> + w &gt; W for every other w, so w<sub>r</sub> must go alone in every feasible solution.</p>
+    <p><strong>Case 2</strong>: w<sub>l</sub> + w<sub>r</sub> ≤ W. If OPT pairs (w<sub>r</sub>, w<sub>k</sub>) and (w<sub>l</sub>, w<sub>m</sub>), exchange to (w<sub>r</sub>, w<sub>l</sub>) and (w<sub>k</sub>, w<sub>m</sub>). This is feasible since w<sub>m</sub> ≤ w<sub>r</sub> gives w<sub>k</sub> + w<sub>m</sub> ≤ w<sub>k</sub> + w<sub>r</sub> ≤ W, and the boat count is unchanged. Remove the pair and apply induction.</p>
+  </div>
+  <p class="small">例子：[30, 40, 60, 70]，W = 100 → {30, 70}、{40, 60}，共 2 隻船。可以在 <a href="#l5">L5 的 Greedy Lab</a> 試其他數字。</p>
+</section>
+
+<!-- ============================ L5 ============================ -->
+<section id="l5">
+  <header><p class="eyebrow">Lecture 5 · W05 2026-L5.pdf · In-lecture Ex.5 · Tutorial 4</p><h2>Greedy 更多例子</h2></header>
+
+  <h3>Fractional Knapsack</h3>
+  <p>n 件物品 (w<sub>i</sub>, v<sub>i</sub>)，背包上限 W kg。Fractional 版本可以只拿一部分。</p>
+  <div class="box must"><span class="tag">Greedy</span>
+    <p>計 <mark>unit price v<sub>i</sub>/w<sub>i</sub></mark>，由高到低拿；最後一件放不下就拿一部分。</p>
+  </div>
+  <div class="proof">
+    <p>Assume distinct unit prices (merge items with equal unit price). An optimal X must satisfy <strong>P1</strong>: its total weight is W; <strong>P2</strong>: no item outside X has a higher unit price than an item in X. If X differs from greedy at item i, replacing part of a cheaper item k by the same weight of i increases the value (exchange argument). The greedy solution is the only one with P1 and P2, so it is optimal.</p>
+  </div>
+  <div class="box trap"><span class="tag">0–1 knapsack 不能用 greedy</span>
+    <p class="small">W = 20：a($10, 10kg)、b($10, 10kg)、c($12, 11kg)。Greedy 拿 c 得 $12，最優是 a + b 得 $20。</p>
+  </div>
+
+  <h3>Scheduling to Minimize Lateness</h3>
+  <p>Job j 需要 t<sub>j</sub> 時間，deadline d<sub>j</sub>。Lateness ℓ<sub>j</sub> = max{0, f<sub>j</sub> − d<sub>j</sub>}，目標是令最大 lateness L = max ℓ<sub>j</sub> 最小。</p>
+  <div class="twocol">
+    <div class="box must"><span class="tag">正確：Earliest Deadline First</span>
+      <p>按 d<sub>j</sub> 由小到大排，一份接一份做，中間不留空檔。O(n log n)。</p>
+    </div>
+    <div class="box trap"><span class="tag">錯的規則</span>
+      <p class="small"><strong>Shortest processing time</strong>：t = (1, 10)、d = (100, 10) → 先做 1 令 job 2 遲 1。<br><strong>Smallest slack d−t</strong>：t = (1, 10)、d = (2, 10) → 先做 2 令 job 1 遲 9。</p>
+    </div>
+  </div>
+  <h4>證明：Inversion + adjacent swap</h4>
+  <div class="proof">
+    <ol>
+      <li>There is an optimal schedule with no idle time; the greedy schedule has no idle time.</li>
+      <li>An <em>inversion</em> is a pair i, j with d<sub>i</sub> &lt; d<sub>j</sub> but j scheduled before i. Greedy has no inversions. If a schedule with no idle time has an inversion, it has one between two adjacent jobs.</li>
+      <li>Swapping an adjacent inverted pair (j, i) reduces the number of inversions by one. Other jobs are unaffected, ℓ′<sub>i</sub> ≤ ℓ<sub>i</sub>, and if ℓ′<sub>j</sub> &gt; 0 then ℓ′<sub>j</sub> = f′<sub>j</sub> − d<sub>j</sub> = f<sub>i</sub> − d<sub>j</sub> ≤ f<sub>i</sub> − d<sub>i</sub> = ℓ<sub>i</sub>. So the maximum lateness does not increase.</li>
+      <li>Starting from an optimal schedule, keep swapping until no inversion remains. The result is the greedy schedule and it is still optimal.</li>
+    </ol>
+  </div>
+
+  <h3>Minimize Average Waiting Time（2022 Q6）</h3>
+  <p>一部機做 n 份 job，job 的 waiting time = 排在它前面所有 job 的 processing time 總和。</p>
+  <div class="box must"><span class="tag">Greedy</span><p><mark>Shortest Job First (SJF)</mark>：按 p<sub>i</sub> 由小到大做。O(n log n)。</p></div>
+  <div class="proof">
+    <p>Let OPT be an optimal schedule. If OPT has no inversion (a job with larger p before a smaller one), OPT = SJF. Otherwise there is an adjacent inversion J<sub>a</sub>, J<sub>b</sub> with p<sub>a</sub> &gt; p<sub>b</sub>. Swap them: other jobs' waiting times are unchanged; w′(J<sub>b</sub>) = w(J<sub>a</sub>) and w′(J<sub>a</sub>) = w(J<sub>a</sub>) + p<sub>b</sub> &lt; w(J<sub>a</sub>) + p<sub>a</sub> = w(J<sub>b</sub>). So the total waiting time does not increase and the number of inversions drops by one. Repeating, OPT becomes SJF, so SJF is optimal.</p>
+  </div>
+  <p class="small">Slides 例子：p = 3, 4, 1, 8, 2, 6。原本次序 total = 0+3+7+8+16+18 = 52；SJF 次序 J3, J5, J1, J2, J6, J4 → 0+1+3+6+10+16 = <strong>36</strong>。</p>
+
+  <div class="lab" id="gr-lab">
+    <div class="lab-head"><span class="lab-title">Greedy Lab</span><span class="small muted">自己出題再對答案</span></div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="knap">Fractional knapsack</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="edf">Lateness (EDF)</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="sjf">Waiting time (SJF)</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="boat">Boat rescue</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="cover">Interval cover (T4)</button>
+    </div>
+    <div data-panel="knap">
+      <div class="controls"><label class="fld">Items <code>($value, kg)</code><input type="text" id="kn-items" value="(1,20),(5,101),(2,5),(15,8),(11,4),(12,3)"></label><label class="fld" style="flex:0 1 120px">W (kg)<input type="text" id="kn-w" value="10"></label></div>
+      <p class="small muted">預設是 In-lecture Ex.5 Exe1。</p>
+    </div>
+    <div data-panel="edf" hidden>
+      <div class="controls"><label class="fld">Jobs <code>(t, d)</code>，按 J1, J2, … 次序<input type="text" id="edf-in" value="(3,8),(2,7),(1,6),(5,10),(2,10),(3,13)"></label></div>
+      <p class="small muted">預設是 In-lecture Ex.5 Exe2。</p>
+    </div>
+    <div data-panel="sjf" hidden>
+      <div class="controls"><label class="fld">Processing times p<sub>1</sub>, p<sub>2</sub>, …<input type="text" id="sjf-in" value="4, 3, 2, 5, 6, 1"></label></div>
+      <p class="small muted">預設是 In-lecture Ex.5 Exe3（J1=4, J2=3, J3=2, J4=5, J5=6, J6=1）。</p>
+    </div>
+    <div data-panel="boat" hidden>
+      <div class="controls"><label class="fld">Weights<input type="text" id="boat-in" value="30, 40, 60, 70"></label><label class="fld" style="flex:0 1 120px">W<input type="text" id="boat-w" value="100"></label></div>
+    </div>
+    <div data-panel="cover" hidden>
+      <div class="controls"><label class="fld">Points X<input type="text" id="cov-in" value="1.5, 1.56, 1.9, 2.9, 3.4, 5.8, 5.99, 6.32, 10"></label><label class="fld" style="flex:0 1 120px">Length<input type="text" id="cov-l" value="2"></label></div>
+      <p class="small muted">Tutorial 4：用最少長度為 2 的 interval 覆蓋所有點。Greedy：由最左未覆蓋的點 y 開始放 [y, y+2]。</p>
+    </div>
+    <div class="controls"><button class="btn primary" id="gr-run">計算</button></div>
+    <div class="out" id="gr-out"></div>
+  </div>
+
+  <details class="answer"><summary>In-lecture Ex.5 與 Tutorial 4 答案</summary>
+    <p><strong>Exe1</strong> unit price：0.05, 0.0495, 0.4, 1.875, 2.75, 4。拿 ($12, 3kg)、($11, 4kg)、($15, 8kg) 的 3kg → 總值 <strong>$28.625</strong>。</p>
+    <p><strong>Exe2</strong> 按 deadline：J3(6), J2(7), J1(8), J4(10), J5(10), J6(13)。J4 在 11 完成遲 1，J5 在 13 完成遲 3，J6 在 16 完成遲 3 → 最大 lateness <strong>3</strong>。</p>
+    <p><strong>Exe3</strong> 按 processing time：J6(1), J3(2), J2(3), J1(4), J4(5), J5(6)。Waiting 0, 1, 3, 6, 10, 15 → total <strong>35</strong>。</p>
+    <p><strong>Tutorial 4</strong> [1.5, 3.5]、[5.8, 7.8]、[10, 12]，共 3 個。證明：設 greedy 和 OPT 首個不同的是第 r+1 個 interval。Greedy 由最小的未覆蓋點開始，所以 OPT 的那個 interval 開始得更早或一樣，換成 greedy 的 interval 仍然覆蓋所有點，數量不變。重複即得 greedy = OPT。</p>
+  </details>
+</section>
+
+<!-- ============================ L6 ============================ -->
+<section id="l6">
+  <header><p class="eyebrow">Lecture 6 · W06 2026-L6.pdf · Tutorial 5</p><h2>Divide and Conquer</h2></header>
+  <div class="box must"><span class="tag">三步</span>
+    <p><strong>Divide</strong>：拆成同類但更細的 subproblems。<strong>Recur</strong>：遞迴解每個 subproblem。<strong>Conquer</strong>：合併答案。</p>
+  </div>
+
+  <h3>Merge Sort</h3>
+<pre><code>mergeSort(S)
+  if S.size() &gt; 1
+      (S1, S2) ← partition(S, n/2)      // Divide   O(1)
+      mergeSort(S1);  mergeSort(S2)     // Recur    2T(n/2)
+      S ← merge(S1, S2)                 // Conquer  O(n)</code></pre>
+  <p>T(n) ≤ T(⌈n/2⌉) + T(⌊n/2⌋) + n，T(1) = 0 → <strong>T(n) = O(n log n)</strong>。</p>
+  <div class="twocol">
+    <div class="proof"><p><strong>展開法</strong>（n = 2<sup>k</sup>）</p>
+<pre><code>T(n) = n + 2T(n/2)
+     = 2n + 2²T(n/2²)
+     = 3n + 2³T(n/2³)
+     = … = kn + 2^k T(n/2^k)
+n/2^k = 1 ⇒ k = log₂n
+T(n) = n log₂n + nT(1) = O(n log n)</code></pre></div>
+    <div class="proof"><p><strong>Telescoping</strong>（T(1) = 0）</p>
+<pre><code>T(n)/n = T(n/2)/(n/2) + 1
+       = T(n/4)/(n/4) + 1 + 1
+       = …
+       = T(1) + 1 + … + 1   (log₂n 個)
+       = log₂n
+⇒ T(n) = n log₂n</code></pre></div>
+  </div>
+
+  <h3>Iteration Method 例子：T(n) = 4T(n/2) + n</h3>
+<pre><code>T(n) = 4T(n/2) + n
+     = 4²T(n/4) + 2n + n
+     = 4³T(n/8) + 4n + 2n + n
+     = 4^k T(n/2^k) + n(1 + 2 + … + 2^(k−1))
+     = 4^k T(n/2^k) + n(2^k − 1)
+n = 2^k ⇒ 4^k = n²
+T(n) = n²T(1) + n² − n = O(n²)</code></pre>
+  <div class="tbl"><table>
+    <thead><tr><th>Recurrence</th><th>答案</th><th>點樣得出／例子</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">T(n)=2T(n/2)+c</td><td><strong>O(n)</strong></td><td>c(1+2+…+2<sup>k−1</sup>) + nT(1) = c(n−1) + nT(1)。找最大值、最大＋第二大</td></tr>
+      <tr><td class="mono">T(n)=2T(n/2)+n</td><td><strong>O(n log n)</strong></td><td>Merge sort、counting inversions、max subarray</td></tr>
+      <tr><td class="mono">T(n)=4T(n/2)+n</td><td><strong>O(n²)</strong></td><td>Lecture 6 iteration 例子；普通 D&amp;C 乘法</td></tr>
+      <tr><td class="mono">T(n)=T(n/2)+n</td><td><strong>O(n)</strong></td><td>n + n/2 + n/4 + … ≤ 2n</td></tr>
+      <tr><td class="mono">T(n)=T(n/2)+1</td><td><strong>O(log n)</strong></td><td>Binary search</td></tr>
+      <tr><td class="mono">T(n)=T(n−1)+n</td><td><strong>O(n²)</strong></td><td>n + (n−1) + … + 1 = n(n+1)/2</td></tr>
+      <tr><td class="mono">T(n)=T(n−2)+n</td><td><strong>O(n²)</strong></td><td>2022 Q4(b)：n 為偶數時 = 1 + n²/4 + n/2 − 1 ≈ n²/4</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Counting Inversions</h3>
+  <p>排名 a<sub>1</sub>, …, a<sub>n</sub> 中，i &lt; j 但 a<sub>i</sub> &gt; a<sub>j</sub> 就是一個 inversion。暴力檢查所有 pair 要 Θ(n²)。</p>
+<pre><code>Sort-and-Count(L)
+  if L has one element: return (0, L)
+  divide L into halves A and B
+  (rA, A) ← Sort-and-Count(A)
+  (rB, B) ← Sort-and-Count(B)
+  (r,  L) ← Merge-and-Count(A, B)       // A, B sorted
+  return (rA + rB + r, L)</code></pre>
+  <div class="box must"><span class="tag">Merge-and-Count 規則</span>
+    <p>合併兩個已排序的 A、B 時，每當從 <strong>B（右半）</strong>拿出元素，<mark>就加上 A 中剩下的元素數目</mark>，因為它們全部比這個元素大。合併 O(n)，所以 T(n) = 2T(n/2) + O(n) = <strong>O(n log n)</strong>。</p>
+  </div>
+  <p class="small">Slides 例子 1 5 4 8 10 2 | 6 9 12 11 3 7：左邊內部 5 個，右邊內部 8 個，跨兩邊 9 個，合共 <strong>22</strong>。</p>
+
+  <div class="lab" id="mc-lab">
+    <div class="lab-head"><span class="lab-title">Merge-and-Count</span><span class="small muted">跟 2022 Q4 的答案格式一樣</span></div>
+    <div class="controls">
+      <button class="btn" data-mc="15 1 5 8 9 10 4 7 6 13 14 11">2022 Q4</button>
+      <button class="btn" data-mc="1 5 4 8 10 2 6 9 12 11 3 7">Lecture 6 例子</button>
+      <button class="btn" data-mcl="3 7 10 14 18 19" data-mcr="2 11 16 17 23 25">Slides p.46</button>
+      <button class="btn" data-mcl="2 4 7 9" data-mcr="1 3 8 10">模擬題 M5</button>
+    </div>
+    <div class="controls"><label class="fld">整個 list（可選，按「分半」自動切開及排序）<input type="text" id="mc-all" value="15 1 5 8 9 10 4 7 6 13 14 11"></label><button class="btn" id="mc-split">分半</button></div>
+    <div class="controls"><label class="fld">左半 A（sorted）<input type="text" id="mc-l"></label><label class="fld">右半 B（sorted）<input type="text" id="mc-r"></label></div>
+    <div class="controls"><button class="btn primary" id="mc-run">Merge and count</button></div>
+    <div class="out" id="mc-out"></div>
+  </div>
+
+  <h3>D&amp;C 設計題</h3>
+  <p>題目常常規定 function prototype，例如 <code>x, y = f(low, high)</code>，array 作 global variable；只傳 low、high，不要複製 array，否則做不到 O(n)。</p>
+  <h4>(1) 找最大值（Tutorial 5 Q1）</h4>
+<pre><code>f(l, h, A)
+  if l == h: return A[l]
+  m ← ⌊(l + h) / 2⌋
+  a ← f(l, m, A);  b ← f(m+1, h, A)
+  return max(a, b)
+T(n) = 2T(n/2) + c  ⇒  O(n)</code></pre>
+  <h4>(2) 最大和第二大（2022 Q5，n 個不同數字）</h4>
+<pre><code>f(low, high)                      // returns (largest, second largest)
+  if low == high:      return (A[low], −∞)
+  if high == low + 1:  return (max(A[low],A[high]), min(A[low],A[high]))
+  mid ← ⌊(low + high) / 2⌋
+  (x1, y1) ← f(low, mid)
+  (x2, y2) ← f(mid+1, high)
+  if x1 &gt; x2: return (x1, max(y1, x2))
+  else:       return (x2, max(x1, y2))
+Comparisons: g(n) = 2g(n/2) + 2
+           = 2^k g(n/2^k) + 2(2^k − 1)  ⇒  g(n) = O(n)</code></pre>
+  <p class="small muted">合併時第二大只可能是「贏家那邊的第二大」或「輸家那邊的最大」，所以只需 2 次比較。2022 官方答案把四個數放入 array 再排序，同樣是 O(1)，也拿全分。</p>
+  <h4>(3) Maximum subarray sum（Tutorial 5 extra）</h4>
+  <p>在 mid 切開，最優 subarray 一定是三種之一：全在左邊、全在右邊、跨過 mid。跨過 mid 的那個由 mid 向左掃找最大後綴和、由 mid+1 向右掃找最大前綴和，相加即可，O(n)。所以 T(n) = 2T(n/2) + O(n) = <strong>O(n log n)</strong>。</p>
+  <p class="small">例子 A = [−2, 1, −3, 4, −1, 2, 1, −5, 4] → 最大和 <strong>6</strong>，subarray [4, −1, 2, 1]，即 index 4 至 7（由 1 開始數）。</p>
+  <p class="small muted">Karatsuba multiplication 是 Fun part，不考。</p>
+</section>
+
+<!-- ============================ proofs ============================ -->
+<section id="proof">
+  <header><p class="eyebrow">Hard 分的關鍵</p><h2>證明模板</h2></header>
+  <p>Midterm 的證明幾乎都是以下四種之一。先認出用哪一種，再套句式。</p>
+  <div class="box write"><span class="tag">1 · Exchange argument</span>
+    <p class="small muted">用於：interval scheduling、interval cover（T4）、fractional knapsack、boat rescue</p>
+    <div class="proof"><p>Let G = g<sub>1</sub>, g<sub>2</sub>, … be the greedy solution and OPT = o<sub>1</sub>, o<sub>2</sub>, … an optimal solution. Suppose they agree on the first r choices and g<sub>r+1</sub> ≠ o<sub>r+1</sub>. By the greedy rule, g<sub>r+1</sub> is <em>[at least as good as]</em> o<sub>r+1</sub>, so replacing o<sub>r+1</sub> with g<sub>r+1</sub> keeps OPT feasible and does not make it worse. We obtain an optimal solution that agrees with G on r+1 choices. Repeating this, we get an optimal solution identical to G. Hence G is optimal.</p></div>
+  </div>
+  <div class="box write"><span class="tag">2 · Inversion / adjacent swap</span>
+    <p class="small muted">用於：minimize lateness（EDF）、minimize waiting time（SJF）</p>
+    <div class="proof"><p>Take an optimal schedule (with no idle time). If it has an inversion, it has an adjacent inversion. Swapping the two adjacent jobs does not change the other jobs, reduces the number of inversions by one, and does not increase the objective. After finitely many swaps we reach the greedy schedule, which is therefore optimal.</p></div>
+  </div>
+  <div class="box write"><span class="tag">3 · Structural bound</span>
+    <p class="small muted">用於：interval partitioning（depth）</p>
+    <div class="proof"><p>Every solution needs at least B (e.g. depth). The greedy algorithm uses at most B, because it only opens a new resource when B items overlap. So greedy is optimal.</p></div>
+  </div>
+  <div class="box write"><span class="tag">4 · Cut property ／ Induction</span>
+    <p class="small muted">用於：MST（cut property：換邊 T′ = T − ℓ′ + ℓ）；Dijkstra（對 |S| 歸納，分兩個 case）。全文見 <a href="#l3">L3</a>、<a href="#l4">L4</a>。</p>
+  </div>
+  <div class="box trap"><span class="tag">證明常見扣分</span>
+    <ul>
+      <li>只寫「greedy is locally optimal so it is globally optimal」，沒有比較 OPT。</li>
+      <li>寫 G = OPT。正確是：存在一個 optimal solution 可以變成 G，或 |G| = |OPT|。</li>
+      <li>交換後沒有說明為何仍然 feasible，以及為何不會變差。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="cheat">
+  <header><p class="eyebrow">考前一晚</p><h2>時間複雜度一覽</h2></header>
+  <div class="tbl"><table>
+    <thead><tr><th>Algorithm</th><th>Greedy 規則／做法</th><th>Running time</th><th>證明方法</th></tr></thead>
+    <tbody>
+      <tr><td>Euler circuit</td><td>走 circuit 再合併</td><td>O(|V|+|E|)（Hierholzer，不考）</td><td>Theorem ⇔ even degree</td></tr>
+      <tr><td>Interval scheduling</td><td>Earliest finish time</td><td>O(n log n)</td><td>Exchange</td></tr>
+      <tr><td>Interval partitioning</td><td>Earliest start time</td><td>O(n log n)</td><td>Structural（depth）</td></tr>
+      <tr><td>Kruskal</td><td>全局最輕、不成 cycle 的邊</td><td>O(|E| log |E|)</td><td>Cut property</td></tr>
+      <tr><td>Prim</td><td>離開 tree 最輕的邊</td><td>O(|E| log |V|) heap；O(|E|+|V| log |V|) Fibonacci</td><td>Cut property</td></tr>
+      <tr><td>Dijkstra</td><td>d 最小的頂點</td><td>O(|V|²) array；O(|E| log |V|) heap</td><td>Induction on |S|</td></tr>
+      <tr><td>Boat rescue</td><td>最重配最輕</td><td>O(n log n)</td><td>Exchange + induction</td></tr>
+      <tr><td>Fractional knapsack</td><td>最高 unit price</td><td>O(n log n)</td><td>Exchange</td></tr>
+      <tr><td>Min lateness</td><td>Earliest deadline</td><td>O(n log n)</td><td>Inversion swap</td></tr>
+      <tr><td>Min waiting time</td><td>Shortest job first</td><td>O(n log n)</td><td>Inversion swap</td></tr>
+      <tr><td>Merge sort</td><td>分半、遞迴、合併</td><td>O(n log n)</td><td>Recurrence</td></tr>
+      <tr><td>Counting inversions</td><td>Sort-and-Count</td><td>O(n log n)（暴力 Θ(n²)）</td><td>Recurrence</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================ mock ============================ -->
+<section id="mock">
+  <header><p class="eyebrow">仿 2022 卷題型 · 答案收起</p><h2>模擬題</h2></header>
+  <p>這些是按 2022 卷和今年 tutorial 題型出的練習題，不是真題。先自己寫，再打開答案。</p>
+
+  <div class="q"><p><span class="pts">M1 · L2</span><br>Jobs (s, f)：(1,4), (3,5), (0,6), (5,7), (3,9), (5,9), (6,10), (8,11), (8,12), (2,14), (12,16)。用 greedy 求最多 compatible jobs，寫出主要步驟和 running time。</p>
+    <details class="answer"><summary>答案</summary><p>按 f 排序：(1,4) (3,5) (0,6) (5,7) (3,9) (5,9) (6,10) (8,11) (8,12) (2,14) (12,16)。選 (1,4) → (5,7) → (8,11) → (12,16)，共 <strong>4</strong> 份。O(n log n)。</p></details></div>
+
+  <div class="q"><p><span class="pts">M2 · L2</span><br>Lectures：(0,3), (1,4), (2,5), (3,6), (4,7), (5,8), (6,9)。求最少課室數和 depth。</p>
+    <details class="answer"><summary>答案</summary><p>按 s 已排好。Room 1：(0,3)(3,6)(6,9)；Room 2：(1,4)(4,7)；Room 3：(2,5)(5,8)。<strong>3</strong> 間。Depth = 3（例如時間 2.5 有 (0,3)(1,4)(2,5) 重疊），所以 optimal。</p></details></div>
+
+  <div class="q"><p><span class="pts">M3 · L3</span><br>無向圖邊：AB 4, AC 2, BC 1, BD 5, CD 8, CE 10, DE 2, DF 6, EF 3。(a) 用 Kruskal 求 MST，寫出加邊次序。(b) 用 Prim 由 A 開始。</p>
+    <details class="answer"><summary>答案</summary><p>(a) 排序：BC1, AC2, DE2, EF3, AB4, BD5, DF6, CD8, CE10。加 BC、AC、DE、EF；<strong>拒絕 AB</strong>（A、B 已經經 C 連通）；加 BD，已有 5 條 = |V|−1，停。(b) AC(2) → BC(1) → BD(5) → DE(2) → EF(3)。MST 總重 <strong>13</strong>。可用 <a href="#mst-lab">MST Lab</a> 的「模擬題 M3」逐步檢查。</p></details></div>
+
+  <div class="q"><p><span class="pts">M4 · L4</span><br>有向圖：s→a 4, s→b 1, b→a 2, a→c 1, b→c 5, c→t 3, b→t 8。用 Dijkstra 求 s 到 t 的最短路徑，要有表格和 backtracking。</p>
+    <details class="answer"><summary>答案</summary><p>取出次序 s(0) → b(1) → a(3/b) → c(4/a) → t(7/c)。中途 a 由 4 降到 3，c 由 6 降到 4，t 由 9 降到 7。Backtracking：t ← c ← a ← b ← s，路徑 s→b→a→c→t，長度 <strong>7</strong>。<a href="#dj-lab">Dijkstra Lab</a> 有這幅圖。</p></details></div>
+
+  <div class="q"><p><span class="pts">M5 · L6</span><br>兩個已排序的半邊 A = 2, 4, 7, 9 和 B = 1, 3, 8, 10。用 O(n) 方法數一個在 A、一個在 B 的 inversions，寫出中間步驟。</p>
+    <details class="answer"><summary>答案</summary><p>拿 1（B）→ +4；拿 2；拿 3（B）→ +3；拿 4；拿 7；拿 8（B）→ +1；拿 9；拿 10（B）→ +0。Total = 4 + 3 + 1 = <strong>8</strong>。</p></details></div>
+
+  <div class="q"><p><span class="pts">M6 · L6</span><br>用 big-O 表示：(a) T(n) = 2T(n/2) + 1　(b) T(n) = T(n/2) + n　(c) T(n) = T(n−1) + n　(d) T(n) = T(n−2) + n。T(1) = T(2) = 1。</p>
+    <details class="answer"><summary>答案</summary><p>(a) 2<sup>k</sup>T(1) + (2<sup>k</sup> − 1) = 2n − 1 → <strong>O(n)</strong>。(b) n + n/2 + … ≤ 2n → <strong>O(n)</strong>。(c) n(n+1)/2 → <strong>O(n²)</strong>。(d) 約 n²/4 → <strong>O(n²)</strong>。考試要寫展開步驟。</p></details></div>
+
+  <div class="q"><p><span class="pts">M7 · L5</span><br>Fractional knapsack，W = 12 kg：a($20, 4kg)、b($18, 6kg)、c($15, 5kg)、d($8, 4kg)。</p>
+    <details class="answer"><summary>答案</summary><p>Unit price：a 5、b 3、c 3、d 2。拿 a 全部（4kg）、b 全部（6kg）、c 的 2kg（$6）→ <strong>$44</strong>。b、c 同價，次序可對調，總值一樣。</p></details></div>
+
+  <div class="q"><p><span class="pts">M8 · L5</span><br>Jobs (t, d)：J1(2, 3)、J2(1, 2)、J3(3, 7)、J4(2, 5)。求最小 maximum lateness 的 schedule。</p>
+    <details class="answer"><summary>答案</summary><p>EDF：J2 [0,1]、J1 [1,3]、J4 [3,5]、J3 [5,8]。只有 J3 遲 1 → L = <strong>1</strong>。</p></details></div>
+
+  <div class="q"><p><span class="pts">M9 · L5</span><br>p = 5, 2, 8, 1, 4（J1–J5）。求令 total waiting time 最小的次序，並證明 algorithm 正確。</p>
+    <details class="answer"><summary>答案</summary><p>SJF：J4, J2, J5, J1, J3。Waiting 0, 1, 3, 7, 12 → total <strong>23</strong>，average 4.6。證明用 <a href="#l5">L5</a> 的 adjacent swap。</p></details></div>
+
+  <div class="q"><p><span class="pts">M10 · L4</span><br>Boat rescue：weights 20, 50, 50, 70, 80, 90，W = 100。</p>
+    <details class="answer"><summary>答案</summary><p>20+90 &gt; 100 → 90 獨自；20+80 = 100 → 一船；50+70 &gt; 100 → 70 獨自；50+50 = 100 → 一船。共 <strong>4</strong> 隻。</p></details></div>
+
+  <div class="q"><p><span class="pts">M11 · L6</span><br>寫一個 O(n) 的 divide-and-conquer algorithm，同時找出 array 的最小值和最大值。寫出 comparison 數目的 recurrence 並求解。</p>
+    <details class="answer"><summary>答案</summary>
+<pre><code>f(low, high)                       // returns (min, max)
+  if low == high: return (A[low], A[low])
+  mid ← ⌊(low + high) / 2⌋
+  (m1, M1) ← f(low, mid);  (m2, M2) ← f(mid+1, high)
+  return (min(m1, m2), max(M1, M2))
+g(n) = 2g(n/2) + 2,  g(1) = 0
+     = 2^k g(n/2^k) + 2(2^k − 1) = 2(n − 1)  ⇒  O(n)</code></pre></details></div>
+
+  <div class="q"><p><span class="pts">M12 · L2/L5</span><br>證明 Tutorial 4 的 interval cover greedy（由最左未覆蓋點 y 放 [y, y+2]）是 optimal。</p>
+    <details class="answer"><summary>答案</summary><p>Let G = G<sub>1</sub>, …, G<sub>m</sub> be the greedy intervals and OPT = O<sub>1</sub>, …, O<sub>p</sub> sorted by left endpoint. Suppose G<sub>i</sub> = O<sub>i</sub> for i ≤ r and G<sub>r+1</sub> = [y, y+2] ≠ O<sub>r+1</sub> = [o, o+2]. y is the smallest uncovered point, and O<sub>r+1</sub> must cover it, so o ≤ y. Every point covered by O<sub>r+1</sub> but not by earlier intervals lies in [y, o+2] ⊆ [y, y+2]. Replacing O<sub>r+1</sub> with G<sub>r+1</sub> still covers all points and keeps p intervals. Repeating, OPT becomes G, so m = p.</p></details></div>
+
+  <div class="q"><p><span class="pts">M13 · L1</span><br>邊：ab, ac, bc, bd, cd, ce, de。有沒有 Euler circuit？如果沒有，最少加幾條邊（可以是 parallel edge）？</p>
+    <details class="answer"><summary>答案</summary><p>Degree：a 2、b 3、c 4、d 3、e 2。b、d 是 odd，所以<strong>沒有</strong>。加一條 bd（parallel edge），全部變 even，就有 Euler circuit。在 <a href="#eu-lab">Euler 檢查器</a> 加入 <code>bd</code> 試試。</p></details></div>
+</section>
+
+<!-- ============================ files ============================ -->
+<section id="files">
+  <header><p class="eyebrow">CS4335 Design and Analysis of Alogrithms 資料夾</p><h2>已整理的檔案</h2></header>
+  <p class="small muted" id="files-note">連結指向這個 HTML 旁邊的資料夾。Canvas 上 <code>CS4335 2023</code> 資料夾對學生鎖住（403），所以師兄資料用你本來的 7z。</p>
+  <div class="files" id="files-list"></div>
+</section>
+</main>
+
+<footer>
+  內容根據 Canvas 2026 Lecture 1–7 slides、in-lecture exercises、Tutorial 1–5 答案，以及師兄的 2022 Midterm（附答案）整理。
+</footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const NS = "http://www.w3.org/2000/svg";
+const fmt = x => x === Infinity ? "∞" : x === -Infinity ? "−∞" : Number.isInteger(x) ? String(x) : String(+x.toFixed(4));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function svgEl(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function parsePairs(str) {
+  const out = [], re = /\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)/g;
+  let m;
+  while ((m = re.exec(str))) out.push([+m[1], +m[2]]);
+  return out;
+}
+const parseNums = str => (str.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
+};
+function press(group, active) { group.forEach(b => b.setAttribute("aria-pressed", String(b === active))); }
+
+/* ---------- countdown ---------- */
+(function countdown() {
+  const hkDay = d => Math.floor((d.getTime() + 8 * 3600000) / 86400000);
+  const diff = hkDay(new Date("2026-10-23T15:00:00+08:00")) - hkDay(new Date());
+  const n = $("#days"), l = $("#days-label");
+  if (diff > 0) { n.textContent = diff; l.textContent = "日後考試（10 月 23 日 星期五 3 pm）"; }
+  else if (diff === 0) { n.textContent = "今日"; l.textContent = "考試日，3:00 pm 開考"; }
+  else { n.textContent = "✓"; l.textContent = "Midterm 已經考完"; }
+})();
+
+/* ---------- plan checklist ---------- */
+$$(".plan input[type=checkbox]").forEach(cb => {
+  cb.checked = !!store.get("cs4335-plan", {})[cb.id];
+  cb.addEventListener("change", () => {
+    const s = store.get("cs4335-plan", {});
+    s[cb.id] = cb.checked;
+    store.set("cs4335-plan", s);
+  });
+});
+
+/* ---------- graph drawing (shared by MST and Dijkstra) ---------- */
+function drawGraph(svg, g, st, directed) {
+  svg.innerHTML = "";
+  svg.setAttribute("viewBox", `0 0 ${g.w} ${g.h}`);
+  const R = 18, id = svg.id;
+  if (directed) {
+    const defs = svgEl("defs", {}, svg);
+    for (const k of ["base", "chosen", "cand", "pick"]) {
+      const m = svgEl("marker", { id: `${id}-ah-${k}`, viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto" }, defs);
+      svgEl("path", { d: "M0,0 L10,5 L0,10 z", class: `ah ah-${k}` }, m);
+    }
+  }
+  const has = new Set(g.edges.map(e => e[0] + ">" + e[1]));
+  const unit = (x, y) => { const l = Math.hypot(x, y) || 1; return [x / l, y / l]; };
+  const labels = [];
+  g.edges.forEach((e, i) => {
+    const [u, v, w, opt] = e;
+    const [x1, y1] = g.nodes[u], [x2, y2] = g.nodes[v];
+    const [ux, uy] = unit(x2 - x1, y2 - y1);
+    const nx = -uy, ny = ux;
+    const bend = opt && opt.bend != null ? opt.bend : (directed && has.has(v + ">" + u) ? 22 : 0);
+    const endGap = directed ? R + 3 : R;
+    let d, lx, ly;
+    if (bend) {
+      const cx = (x1 + x2) / 2 + nx * bend, cy = (y1 + y2) / 2 + ny * bend;
+      const a = unit(cx - x1, cy - y1), b = unit(cx - x2, cy - y2);
+      d = `M${x1 + a[0] * R},${y1 + a[1] * R} Q${cx},${cy} ${x2 + b[0] * endGap},${y2 + b[1] * endGap}`;
+      const s = Math.sign(bend);
+      lx = 0.25 * x1 + 0.5 * cx + 0.25 * x2 + nx * 11 * s;
+      ly = 0.25 * y1 + 0.5 * cy + 0.25 * y2 + ny * 11 * s;
+    } else {
+      d = `M${x1 + ux * R},${y1 + uy * R} L${x2 - ux * endGap},${y2 - uy * endGap}`;
+      lx = (x1 + x2) / 2; ly = (y1 + y2) / 2;
+    }
+    const cls = (st.edge && st.edge[i]) || "base";
+    const p = svgEl("path", { d, class: "g-edge " + (cls === "base" ? "" : cls) }, svg);
+    if (directed) p.setAttribute("marker-end", `url(#${id}-ah-${cls === "rej" ? "base" : cls})`);
+    labels.push([lx, ly, fmt(w)]);
+  });
+  labels.forEach(([x, y, t]) => {
+    const wdt = 8 + 8 * t.length;
+    svgEl("rect", { x: x - wdt / 2, y: y - 9, width: wdt, height: 18, rx: 4, class: "g-lblbg" }, svg);
+    svgEl("text", { x, y, class: "g-lbl" }, svg).textContent = t;
+  });
+  for (const v in g.nodes) {
+    const [x, y] = g.nodes[v];
+    const grp = svgEl("g", { class: "g-node " + ((st.node && st.node[v]) || "") }, svg);
+    svgEl("circle", { cx: x, cy: y, r: R }, grp);
+    svgEl("text", { x, y }, grp).textContent = v;
+    if (st.sub && st.sub[v] != null) {
+      const below = y + R + 14 <= g.h - 2;
+      svgEl("text", { x, y: below ? y + R + 13 : y - R - 6, class: "g-sub" }, svg).textContent = st.sub[v];
+    }
+  }
+}
+const edgeName = e => e[0] + e[1] + "(" + fmt(e[2]) + ")";
+
+/* ---------- Euler lab ---------- */
+function eulerRun() {
+  const out = $("#eu-out");
+  const edges = [];
+  for (const t of $("#eu-in").value.split(/[\s,;]+/).filter(Boolean)) {
+    const parts = t.includes("-") ? t.split("-") : (t.length === 2 ? [t[0], t[1]] : null);
+    if (parts && parts.length === 2 && parts[0] && parts[1]) edges.push(parts);
+  }
+  if (!edges.length) { out.innerHTML = '<p class="err">請輸入邊，例如 ab bc ca。</p>'; return; }
+  const deg = {}, adj = {};
+  edges.forEach(([a, b], i) => {
+    deg[a] = (deg[a] || 0) + 1; deg[b] = (deg[b] || 0) + 1;
+    (adj[a] = adj[a] || []).push(i); (adj[b] = adj[b] || []).push(i);
+  });
+  const V = Object.keys(deg).sort();
+  const other = (i, u) => edges[i][0] === u ? edges[i][1] : edges[i][0];
+  const seen = new Set([V[0]]), stack = [V[0]];
+  while (stack.length) { const u = stack.pop(); for (const i of adj[u]) { const w = other(i, u); if (!seen.has(w)) { seen.add(w); stack.push(w); } } }
+  const connected = seen.size === V.length;
+  const odd = V.filter(v => deg[v] % 2);
+  let html = '<div class="tbl"><table><thead><tr><th>Vertex</th>' + V.map(v => `<th>${esc(v)}</th>`).join("") +
+    '</tr></thead><tbody><tr><td>Degree</td>' + V.map(v => `<td class="${deg[v] % 2 ? "no" : "yes"}">${deg[v]}</td>`).join("") + "</tr></tbody></table></div>";
+  html += `<p>Connected：<strong>${connected ? "是" : "否"}</strong>；odd degree 頂點：<strong>${odd.length ? esc(odd.join(", ")) : "沒有"}</strong></p>`;
+  if (!connected || odd.length) {
+    out.innerHTML = html + `<p class="err">沒有 Euler circuit：${!connected ? "graph 不是 connected。" : ""}${odd.length ? "有 odd degree 頂點。" : ""}</p>`;
+    return;
+  }
+  const used = new Array(edges.length).fill(false);
+  const walk = start => {
+    const path = [start];
+    let u = start;
+    do {
+      const cand = adj[u].filter(i => !used[i]).sort((i, j) => other(i, u).localeCompare(other(j, u)) || i - j);
+      if (!cand.length) break;
+      used[cand[0]] = true;
+      u = other(cand[0], u);
+      path.push(u);
+    } while (u !== start);
+    return path;
+  };
+  let C = walk(edges[0][0]);
+  const steps = [`C1 = ${C.join("→")}`];
+  let k = 1;
+  while (used.some(x => !x)) {
+    const idx = C.findIndex(v => adj[v].some(i => !used[i]));
+    const v = C[idx], Cp = walk(v);
+    k++;
+    steps.push(`${v} 還有未用的邊，由 ${v} 走出 C${k} = ${Cp.join("→")}`);
+    C = [...C.slice(0, idx), ...Cp, ...C.slice(idx + 1)];
+    steps.push(`合併：${C.join("→")}`);
+  }
+  out.innerHTML = html + '<ol class="log">' + steps.map(s => `<li>${esc(s)}</li>`).join("") + "</ol>" +
+    `<p class="result">Euler circuit：${esc(C.join("→"))}（共 ${edges.length} 條邊）</p>`;
+}
+$$("[data-eu]").forEach(b => b.addEventListener("click", () => { $("#eu-in").value = b.dataset.eu; eulerRun(); }));
+$("#eu-run").addEventListener("click", eulerRun);
+eulerRun();
+
+/* ---------- Interval lab ---------- */
+const IV_PRESETS = [
+  { mode: "s", label: "Tutorial 1 Ex.1", text: "(0,5),(1,2),(3,8),(2,5),(6,7),(4,11),(3,13),(6,7)" },
+  { mode: "s", label: "Lecture 2 例子", text: "(0,10),(3,4),(2,8),(1,5),(4,5),(4,8),(5,6),(7,9)" },
+  { mode: "s", label: "2022 Q1(a)", text: "(0,2),(1,3),(3,6),(3,4),(6,9),(4,12),(5,8),(6,7)" },
+  { mode: "p", label: "Tutorial 1 Ex.2", text: "(5,7),(2,3),(1,2),(2,7),(3,6),(5,8),(4,6)" },
+  { mode: "p", label: "2022 Q1(b)", text: "(0,1),(0,3),(1,4),(2,6),(3,4),(4,5),(5,8)" }
+];
+let ivMode = "s";
+const ivBtns = [$("#iv-m-s"), $("#iv-m-p")];
+function setIvMode(m) { ivMode = m; press(ivBtns, m === "s" ? ivBtns[0] : ivBtns[1]); }
+ivBtns[0].addEventListener("click", () => { setIvMode("s"); ivRun(); });
+ivBtns[1].addEventListener("click", () => { setIvMode("p"); ivRun(); });
+IV_PRESETS.forEach(p => {
+  const b = document.createElement("button");
+  b.className = "btn"; b.textContent = p.label;
+  b.addEventListener("click", () => { $("#iv-in").value = p.text; setIvMode(p.mode); ivRun(); });
+  $("#iv-presets").appendChild(b);
+});
+function drawTimeline(svg, rows, lo, hi) {
+  svg.innerHTML = "";
+  const W = 640, left = 70, right = 14, rowH = 28, top = 8;
+  const H = top + rows.length * rowH + 28;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const x = t => left + (t - lo) / ((hi - lo) || 1) * (W - left - right);
+  const span = hi - lo, step = span <= 16 ? 1 : span <= 32 ? 2 : Math.ceil(span / 16);
+  for (let t = Math.ceil(lo); t <= hi + 1e-9; t += step) {
+    svgEl("line", { x1: x(t), x2: x(t), y1: top, y2: H - 22, class: "tl-grid" }, svg);
+    svgEl("text", { x: x(t), y: H - 8, class: "tl-tick", "text-anchor": "middle" }, svg).textContent = fmt(t);
+  }
+  rows.forEach((r, i) => {
+    const y = top + i * rowH;
+    svgEl("text", { x: 4, y: y + rowH / 2, class: "tl-row", "dominant-baseline": "central" }, svg).textContent = r.label;
+    r.bars.forEach(b => {
+      svgEl("rect", { x: x(b.s), y: y + 4, width: Math.max(2, x(b.f) - x(b.s)), height: rowH - 8, rx: 4, class: "tl-bar" + (b.sel ? " sel" : "") }, svg);
+      svgEl("text", { x: (x(b.s) + x(b.f)) / 2, y: y + rowH / 2, class: "tl-txt" + (b.sel ? " sel" : "") }, svg).textContent = b.text;
+    });
+  });
+}
+function ivRun() {
+  const out = $("#iv-out"), svg = $("#iv-svg");
+  const jobs = parsePairs($("#iv-in").value).map(([s, f], i) => ({ s, f, i, name: `(${fmt(s)},${fmt(f)})` }));
+  if (!jobs.length) { out.innerHTML = '<p class="err">請用 (s,f),(s,f) 格式輸入。</p>'; svg.innerHTML = ""; return; }
+  if (jobs.some(j => j.f <= j.s)) { out.innerHTML = '<p class="err">每份 job 的 f 要大於 s。</p>'; svg.innerHTML = ""; return; }
+  const lo = Math.floor(Math.min(...jobs.map(j => j.s))), hi = Math.ceil(Math.max(...jobs.map(j => j.f)));
+  const log = [];
+  if (ivMode === "s") {
+    const sorted = [...jobs].sort((a, b) => a.f - b.f || a.i - b.i);
+    let last = null;
+    const sel = new Set();
+    for (const j of sorted) {
+      if (last === null || j.s >= last.f) {
+        log.push(`選 ${j.name}${last ? `：s = ${fmt(j.s)} ≥ 上一份的 f = ${fmt(last.f)}` : "：finish time 最早"}`);
+        sel.add(j); last = j;
+      } else log.push(`略過 ${j.name}：s = ${fmt(j.s)} &lt; ${fmt(last.f)}，與 ${last.name} 重疊`);
+    }
+    const chosen = sorted.filter(j => sel.has(j));
+    out.innerHTML = `<p><strong>Step 1</strong> 按 finish time 排序：${sorted.map(j => j.name).join(" ")}</p>` +
+      `<p><strong>Step 2</strong> 由頭掃到尾：</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol>` +
+      `<p class="result">最多 ${chosen.length} 份：${chosen.map(j => j.name).join(", ")}　Running time O(n log n)</p>`;
+    drawTimeline(svg, sorted.map((j, k) => ({ label: `#${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name, sel: sel.has(j) }] })), lo, hi);
+  } else {
+    const sorted = [...jobs].sort((a, b) => a.s - b.s || a.i - b.i);
+    const rooms = [];
+    for (const j of sorted) {
+      const k = rooms.findIndex(r => r.end <= j.s);
+      if (k < 0) { rooms.push({ end: j.f, list: [j] }); log.push(`${j.name}：現有課室都未空，開 Room ${rooms.length}`); }
+      else { rooms[k].list.push(j); log.push(`${j.name} → Room ${k + 1}（上一堂 ${fmt(rooms[k].end)} 結束 ≤ ${fmt(j.s)}）`); rooms[k].end = j.f; }
+    }
+    const ev = [];
+    jobs.forEach(j => { ev.push([j.s, 1]); ev.push([j.f, -1]); });
+    ev.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    let cur = 0, depth = 0, at = null;
+    for (const [t, dlt] of ev) { cur += dlt; if (cur > depth) { depth = cur; at = t; } }
+    out.innerHTML = `<p><strong>Step 1</strong> 按 start time 排序：${sorted.map(j => j.name).join(" ")}</p>` +
+      `<p><strong>Step 2</strong> 逐堂分配（放入第一間可用的課室）：</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol>` +
+      `<p>${rooms.map((r, k) => `Room ${k + 1}：${r.list.map(j => j.name).join(" ")}`).join("<br>")}</p>` +
+      `<p class="result">最少 ${rooms.length} 間課室。Depth = ${depth}（例如剛過時間 ${fmt(at)}），greedy 用 ${rooms.length} 間 = depth，所以 optimal。</p>`;
+    drawTimeline(svg, rooms.map((r, k) => ({ label: `Room ${k + 1}`, bars: r.list.map(j => ({ s: j.s, f: j.f, text: j.name, sel: true })) })), lo, hi);
+  }
+}
+$("#iv-run").addEventListener("click", ivRun);
+$("#iv-in").value = IV_PRESETS[0].text;
+ivRun();
+
+/* ---------- MST lab ---------- */
+const MST_G = {
+  lecture: { root: "A", w: 460, h: 430,
+    nodes: { A: [40, 131], B: [203, 40], C: [414, 40], D: [124, 188], E: [313, 135], F: [410, 146], G: [313, 238], H: [146, 352], I: [410, 329], J: [225, 390] },
+    edges: [["A","D",1],["C","F",1],["C","E",2],["E","G",2],["H","J",2],["F","G",3],["G","I",3],["I","J",3],["A","B",4],["B","D",4],["B","C",4],["G","J",4],["F","I",5],["D","H",5],["D","J",6],["B","J",10]] },
+  mock: { root: "A", w: 460, h: 340,
+    nodes: { A: [50, 70], B: [230, 40], C: [140, 190], D: [330, 170], E: [260, 300], F: [420, 290] },
+    edges: [["B","C",1],["A","C",2],["D","E",2],["E","F",3],["A","B",4],["B","D",5],["D","F",6],["C","D",8],["C","E",10]] }
+};
+let mstAlg = "k", mstKey = "lecture", mstSteps = [], mstK = 0, mstOrder = [];
+function kruskalSteps(g) {
+  const order = g.edges.map((e, i) => ({ e, i })).sort((a, b) => a.e[2] - b.e[2] || a.i - b.i);
+  const parent = {};
+  Object.keys(g.nodes).forEach(v => parent[v] = v);
+  const find = v => parent[v] === v ? v : (parent[v] = find(parent[v]));
+  const n = Object.keys(g.nodes).length, status = {};
+  let taken = 0, total = 0;
+  const steps = [{ status: {}, cur: null, text: `把 ${g.edges.length} 條邊按重量排序（下面一行）。開始時每個頂點自成一個 component。` }];
+  for (const { e, i } of order) {
+    if (taken === n - 1) break;
+    const [u, v, w] = e, ru = find(u), rv = find(v);
+    if (ru !== rv) {
+      parent[ru] = rv; status[i] = "ok"; taken++; total += w;
+      steps.push({ status: { ...status }, cur: i, text: `加入 ${edgeName(e)}：${u}、${v} 在不同 component，合併。已選 ${taken} 條，總重 ${fmt(total)}。` });
+    } else {
+      status[i] = "rej";
+      steps.push({ status: { ...status }, cur: i, text: `拒絕 ${edgeName(e)}：${u}、${v} 已經連通，加入會形成 cycle。` });
+    }
+  }
+  steps.push({ status: { ...status }, cur: null, text: `完成：選了 |V| − 1 = ${n - 1} 條邊，MST 總重 = ${fmt(total)}。之後的邊不用再看。` });
+  return { steps, order };
+}
+function primSteps(g) {
+  const V = Object.keys(g.nodes), S = new Set([g.root]), status = {};
+  let total = 0;
+  const steps = [{ S: [...S], status: {}, cand: [], text: `選 root ${g.root}，S = {${g.root}}。` }];
+  const added = [];
+  while (S.size < V.length) {
+    const cross = g.edges.map((e, i) => ({ e, i })).filter(({ e }) => S.has(e[0]) !== S.has(e[1]));
+    if (!cross.length) break;
+    const best = cross.reduce((a, b) => b.e[2] < a.e[2] ? b : a);
+    const [u, v, w] = best.e, nv = S.has(u) ? v : u;
+    const listed = [...cross].sort((a, b) => a.e[2] - b.e[2] || a.i - b.i).map(c => edgeName(c.e)).join("、");
+    steps.push({ S: [...S], status: { ...status }, cand: cross.map(c => c.i), pick: best.i, text: `跨越 cut (S, V−S) 的邊：${listed}。Light edge 是 ${edgeName(best.e)}。` });
+    S.add(nv); status[best.i] = "ok"; total += w; added.push(edgeName(best.e));
+    steps.push({ S: [...S], status: { ...status }, cand: [], text: `加入 ${edgeName(best.e)}，${nv} 進入 S。總重 ${fmt(total)}。` });
+  }
+  steps.push({ S: [...S], status: { ...status }, cand: [], text: `完成：加邊次序 ${added.join(" → ")}，MST 總重 = ${fmt(total)}。` });
+  return { steps, order: g.edges.map((e, i) => ({ e, i })) };
+}
+function mstLoad() {
+  const g = MST_G[mstKey];
+  const r = mstAlg === "k" ? kruskalSteps(g) : primSteps(g);
+  mstSteps = r.steps; mstOrder = r.order; mstK = 0;
+  mstShow();
+}
+function mstShow() {
+  const g = MST_G[mstKey], s = mstSteps[mstK];
+  const st = { edge: {}, node: {} };
+  for (const i in s.status) st.edge[i] = s.status[i] === "ok" ? "chosen" : "rej";
+  if (mstAlg === "k") {
+    for (const i in s.status) if (s.status[i] === "ok") { st.node[g.edges[i][0]] = "in"; st.node[g.edges[i][1]] = "in"; }
+    if (s.cur != null && s.status[s.cur] === "ok") st.edge[s.cur] = "chosen";
+  } else {
+    s.S.forEach(v => st.node[v] = "in");
+    (s.cand || []).forEach(i => { if (!st.edge[i]) st.edge[i] = "cand"; });
+    if (s.pick != null) st.edge[s.pick] = "pick";
+  }
+  drawGraph($("#mst-svg"), g, st, false);
+  $("#mst-list").innerHTML = (mstAlg === "k" ? mstOrder : []).map(({ e, i }) => {
+    const c = s.status[i] === "ok" ? "ok" : s.status[i] === "rej" ? "rej" : "";
+    return `<span class="${c}${s.cur === i ? " now" : ""}">${esc(edgeName(e))}</span>`;
+  }).join("") || (mstAlg === "p" ? `<span>S = {${s.S.join(", ")}}</span>` : "");
+  $("#mst-text").textContent = s.text;
+  $("#mst-count").textContent = `步驟 ${mstK} / ${mstSteps.length - 1}`;
+  $("#mst-prev").disabled = mstK === 0;
+  $("#mst-next").disabled = $("#mst-end").disabled = mstK === mstSteps.length - 1;
+}
+const mstAlgBtns = [$("#mst-a-k"), $("#mst-a-p")], mstGBtns = [$("#mst-g-lecture"), $("#mst-g-mock")];
+mstAlgBtns.forEach(b => b.addEventListener("click", () => { mstAlg = b.id.endsWith("k") ? "k" : "p"; press(mstAlgBtns, b); mstLoad(); }));
+mstGBtns.forEach(b => b.addEventListener("click", () => { mstKey = b.id.replace("mst-g-", ""); press(mstGBtns, b); mstLoad(); }));
+$("#mst-prev").addEventListener("click", () => { if (mstK > 0) { mstK--; mstShow(); } });
+$("#mst-next").addEventListener("click", () => { if (mstK < mstSteps.length - 1) { mstK++; mstShow(); } });
+$("#mst-end").addEventListener("click", () => { mstK = mstSteps.length - 1; mstShow(); });
+$("#mst-reset").addEventListener("click", () => { mstK = 0; mstShow(); });
+mstLoad();
+
+/* ---------- Dijkstra lab ---------- */
+const DJ_G = [
+  { key: "lecture", label: "Lecture 4 例子", src: "A", dst: "D", w: 420, h: 260,
+    nodes: { A: [45, 130], B: [175, 45], C: [175, 215], D: [370, 45], E: [370, 215] },
+    edges: [["A","B",10],["A","C",3],["B","D",2],["B","C",1],["C","B",4],["C","D",8],["C","E",2],["D","E",7],["E","D",9]] },
+  { key: "ex4", label: "In-lecture Ex.4", src: "s", dst: "v", w: 420, h: 300,
+    nodes: { s: [40, 120], u: [170, 40], v: [370, 40], x: [170, 180], y: [370, 180] },
+    edges: [["s","u",10],["s","x",5],["u","v",1],["u","x",2],["x","u",3],["x","v",9],["x","y",2],["y","s",7,{ bend: -150 }],["y","v",6],["v","y",4]] },
+  { key: "mid22", label: "2022 Q3", src: "s", dst: "v", w: 460, h: 270,
+    nodes: { s: [40, 135], a: [160, 45], b: [310, 45], d: [160, 225], c: [310, 225], v: [420, 135] },
+    edges: [["s","a",16],["s","d",13],["a","b",5],["a","d",10],["d","a",4],["b","d",9],["d","c",15],["c","b",10],["b","v",20],["c","v",4]] },
+  { key: "m4", label: "模擬題 M4", src: "s", dst: "t", w: 440, h: 260,
+    nodes: { s: [40, 130], a: [180, 45], b: [180, 215], c: [320, 45], t: [400, 180] },
+    edges: [["s","a",4],["s","b",1],["b","a",2],["a","c",1],["b","c",5],["c","t",3],["b","t",8]] }
+];
+let djG = DJ_G[0], djSteps = [], djK = 0;
+function dijkstraSteps(g) {
+  const V = Object.keys(g.nodes), d = {}, pi = {};
+  V.forEach(v => { d[v] = Infinity; pi[v] = null; });
+  d[g.src] = 0;
+  const S = [];
+  const steps = [{ S: [], d: { ...d }, pi: { ...pi }, u: null, relaxed: [], text: `Initialize：d[${g.src}] = 0，其他 d = ∞，π = NIL，S = ∅。` }];
+  while (S.length < V.length) {
+    let u = null;
+    for (const v of V) if (!S.includes(v) && (u === null || d[v] < d[u])) u = v;
+    if (d[u] === Infinity) break;
+    S.push(u);
+    const notes = [], relaxed = [];
+    g.edges.forEach((e, i) => {
+      if (e[0] !== u) return;
+      const v = e[1], nd = d[u] + e[2];
+      relaxed.push(i);
+      if (S.includes(v)) notes.push(`${v} 已在 S`);
+      else if (nd < d[v]) { notes.push(`${v}：${fmt(d[v])} → ${fmt(nd)}（π = ${u}）`); d[v] = nd; pi[v] = u; }
+      else notes.push(`${v}：${fmt(d[v])} ≤ ${fmt(nd)}，不變`);
+    });
+    steps.push({ S: [...S], d: { ...d }, pi: { ...pi }, u, relaxed, text: `EXTRACT-MIN 取出 ${u}（d = ${fmt(d[u])}），S = {${S.join(", ")}}。Relax ${u} 的出邊：${notes.join("；") || "沒有出邊"}。` });
+  }
+  const path = [];
+  if (d[g.dst] < Infinity) for (let x = g.dst; x; x = pi[x]) path.push(x);
+  const last = steps[steps.length - 1];
+  steps.push({ ...last, u: null, relaxed: [], final: true,
+    text: path.length ? `Backtracking：${path.join(" ← ")}。最短路徑 ${[...path].reverse().join(" → ")}，總長 ${fmt(d[g.dst])}。` : `${g.dst} 不能由 ${g.src} 到達。` });
+  return steps;
+}
+function djLoad() { djSteps = dijkstraSteps(djG); djK = 0; djShow(); }
+function djShow() {
+  const g = djG, s = djSteps[djK], V = Object.keys(g.nodes);
+  const st = { edge: {}, node: {}, sub: {} };
+  V.forEach(v => {
+    if (s.S.includes(v)) st.node[v] = "in";
+    if (s.pi[v]) { const i = g.edges.findIndex(e => e[0] === s.pi[v] && e[1] === v); if (i >= 0) st.edge[i] = "chosen"; }
+    st.sub[v] = fmt(s.d[v]);
+  });
+  s.relaxed.forEach(i => { if (!st.edge[i]) st.edge[i] = "cand"; });
+  if (s.u) st.node[s.u] = "cur";
+  drawGraph($("#dj-svg"), g, st, true);
+  $("#dj-text").textContent = s.text;
+  $("#dj-count").textContent = `步驟 ${djK} / ${djSteps.length - 1}`;
+  $("#dj-prev").disabled = djK === 0;
+  $("#dj-next").disabled = $("#dj-end").disabled = djK === djSteps.length - 1;
+  const rows = djSteps.slice(0, djK + 1).filter(r => !r.final);
+  $("#dj-table").innerHTML = `<table><thead><tr><th>Step</th>${V.map(v => `<th class="mono">${esc(v)}</th>`).join("")}<th>S</th></tr></thead><tbody>` +
+    rows.map((r, k) => `<tr><td>${k === 0 ? "Init" : `Step ${k}`}</td>` +
+      V.map(v => `<td class="mono${r.u === v ? " cur" : r.S.includes(v) ? " inS" : ""}">${fmt(r.d[v])}/${r.pi[v] || "NIL"}</td>`).join("") +
+      `<td class="mono">{${r.S.join(", ")}}</td></tr>`).join("") + "</tbody></table>";
+}
+DJ_G.forEach((g, k) => {
+  const b = document.createElement("button");
+  b.className = "btn"; b.textContent = `${g.label}（${g.src} → ${g.dst}）`;
+  b.setAttribute("aria-pressed", String(k === 0));
+  b.addEventListener("click", () => { djG = g; press($$("#dj-presets .btn"), b); djLoad(); });
+  $("#dj-presets").appendChild(b);
+});
+$("#dj-prev").addEventListener("click", () => { if (djK > 0) { djK--; djShow(); } });
+$("#dj-next").addEventListener("click", () => { if (djK < djSteps.length - 1) { djK++; djShow(); } });
+$("#dj-end").addEventListener("click", () => { djK = djSteps.length - 1; djShow(); });
+$("#dj-reset").addEventListener("click", () => { djK = 0; djShow(); });
+djLoad();
+
+/* ---------- Greedy lab ---------- */
+let grTab = "knap";
+$$("#gr-lab .tab").forEach(t => t.addEventListener("click", () => {
+  grTab = t.dataset.tab;
+  $$("#gr-lab .tab").forEach(x => x.setAttribute("aria-selected", String(x === t)));
+  $$("#gr-lab [data-panel]").forEach(p => p.hidden = p.dataset.panel !== grTab);
+  grRun();
+}));
+const table = (head, rows) => `<div class="tbl"><table><thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+const GR = {
+  knap() {
+    const items = parsePairs($("#kn-items").value), W = parseNums($("#kn-w").value)[0];
+    if (!items.length || !(W > 0)) return '<p class="err">請輸入 ($value, kg) 和正數 W。</p>';
+    if (items.some(([v, w]) => !(w > 0))) return '<p class="err">每件物品重量要大於 0。</p>';
+    const arr = items.map(([v, w], i) => ({ v, w, i, r: v / w })).sort((a, b) => b.r - a.r || a.i - b.i);
+    let cap = W, val = 0;
+    const rows = arr.map(it => {
+      const t = Math.min(it.w, Math.max(cap, 0));
+      cap -= t; val += it.v * t / it.w;
+      return [`($${fmt(it.v)}, ${fmt(it.w)}kg)`, fmt(it.r), t === it.w ? `全部 ${fmt(t)}kg` : t > 0 ? `${fmt(t)}kg（${fmt(t)}/${fmt(it.w)}）` : "—", t > 0 ? "$" + fmt(it.v * t / it.w) : "—"];
+    });
+    return `<p><strong>Step 1</strong> 計 unit price 並由高到低排序。<strong>Step 2</strong> 由高到低拿，直到 W = ${fmt(W)}kg 滿。</p>` +
+      table(["Item", "Unit price ($/kg)", "拿多少", "價值"], rows) + `<p class="result">Total value = $${fmt(val)}</p>`;
+  },
+  edf() {
+    const jobs = parsePairs($("#edf-in").value).map(([t, d], i) => ({ t, d, i, n: "J" + (i + 1) }));
+    if (!jobs.length) return '<p class="err">請用 (t,d) 格式輸入。</p>';
+    const order = [...jobs].sort((a, b) => a.d - b.d || a.i - b.i);
+    let time = 0, L = 0;
+    const rows = order.map(j => {
+      const s = time; time += j.t;
+      const late = Math.max(0, time - j.d); L = Math.max(L, late);
+      return [j.n, fmt(j.t), fmt(j.d), `[${fmt(s)}, ${fmt(time)}]`, late ? `<b>${fmt(late)}</b>` : "0"];
+    });
+    return `<p><strong>Step 1</strong> 按 deadline 排序：${order.map(j => `${j.n}(d=${fmt(j.d)})`).join(", ")}。<strong>Step 2</strong> 由時間 0 開始連續做。</p>` +
+      table(["Job", "t", "d", "[s, f]", "Lateness"], rows) + `<p class="result">Maximum lateness L = ${fmt(L)}</p>`;
+  },
+  sjf() {
+    const p = parseNums($("#sjf-in").value);
+    if (!p.length) return '<p class="err">請輸入 processing times。</p>';
+    const order = p.map((x, i) => ({ x, i, n: "J" + (i + 1) })).sort((a, b) => a.x - b.x || a.i - b.i);
+    let t = 0, tot = 0;
+    const rows = order.map(j => { const w = t; tot += w; t += j.x; return [j.n, fmt(j.x), fmt(w)]; });
+    return `<p>按 processing time 排序：${order.map(j => `${j.n}(${fmt(j.x)})`).join(", ")}</p>` +
+      table(["Job", "p", "Waiting time"], rows) + `<p class="result">Total waiting time = ${fmt(tot)}，average = ${fmt(tot / p.length)}</p>`;
+  },
+  boat() {
+    const w = parseNums($("#boat-in").value).sort((a, b) => a - b), W = parseNums($("#boat-w").value)[0];
+    if (!w.length || !(W > 0)) return '<p class="err">請輸入體重和 W。</p>';
+    if (w[w.length - 1] > W) return `<p class="err">有人重過 W = ${fmt(W)}，不可能載。</p>`;
+    let l = 0, r = w.length - 1, boats = 0;
+    const log = [];
+    while (l <= r) {
+      boats++;
+      if (l < r && w[l] + w[r] <= W) { log.push(`${fmt(w[l])} + ${fmt(w[r])} = ${fmt(w[l] + w[r])} ≤ ${fmt(W)} → 一齊上船 ${boats}`); l++; r--; }
+      else if (l === r) { log.push(`只剩 ${fmt(w[r])} → 船 ${boats}`); r--; }
+      else { log.push(`${fmt(w[l])} + ${fmt(w[r])} = ${fmt(w[l] + w[r])} &gt; ${fmt(W)} → ${fmt(w[r])} 獨自上船 ${boats}`); r--; }
+    }
+    return `<p>排序：${w.map(fmt).join(", ")}</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol><p class="result">最少 ${boats} 隻船</p>`;
+  },
+  cover() {
+    const X = parseNums($("#cov-in").value).sort((a, b) => a - b), L = parseNums($("#cov-l").value)[0];
+    if (!X.length || !(L > 0)) return '<p class="err">請輸入點和正數長度。</p>';
+    const iv = [], log = [];
+    let k = 0;
+    while (k < X.length) {
+      const y = X[k], end = y + L, cov = [];
+      while (k < X.length && X[k] <= end + 1e-9) cov.push(X[k++]);
+      iv.push(`[${fmt(y)}, ${fmt(end)}]`);
+      log.push(`最左未覆蓋點 y = ${fmt(y)} → 放 [${fmt(y)}, ${fmt(end)}]，覆蓋 ${cov.map(fmt).join(", ")}`);
+    }
+    return `<p>排序：${X.map(fmt).join(", ")}</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol><p class="result">${iv.length} 個 interval：${iv.join(", ")}</p>`;
+  }
+};
+function grRun() { $("#gr-out").innerHTML = GR[grTab](); }
+$("#gr-run").addEventListener("click", grRun);
+grRun();
+
+/* ---------- Merge-and-count lab ---------- */
+function mcSplit() {
+  const a = parseNums($("#mc-all").value);
+  const h = Math.ceil(a.length / 2);
+  $("#mc-l").value = a.slice(0, h).sort((x, y) => x - y).join(" ");
+  $("#mc-r").value = a.slice(h).sort((x, y) => x - y).join(" ");
+}
+const brute = a => { let c = 0; for (let i = 0; i < a.length; i++) for (let j = i + 1; j < a.length; j++) if (a[i] > a[j]) c++; return c; };
+function mcRun(fromList) {
+  const out = $("#mc-out");
+  let A = parseNums($("#mc-l").value), B = parseNums($("#mc-r").value);
+  if (!A.length || !B.length) { out.innerHTML = '<p class="err">兩邊都要有數字。</p>'; return; }
+  const note = [];
+  if (A.some((x, i) => i && x < A[i - 1])) { A.sort((x, y) => x - y); note.push("左半未排序，已先排序"); }
+  if (B.some((x, i) => i && x < B[i - 1])) { B.sort((x, y) => x - y); note.push("右半未排序，已先排序"); }
+  let i = 0, j = 0, total = 0;
+  const rows = [], adds = [], merged = [];
+  while (i < A.length && j < B.length) {
+    if (A[i] <= B[j]) { merged.push(A[i]); rows.push([`${fmt(A[i])} vs ${fmt(B[j])}`, `${fmt(A[i])}（A）`, "—", fmt(total)]); i++; }
+    else {
+      const k = A.length - i; total += k; adds.push(k); merged.push(B[j]);
+      rows.push([`${fmt(A[i])} vs ${fmt(B[j])}`, `${fmt(B[j])}（B）`, `<b>+${k}</b>（${A.slice(i).map(fmt).join(", ")} 比它大）`, fmt(total)]);
+      j++;
+    }
+  }
+  while (i < A.length) { merged.push(A[i]); rows.push(["B 已空", `${fmt(A[i])}（A）`, "—", fmt(total)]); i++; }
+  while (j < B.length) { merged.push(B[j]); rows.push(["A 已空", `${fmt(B[j])}（B）`, "+0", fmt(total)]); adds.push(0); j++; }
+  let extra = "";
+  if (fromList) {
+    const all = parseNums($("#mc-all").value), h = Math.ceil(all.length / 2);
+    const ra = brute(all.slice(0, h)), rb = brute(all.slice(h));
+    extra = `<p>整個 list：左半內部 ${ra} 個 + 右半內部 ${rb} 個 + 跨兩邊 ${total} 個 = <strong>${ra + rb + total}</strong> 個 inversions。</p>`;
+  }
+  out.innerHTML = (note.length ? `<p class="small muted">${note.join("；")}。</p>` : "") +
+    `<p>A = ${A.map(fmt).join(", ")}　B = ${B.map(fmt).join(", ")}</p>` +
+    table(["比較", "放入 merged", "加多少", "累計"], rows) +
+    `<p>Merged：${merged.map(fmt).join(", ")}</p>` +
+    `<p class="result">Cross inversions = ${adds.filter(x => x).join(" + ") || "0"} = ${total}</p>` + extra;
+}
+$("#mc-split").addEventListener("click", () => { mcSplit(); mcRun(true); });
+$("#mc-run").addEventListener("click", () => mcRun(false));
+$$("[data-mc]").forEach(b => b.addEventListener("click", () => { $("#mc-all").value = b.dataset.mc; mcSplit(); mcRun(true); }));
+$$("[data-mcl]").forEach(b => b.addEventListener("click", () => { $("#mc-l").value = b.dataset.mcl; $("#mc-r").value = b.dataset.mcr; mcRun(false); }));
+mcSplit(); mcRun(true);
+
+/* ---------- file index ---------- */
+const FILES = {
+  "2026 Canvas (今年)": {
+    "1 Lecture Slides": ["W01 L1-26.pdf", "W02 L2-26.pdf", "W03 2026-L3.pdf", "W03 L3-2026.pdf", "W04 2006-L4.pdf", "W05 2026-L5.pdf", "W06 2026-L6.pdf", "W07 2026-L7.pdf"],
+    "2 Demos": ["W04 dijkstra.ppt", "W06 demo-merge-invert.ppt", "W06 demo-merge.ppt", "W07 demoP.ppt"],
+    "3 In-Lecture Exercises": ["W01 ex1.docx", "W01 extra.doc", "W02 E2 (1).doc", "W03 ex3inL2026.docx", "W04 ex4inL25solu.docx", "W04 ex4inL26.docx", "W05 In-lec-exe5.docx", "W05 In-lec-exe5Solu.docx", "W06 ex6inL-26.docx", "W07 ex7.doc"],
+    "4 Tutorials": ["W03 SlidesforQ3inT2.pptx", "W03 Tut1-26.docx", "W04 T2Solution-25.pdf", "W04 T2Solution.pptx", "W04 tut2-25.doc", "W05 T3 slides XuanYU.pptx", "W05 T3 slides.pptx", "W05 tutorial3-26.doc", "W06 T4 slides.pdf", "W06 Tutorial1_XuanYu.pptx", "W06 stutorial5.1 (2).docx", "W06 tutorial4-26.docx", "W06 tutorial4-26Solution.docx", "W07 T5ExtraAnswer.pdf", "W07 T5Q1Answer.pdf", "W07 Tutorial 5 .docx"]
+  },
+  "Senior 2022 (師兄)": {
+    "0 Past Papers": ["2022 Midterm (with solution).pdf", "2021-22 Final Exam.pdf"],
+    "0 Course Outline": ["CS4335.pdf"],
+    "1 Lecture Slides": ["lecture1-22.ppt", "lecture2-2022.pptx", "lecture3.pptx", "lecture4-22.pptx", "lecture5-1.pptx", "lecture5-1zhang.pptx", "lecture5-2.pptx", "lecture6-22.ppt", "lecture7-22.ppt", "lecture9-22.ppt", "lecture10-22.pptx", "lecture10-22-studentversion.pptx", "lecture11zhang.pptx", "lecture12-22.ppt", "Revision2022.pptx", "coinproblem2022.ppt", "demo-merge.ppt", "demo-merge-invert.ppt", "demoP.ppt"],
+    "3 In-Class Exercises": ["In-lec-exe-All.docx", "ex1.docx", "ex1_solu.docx", "ex2inL.docx", "ex3inL.docx", "ex4inL22.docx", "ex4inL22_solu.docx", "ex5inL.docx", "In-lec-exe5.docx", "In-lec-exe5_Solu.docx", "ex6inL.docx", "ex6inL_Solu.docx", "Question in Week 6 (divide-and-Conquer).pdf", "Question in Week 6 (divide-and-Conquer).pptx", "ex7.doc", "ex9inLec.docx", "exe10.docx", "Inexe10.docx", "exe11.docx", "exe11_SOL.docx", "SOLexe11.docx", "exe12.docx", "exe12_solution.pdf", "extraquestionL2.doc"],
+    "4 Tutorials": ["T2 intervals scheduling and partitioning-2022.doc", "T2-Q3Slides.pptx", "T3 MST-22.doc", "T3-22 (solution).doc", "T3-22_solution.doc", "T5 divide and conquer.doc", "T5_solution.pdf", "tutorial5.1.docx", "tutorial5.1 (2).docx", "tutorial5.2.pptx", "T6-22.doc", "T6-nS.doc", "T7_ans.docx", "T9 dynamic programming.docx", "T9Solu.doc", "CS4335 Tutorial 10.docx", "T10 SCS snapsnack.docx", "T10_solution.docx", "T11 shortest path.docx", "T12.doc", "T12_56701200.docx", "ExerciseonDP-L11forstudent.pptx"],
+    "5 Assignments": ["Assignment1-22.doc", "Assignment1Solution.pdf", "Assignment2-22.docx", "Assignment2-22Solu-final.docx", "Assignment2-22Solu-final.pdf"]
+  }
+};
+const local = location.protocol === "file:";
+$("#files-list").innerHTML = Object.entries(FILES).map(([top, cats]) =>
+  `<div><h3 style="margin:0">${esc(top)}</h3>` + Object.entries(cats).map(([cat, list]) =>
+    `<h4>${esc(cat)}</h4><ul>` + list.map(f => {
+      const path = `${top}/${cat}/${f}`;
+      return `<li>${local ? `<a href="${encodeURI(path).replace(/#/g, "%23")}">${esc(f)}</a>` : esc(f)}</li>`;
+    }).join("") + "</ul>").join("") + "</div>").join("");
+if (!local) $("#files-note").textContent = "以下是你電腦上 CS4335 資料夾的整理結果。在電腦打開同一個 HTML 檔，檔名就會變成可以點開的連結。Canvas 上的 CS4335 2023 資料夾對學生鎖住（403），所以師兄資料用你本來的 7z。";
+})();
+</script>
+</body>
+</html>
