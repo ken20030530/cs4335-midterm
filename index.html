@@ -139,8 +139,25 @@ ol.log li{max-width:none}
 .tab{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
 
 .figwrap{overflow-x:auto}
-svg.graph{width:100%;max-width:540px;height:auto;display:block;margin:0 auto}
-svg.timeline{width:100%;min-width:520px;height:auto;display:block}
+svg.fig{width:100%;height:auto;display:block;margin:0 auto}
+svg.fig.narrow{max-width:560px}
+svg.fig.wide{min-width:560px}
+
+/* 圖解 blocks: every example gets a picture per step plus the written steps */
+.ex{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:12px;padding:12px 14px;margin:1em 0}
+.ex-title{font-family:var(--f-display);font-weight:700;font-size:1.02rem;line-height:1.4;margin:0 0 10px}
+.ex-title::before{content:"圖解";font-family:var(--f-body);font-size:11.5px;font-weight:700;color:var(--ok);border:1px solid var(--ok);border-radius:4px;padding:0 6px;margin-right:8px;vertical-align:2px}
+.stepper{display:grid;gap:10px}
+.stepper>*{min-width:0}
+.stepper .extra:empty{display:none}
+.steps-head{font-size:13px;color:var(--muted);margin:0}
+ol.steps{font-size:14px;margin:0;padding-left:2em}
+ol.steps li{max-width:none;margin:1px 0}
+ol.steps button{display:block;font:inherit;line-height:1.6;color:inherit;text-align:left;background:none;border:0;border-radius:6px;padding:2px 6px;width:100%;cursor:pointer}
+ol.steps button:hover{background:var(--blue-soft)}
+ol.steps li.now button{background:var(--mark)}
+ol.steps li.later{color:var(--muted)}
+tr.now td{background:var(--mark)}
 .g-edge{stroke:var(--edge);stroke-width:2;fill:none}
 .g-edge.chosen{stroke:var(--blue);stroke-width:4.5}
 .g-edge.rej{stroke:var(--no);stroke-width:2.5;stroke-dasharray:6 5}
@@ -165,6 +182,52 @@ svg.timeline{width:100%;min-width:520px;height:auto;display:block}
 .tl-bar.sel{fill:var(--blue);stroke:var(--blue)}
 .tl-txt{font:11px var(--f-mono);fill:var(--muted);text-anchor:middle;dominant-baseline:central}
 .tl-txt.sel{fill:var(--on-blue);font-weight:600}
+.g-node.bad circle{fill:var(--no-soft);stroke:var(--no);stroke-width:2.5}
+.g-edge.tree{stroke:var(--ok);stroke-width:4.5}
+.g-edge.ghost{stroke:var(--line);stroke-width:1.5;stroke-dasharray:3 4}
+.g-region{fill:var(--blue-soft);opacity:.6}
+.g-cut{stroke:var(--warn);stroke-width:2;stroke-dasharray:8 6;fill:none}
+.g-tag{font:700 15px var(--f-display);fill:var(--blue)}
+.g-note{font:700 16px var(--f-display);fill:var(--warn)}
+.tl-bar.cur{fill:var(--mark);stroke:var(--warn);stroke-width:2}
+.tl-txt.cur{fill:var(--ink);font-weight:600}
+.tl-bar.skip{fill:var(--no-soft);stroke:var(--no);stroke-dasharray:4 3}
+.tl-txt.skip{fill:var(--no)}
+.tl-bar.bad{fill:var(--warn);stroke:var(--warn)}
+.tl-bar.ok{fill:var(--ok);stroke:var(--ok)}
+.tl-txt.bad,.tl-txt.ok{fill:var(--on-blue);font-weight:600}
+.tl-bar.wait{fill:var(--grid);stroke:var(--edge);stroke-dasharray:3 3}
+.tl-txt.wait{fill:var(--muted)}
+.tl-late{fill:var(--no);opacity:.8}
+.tl-dl{stroke:var(--no);stroke-width:2.5}
+.tl-dltxt{font:600 10.5px var(--f-mono);fill:var(--no);paint-order:stroke;stroke:var(--card);stroke-width:3px}
+.tl-mark{stroke:var(--warn);stroke-width:2;stroke-dasharray:5 4}
+.tl-marktxt{font:600 11.5px var(--f-mono);fill:var(--warn)}
+.tl-pt{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.tl-pt.sel{fill:var(--blue);stroke:var(--blue)}
+.tl-pt.cur{fill:var(--mark);stroke:var(--warn);stroke-width:2.5}
+.c-box{fill:var(--card);stroke:var(--edge);stroke-width:1.2}
+.c-box.cur{fill:var(--mark);stroke:var(--warn);stroke-width:2}
+.c-box.done{fill:var(--paper);stroke:var(--line)}
+.c-box.big{fill:var(--no-soft);stroke:var(--no);stroke-width:1.8}
+.c-box.hl{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2}
+.c-box.ok{fill:var(--ok);stroke:var(--ok)}
+.c-box.empty{fill:none;stroke:var(--line);stroke-dasharray:3 3}
+.c-txt{font:600 14px var(--f-mono);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.c-txt.sm{font-size:12.5px}
+.c-txt.done{fill:var(--edge)}
+.c-txt.ok{fill:var(--on-blue)}
+.c-lbl{font:12px var(--f-mono);fill:var(--muted);dominant-baseline:central}
+.c-ptr{font:700 12.5px var(--f-mono);fill:var(--warn);text-anchor:middle}
+.c-idx{font:11px var(--f-mono);fill:var(--muted)}
+.c-ann{font:700 12.5px var(--f-mono);fill:var(--no);text-anchor:middle}
+.c-ann.sum{fill:var(--blue)}
+.c-ret{font:700 13px var(--f-mono);fill:var(--ok)}
+.c-total{font:700 14px var(--f-mono);fill:var(--ink)}
+.c-line{stroke:var(--edge);stroke-width:1.3}
+.c-div{stroke:var(--no);stroke-width:2.5}
+.c-out{fill:none;stroke:var(--line);stroke-width:1.2}
+.c-out.hl{stroke:var(--warn);stroke-width:2.2}
 
 details.answer{margin:.6em 0;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:8px 14px}
 details.answer>summary{cursor:pointer;color:var(--blue);font-weight:600;font-size:14.5px}
@@ -230,15 +293,15 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
   <div class="tbl"><table>
     <thead><tr><th>題目</th><th>內容</th><th>分數</th><th>今年考?</th><th>本頁位置</th></tr></thead>
     <tbody>
-      <tr><td>Q1(a)</td><td>Interval scheduling：寫出步驟、答案、running time</td><td>10</td><td class="yes">考</td><td><a href="#l2">L2</a></td></tr>
-      <tr><td>Q1(b)(c)</td><td>Interval partitioning：最少課室數＋depth</td><td>8+2</td><td class="yes">考</td><td><a href="#l2">L2</a></td></tr>
-      <tr><td>Q2(a)</td><td>MST，答案用 Prim 由 s 開始逐步加邊（7 幅圖）</td><td>10</td><td class="yes">考</td><td><a href="#l3">L3</a></td></tr>
+      <tr><td>Q1(a)</td><td>Interval scheduling：寫出步驟、答案、running time</td><td>10</td><td class="yes">考</td><td><a href="#ex-22q1a">L2 圖解</a></td></tr>
+      <tr><td>Q1(b)(c)</td><td>Interval partitioning：最少課室數＋depth</td><td>8+2</td><td class="yes">考</td><td><a href="#ex-22q1b">L2 圖解</a></td></tr>
+      <tr><td>Q2(a)</td><td>MST，答案用 Prim 由 s 開始逐步加邊（7 幅圖）</td><td>10</td><td class="yes">考</td><td><a href="#ex-22q2a">L3 圖解</a></td></tr>
       <tr><td>Q2(b)</td><td>Manhattan Tourist（DP）</td><td>10</td><td class="no">不考</td><td>—</td></tr>
-      <tr><td>Q3</td><td>Dijkstra s→v：每步一個 d/π 表＋backtracking</td><td>15</td><td class="yes">考</td><td><a href="#l4">L4</a></td></tr>
-      <tr><td>Q4(a)</td><td>兩個已排序的半邊，用 O(n) 數 cross inversions（答案 16）</td><td>10</td><td class="yes">考</td><td><a href="#l6">L6</a></td></tr>
-      <tr><td>Q4(b)</td><td>T(n)=T(n−2)+n，用 big-O 表示</td><td>5</td><td class="yes">考</td><td><a href="#l6">L6</a></td></tr>
-      <tr><td>Q5</td><td>用 Divide-and-conquer 找最大和第二大，O(n)，寫 recurrence</td><td>15</td><td class="yes">考</td><td><a href="#l6">L6</a></td></tr>
-      <tr><td>Q6</td><td>SJF 最小化 total waiting time，要寫 algorithm 和證明（做不到可改答 6a：interval scheduling＋證明，最多 6 分）</td><td>15</td><td class="yes">考</td><td><a href="#l5">L5</a></td></tr>
+      <tr><td>Q3</td><td>Dijkstra s→v：每步一個 d/π 表＋backtracking</td><td>15</td><td class="yes">考</td><td><a href="#ex-22q3">L4 圖解</a></td></tr>
+      <tr><td>Q4(a)</td><td>兩個已排序的半邊，用 O(n) 數 cross inversions（答案 16）</td><td>10</td><td class="yes">考</td><td><a href="#ex-22q4">L6 圖解</a></td></tr>
+      <tr><td>Q4(b)</td><td>T(n)=T(n−2)+n，用 big-O 表示</td><td>5</td><td class="yes">考</td><td><a href="#ex-rec">L6 遞迴樹</a>（揀 T(n−2)+n）</td></tr>
+      <tr><td>Q5</td><td>用 Divide-and-conquer 找最大和第二大，O(n)，寫 recurrence</td><td>15</td><td class="yes">考</td><td><a href="#ex-22q5">L6 圖解</a></td></tr>
+      <tr><td>Q6</td><td>SJF 最小化 total waiting time，要寫 algorithm 和證明（做不到可改答 6a：interval scheduling＋證明，最多 6 分）</td><td>15</td><td class="yes">考</td><td><a href="#ex-22q6">L5 圖解</a></td></tr>
     </tbody>
   </table></div>
   <div class="box write"><span class="tag">考試寫法</span>
@@ -274,6 +337,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
     <div class="box"><span class="tag" style="background:var(--warn-soft);color:var(--warn)">Hamiltonian cycle</span><p>一個 cycle <strong>每個頂點剛好經過一次</strong>，最後回到起點。<br>Decision problem 是 NP-complete。</p></div>
   </div>
   <p>Lecture 用這兩題說明一個重點：兩個問題描述看起來差不多，複雜度可以完全不同。</p>
+  <div class="ex" data-ex="eu-vs-ham" data-title="同一個 graph：有 Euler circuit，卻沒有 Hamiltonian cycle"></div>
   <div class="box must"><span class="tag">必背 Theorem</span>
     <p><mark>A connected graph has an Euler circuit if and only if every vertex has even degree.</mark></p>
     <p class="small muted">Parallel edges 要分開計，每條都要走一次，也各自計入 degree。</p>
@@ -290,6 +354,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
       <li>Repeating this, every edge of G is used.</li>
     </ol>
   </div>
+  <div class="ex" data-ex="eu-proof" data-title="(⇒) 為什麼每個 degree 一定是 even"></div>
   <h3>Algorithm</h3>
 <pre><code>1. Start at any vertex with nonzero degree; follow unused edges until
    returning to the start. This forms a circuit C.
@@ -298,6 +363,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
    form another circuit C' using only unused edges.
 4. Merge C' into C (at v) and repeat from Step 2.</code></pre>
   <p>Slides 例子：C1 = a→b→c→a，C2 = b→d→e→f→b，在 b 合併得 C3 = a→b→d→e→f→b→c→a；再加 C4 = e→i→j→h→c→g→e，最後 C = a→b→d→e→i→j→h→c→g→e→f→b→c→a。答案不唯一。</p>
+  <p><strong>下面檢查器預設就是這一題</strong>：按「下一步」逐步看每個 circuit 怎樣走、怎樣合併。圖中把第三個小 circuit 叫 C3（即 slides 的 C4），合併後的統稱 C。</p>
 
   <div class="lab" id="eu-lab">
     <div class="lab-head"><span class="lab-title">Euler circuit 檢查器</span><span class="small muted">每條邊寫兩個字母，例如 <code>ab</code>，或 <code>a-b</code></span></div>
@@ -319,6 +385,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
       <li>Hierholzer 的 O(|V|+|E|) 實作和 adjacency list／matrix 屬於 Fun／Not tested。</li>
     </ul>
   </div>
+  <div class="ex" data-ex="eu-map" data-title="地圖題：區域 → 頂點，共同邊界 → 邊"></div>
 </section>
 
 <!-- ============================ L2 ============================ -->
@@ -341,6 +408,9 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
       <p class="small">Sorting O(n log n) + 掃描 O(n) = <strong>O(n log n)</strong></p>
     </div>
   </div>
+  <div class="ex" data-ex="iv-wrong-start" data-title="反例 1：Earliest start"></div>
+  <div class="ex" data-ex="iv-wrong-short" data-title="反例 2：Shortest job"></div>
+  <div class="ex" data-ex="iv-wrong-conf" data-title="反例 3：Fewest conflicts（和 slides p.10 同一個意思）"></div>
 <pre><code>INTERVAL_SCHEDULE
 1. Sort the jobs so that f1 ≤ f2 ≤ ... ≤ fn.
 2. A ← ∅; let j* be the last selected job.
@@ -354,6 +424,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
     <p>Repeat until OPT = i<sub>1</sub>, …, i<sub>k</sub>, j<sub>k+1</sub>, …, j<sub>m</sub>. If m &gt; k, job j<sub>k+1</sub> starts after i<sub>k</sub> finishes, so greedy would have selected it, a contradiction. Hence m = k and G is optimal.</p>
   </div>
   <p class="small muted">注意：要證明的是 |G| = |OPT|，不是 G = OPT（optimal solution 可以有很多個）。</p>
+  <div class="ex" id="fig-exchange" data-ex="iv-exchange" data-title="Exchange argument：G 和 OPT 逐份比較"></div>
 
   <h3>Interval Partitioning：最少要幾間課室</h3>
   <div class="box must"><span class="tag">必背</span>
@@ -375,13 +446,17 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
     <label class="fld">Jobs / lectures<textarea id="iv-in" rows="2"></textarea></label>
     <div class="controls"><button class="btn primary" id="iv-run">執行 Greedy</button></div>
     <div class="out" id="iv-out"></div>
-    <div class="figwrap"><svg class="timeline" id="iv-svg" role="img" aria-label="時間線"></svg></div>
   </div>
+
+  <div class="ex" id="ex-22q1a" data-ex="iv-s" data-in="(0,2),(1,3),(3,6),(3,4),(6,9),(4,12),(5,8),(6,7)" data-title="2022 Q1(a)：Interval scheduling（答案 3 份）"></div>
+  <div class="ex" id="ex-22q1b" data-ex="iv-p" data-in="(0,1),(0,3),(1,4),(2,6),(3,4),(4,5),(5,8)" data-title="2022 Q1(b)(c)：Interval partitioning 與 depth（答案 3 間）"></div>
 
   <details class="answer"><summary>Tutorial 1 答案（先自己做）</summary>
     <p><strong>Ex.1</strong> 按 f 排序：(1,2) (0,5) (2,5) (6,7) (6,7) (3,8) (4,11) (3,13)。選 (1,2) → (2,5) → (6,7)，共 <strong>3</strong> 份。</p>
+    <div class="ex" data-ex="iv-s" data-in="(0,5),(1,2),(3,8),(2,5),(6,7),(4,11),(3,13),(6,7)" data-title="Tutorial 1 Ex.1"></div>
     <p><strong>Ex.2</strong> 按 s 排序：(1,2) (2,3) (2,7) (3,6) (4,6) (5,7) (5,8)。Room 1：(1,2)(2,3)(3,6)；Room 2：(2,7)；Room 3：(4,6)；Room 4：(5,7)；Room 5：(5,8)。需要 <strong>5</strong> 間，因為時間 5.5 有 5 堂重疊（depth = 5）。</p>
-    <p><strong>2022 Q1</strong>：(a) 選 (0,2), (3,4), (6,7) 共 3 份，O(n log n)；(b) 3 間課室；(c) depth = 3，例如時間在 (2,4) 之間。</p>
+    <div class="ex" data-ex="iv-p" data-in="(5,7),(2,3),(1,2),(2,7),(3,6),(5,8),(4,6)" data-title="Tutorial 1 Ex.2"></div>
+    <p><strong>2022 Q1</strong>：(a) 選 (0,2), (3,4), (6,7) 共 3 份，O(n log n)；(b) 3 間課室；(c) depth = 3，例如時間在 (2,4) 之間。圖解在上面。</p>
   </details>
 </section>
 
@@ -408,6 +483,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
       <li>T′ = T − {ℓ′} + {ℓ} is a spanning tree containing A ∪ {ℓ}, and w(T′) = w(T) − w(ℓ′) + w(ℓ) ≤ w(T). So T′ is also an MST, and ℓ is safe for A.</li>
     </ol>
   </div>
+  <div class="ex" id="fig-cut" data-ex="cut" data-title="Cut property 證明：換邊 T′ = T − ℓ′ + ℓ"></div>
   <div class="twocol">
     <div class="box"><span class="tag" style="background:var(--blue-soft);color:var(--blue)">Kruskal</span>
       <p>A 是一個 <strong>forest</strong>。所有邊由輕到重排序；邊的兩端在不同 component 就加入，否則拒絕（會形成 cycle）。選夠 |V|−1 條就停。</p>
@@ -421,19 +497,18 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
   <p>兩個 algorithm 每步揀的都是「一個沒有被 A 跨越的 cut 的 light edge」，所以都是 generic MST algorithm 的特例，正確性都來自 cut property。</p>
 
   <div class="lab" id="mst-lab">
-    <div class="lab-head"><span class="lab-title">MST 逐步示範</span><span class="stepcount" id="mst-count"></span></div>
+    <div class="lab-head"><span class="lab-title">MST 逐步示範</span><span class="small muted">藍 = 已選；橙 = 這一步的邊；紅虛線 = 拒絕</span></div>
     <div class="controls">
       <button class="btn" id="mst-a-k" aria-pressed="true">Kruskal</button>
       <button class="btn" id="mst-a-p" aria-pressed="false">Prim</button>
       <span class="muted small">圖：</span>
       <button class="btn" id="mst-g-lecture" aria-pressed="true">Lecture 3（A–J）</button>
+      <button class="btn" id="mst-g-q22" aria-pressed="false">2022 Q2(a)</button>
       <button class="btn" id="mst-g-mock" aria-pressed="false">模擬題 M3</button>
     </div>
-    <div class="figwrap"><svg class="graph" id="mst-svg" role="img" aria-label="MST 圖"></svg></div>
-    <div class="edgelist" id="mst-list" aria-label="邊的狀態"></div>
-    <div class="steptext" id="mst-text"></div>
-    <div class="controls"><button class="btn" id="mst-prev">← 上一步</button><button class="btn primary" id="mst-next">下一步 →</button><button class="btn" id="mst-end">跳到最後</button><button class="btn" id="mst-reset">重設</button></div>
+    <div id="mst-host"></div>
   </div>
+  <div class="ex" id="ex-22q2a" data-ex="mst" data-g="q22" data-alg="p" data-title="2022 Q2(a)：Prim 由 s 開始（官方答案那 7 幅圖，總重 37）"></div>
 
   <div class="box trap"><span class="tag">常見陷阱</span>
     <ul>
@@ -464,14 +539,11 @@ DIJKSTRA(G, w, s)
       for each v ∈ Adj[u]:  RELAX(u, v, w)</code></pre>
 
   <div class="lab" id="dj-lab">
-    <div class="lab-head"><span class="lab-title">Dijkstra 表格示範</span><span class="stepcount" id="dj-count"></span></div>
+    <div class="lab-head"><span class="lab-title">Dijkstra 表格示範</span><span class="small muted">頂點旁邊的數字是 d；藍 = 已在 S；黃 = 這一步取出</span></div>
     <div class="controls" id="dj-presets"></div>
-    <div class="figwrap"><svg class="graph" id="dj-svg" role="img" aria-label="有向圖"></svg></div>
-    <div class="steptext" id="dj-text"></div>
-    <div class="controls"><button class="btn" id="dj-prev">← 上一步</button><button class="btn primary" id="dj-next">下一步 →</button><button class="btn" id="dj-end">跳到最後</button><button class="btn" id="dj-reset">重設</button></div>
-    <div class="tbl" id="dj-table"></div>
-    <p class="small muted">表格就是考試寫法：每格寫 <code>d/π</code>；藍底是已在 S；黃底是該步 EXTRACT-MIN 取出的頂點。</p>
+    <div id="dj-host"></div>
   </div>
+  <div class="ex" id="ex-22q3" data-ex="dj" data-g="mid22" data-title="2022 Q3：Dijkstra s → v（官方答案 s→d→c→v = 32）"></div>
 
   <h4>Correctness（歸納法，考試照寫）</h4>
   <div class="proof">
@@ -480,6 +552,7 @@ DIJKSTRA(G, w, s)
     <p><strong>Case 2</strong> ((x, y) is the first edge of P leaving S, y ≠ v): w(P) ≥ d[x] + w(x, y) ≥ d[y] ≥ d[v], since relaxation gives d[y] ≤ d[x] + w(x, y), the algorithm chose the smallest d so d[y] ≥ d[v], and the remaining edges are non-negative.</p>
     <p>So no path is shorter than d[v].</p>
   </div>
+  <div class="ex" id="fig-djproof" data-ex="dj-proof" data-title="Correctness 證明的兩個 case"></div>
   <div class="twocol">
     <div class="box"><span class="tag" style="background:var(--blue-soft);color:var(--blue)">Running time</span>
       <p class="small">Array：EXTRACT-MIN O(|V|) × |V| 次 + |E| 次 relax → <strong>O(|V|²)</strong></p>
@@ -489,6 +562,7 @@ DIJKSTRA(G, w, s)
       <p class="small">s→u = 2，s→v = 1，u→v = −10。Dijkstra 先定 d[v] = 1，但 s→u→v = −8 更短。</p>
     </div>
   </div>
+  <div class="ex" data-ex="dj-neg" data-title="反例：有 negative edge 時 Dijkstra 會錯"></div>
 
   <h3>Boat Rescue（Lecture 4 尾段）</h3>
   <p>每隻船最多載 2 人，載重上限 W。求最少船數。</p>
@@ -500,6 +574,7 @@ DIJKSTRA(G, w, s)
     <p><strong>Case 2</strong>: w<sub>l</sub> + w<sub>r</sub> ≤ W. If OPT pairs (w<sub>r</sub>, w<sub>k</sub>) and (w<sub>l</sub>, w<sub>m</sub>), exchange to (w<sub>r</sub>, w<sub>l</sub>) and (w<sub>k</sub>, w<sub>m</sub>). This is feasible since w<sub>m</sub> ≤ w<sub>r</sub> gives w<sub>k</sub> + w<sub>m</sub> ≤ w<sub>k</sub> + w<sub>r</sub> ≤ W, and the boat count is unchanged. Remove the pair and apply induction.</p>
   </div>
   <p class="small">例子：[30, 40, 60, 70]，W = 100 → {30, 70}、{40, 60}，共 2 隻船。可以在 <a href="#l5">L5 的 Greedy Lab</a> 試其他數字。</p>
+  <div class="ex" data-ex="boat" data-in="30, 40, 60, 70" data-w="100" data-title="例子：[30, 40, 60, 70]，W = 100"></div>
 </section>
 
 <!-- ============================ L5 ============================ -->
@@ -514,9 +589,11 @@ DIJKSTRA(G, w, s)
   <div class="proof">
     <p>Assume distinct unit prices (merge items with equal unit price). An optimal X must satisfy <strong>P1</strong>: its total weight is W; <strong>P2</strong>: no item outside X has a higher unit price than an item in X. If X differs from greedy at item i, replacing part of a cheaper item k by the same weight of i increases the value (exchange argument). The greedy solution is the only one with P1 and P2, so it is optimal.</p>
   </div>
+  <div class="ex" data-ex="knap" data-in="(1,20),(5,101),(2,5),(15,8),(11,4),(12,3)" data-w="10" data-title="In-lecture Ex.5 Exe1：W = 10kg"></div>
   <div class="box trap"><span class="tag">0–1 knapsack 不能用 greedy</span>
     <p class="small">W = 20：a($10, 10kg)、b($10, 10kg)、c($12, 11kg)。Greedy 拿 c 得 $12，最優是 a + b 得 $20。</p>
   </div>
+  <div class="ex" data-ex="knap01" data-title="0–1 knapsack 反例"></div>
 
   <h3>Scheduling to Minimize Lateness</h3>
   <p>Job j 需要 t<sub>j</sub> 時間，deadline d<sub>j</sub>。Lateness ℓ<sub>j</sub> = max{0, f<sub>j</sub> − d<sub>j</sub>}，目標是令最大 lateness L = max ℓ<sub>j</sub> 最小。</p>
@@ -528,6 +605,9 @@ DIJKSTRA(G, w, s)
       <p class="small"><strong>Shortest processing time</strong>：t = (1, 10)、d = (100, 10) → 先做 1 令 job 2 遲 1。<br><strong>Smallest slack d−t</strong>：t = (1, 10)、d = (2, 10) → 先做 2 令 job 1 遲 9。</p>
     </div>
   </div>
+  <div class="ex" data-ex="lat-wrong-spt" data-title="反例：Shortest processing time"></div>
+  <div class="ex" data-ex="lat-wrong-slack" data-title="反例：Smallest slack"></div>
+  <div class="ex" data-ex="edf" data-in="(3,8),(2,7),(1,6),(5,10),(2,10),(3,13)" data-title="In-lecture Ex.5 Exe2：EDF（答案 L = 3）"></div>
   <h4>證明：Inversion + adjacent swap</h4>
   <div class="proof">
     <ol>
@@ -537,6 +617,7 @@ DIJKSTRA(G, w, s)
       <li>Starting from an optimal schedule, keep swapping until no inversion remains. The result is the greedy schedule and it is still optimal.</li>
     </ol>
   </div>
+  <div class="ex" id="fig-swap" data-ex="lat-swap" data-title="Adjacent swap：為什麼交換不會變差"></div>
 
   <h3>Minimize Average Waiting Time（2022 Q6）</h3>
   <p>一部機做 n 份 job，job 的 waiting time = 排在它前面所有 job 的 processing time 總和。</p>
@@ -544,7 +625,10 @@ DIJKSTRA(G, w, s)
   <div class="proof">
     <p>Let OPT be an optimal schedule. If OPT has no inversion (a job with larger p before a smaller one), OPT = SJF. Otherwise there is an adjacent inversion J<sub>a</sub>, J<sub>b</sub> with p<sub>a</sub> &gt; p<sub>b</sub>. Swap them: other jobs' waiting times are unchanged; w′(J<sub>b</sub>) = w(J<sub>a</sub>) and w′(J<sub>a</sub>) = w(J<sub>a</sub>) + p<sub>b</sub> &lt; w(J<sub>a</sub>) + p<sub>a</sub> = w(J<sub>b</sub>). So the total waiting time does not increase and the number of inversions drops by one. Repeating, OPT becomes SJF, so SJF is optimal.</p>
   </div>
+  <div class="ex" data-ex="sjf-swap" data-title="SJF 證明：交換相鄰的 inversion"></div>
   <p class="small">Slides 例子：p = 3, 4, 1, 8, 2, 6。原本次序 total = 0+3+7+8+16+18 = 52；SJF 次序 J3, J5, J1, J2, J6, J4 → 0+1+3+6+10+16 = <strong>36</strong>。</p>
+  <div class="ex" data-ex="sjf" data-in="3, 4, 1, 8, 2, 6" data-compare="1" data-title="Slides 例子：原本次序 52 → SJF 36"></div>
+  <div class="ex" id="ex-22q6" data-ex="sjf-q6" data-title="2022 Q6 題目的例子：t = 3, 1, 5"></div>
 
   <div class="lab" id="gr-lab">
     <div class="lab-head"><span class="lab-title">Greedy Lab</span><span class="small muted">自己出題再對答案</span></div>
@@ -579,10 +663,12 @@ DIJKSTRA(G, w, s)
   </div>
 
   <details class="answer"><summary>In-lecture Ex.5 與 Tutorial 4 答案</summary>
-    <p><strong>Exe1</strong> unit price：0.05, 0.0495, 0.4, 1.875, 2.75, 4。拿 ($12, 3kg)、($11, 4kg)、($15, 8kg) 的 3kg → 總值 <strong>$28.625</strong>。</p>
-    <p><strong>Exe2</strong> 按 deadline：J3(6), J2(7), J1(8), J4(10), J5(10), J6(13)。J4 在 11 完成遲 1，J5 在 13 完成遲 3，J6 在 16 完成遲 3 → 最大 lateness <strong>3</strong>。</p>
+    <p><strong>Exe1</strong> unit price：0.05, 0.0495, 0.4, 1.875, 2.75, 4。拿 ($12, 3kg)、($11, 4kg)、($15, 8kg) 的 3kg → 總值 <strong>$28.625</strong>。圖解在上面 Fractional Knapsack。</p>
+    <p><strong>Exe2</strong> 按 deadline：J3(6), J2(7), J1(8), J4(10), J5(10), J6(13)。J4 在 11 完成遲 1，J5 在 13 完成遲 3，J6 在 16 完成遲 3 → 最大 lateness <strong>3</strong>。圖解在上面 Lateness。</p>
     <p><strong>Exe3</strong> 按 processing time：J6(1), J3(2), J2(3), J1(4), J4(5), J5(6)。Waiting 0, 1, 3, 6, 10, 15 → total <strong>35</strong>。</p>
+    <div class="ex" data-ex="sjf" data-in="4, 3, 2, 5, 6, 1" data-title="Exe3：SJF"></div>
     <p><strong>Tutorial 4</strong> [1.5, 3.5]、[5.8, 7.8]、[10, 12]，共 3 個。證明：設 greedy 和 OPT 首個不同的是第 r+1 個 interval。Greedy 由最小的未覆蓋點開始，所以 OPT 的那個 interval 開始得更早或一樣，換成 greedy 的 interval 仍然覆蓋所有點，數量不變。重複即得 greedy = OPT。</p>
+    <div class="ex" data-ex="cover" data-in="1.5, 1.56, 1.9, 2.9, 3.4, 5.8, 5.99, 6.32, 10" data-l="2" data-title="Tutorial 4：用長度 2 的 interval 覆蓋所有點"></div>
   </details>
 </section>
 
@@ -600,6 +686,8 @@ DIJKSTRA(G, w, s)
       mergeSort(S1);  mergeSort(S2)     // Recur    2T(n/2)
       S ← merge(S1, S2)                 // Conquer  O(n)</code></pre>
   <p>T(n) ≤ T(⌈n/2⌉) + T(⌊n/2⌋) + n，T(1) = 0 → <strong>T(n) = O(n log n)</strong>。</p>
+  <div class="ex" data-ex="dc" data-kind="msort" data-in="5 2 4 7 1 3 2 6" data-title="Merge sort 例子：先分到底，再一層層合併"></div>
+  <div class="ex" data-ex="rec" data-keys="n" data-title="遞迴樹：每層都是 n，共 log₂n 層"></div>
   <div class="twocol">
     <div class="proof"><p><strong>展開法</strong>（n = 2<sup>k</sup>）</p>
 <pre><code>T(n) = n + 2T(n/2)
@@ -625,6 +713,7 @@ T(n) = n log₂n + nT(1) = O(n log n)</code></pre></div>
      = 4^k T(n/2^k) + n(2^k − 1)
 n = 2^k ⇒ 4^k = n²
 T(n) = n²T(1) + n² − n = O(n²)</code></pre>
+  <div class="ex" data-ex="rec" data-keys="4n" data-title="遞迴樹：T(n) = 4T(n/2) + n"></div>
   <div class="tbl"><table>
     <thead><tr><th>Recurrence</th><th>答案</th><th>點樣得出／例子</th></tr></thead>
     <tbody>
@@ -637,6 +726,7 @@ T(n) = n²T(1) + n² − n = O(n²)</code></pre>
       <tr><td class="mono">T(n)=T(n−2)+n</td><td><strong>O(n²)</strong></td><td>2022 Q4(b)：n 為偶數時 = 1 + n²/4 + n/2 − 1 ≈ n²/4</td></tr>
     </tbody>
   </table></div>
+  <div class="ex" id="ex-rec" data-ex="rec" data-keys="c,n,4n,half,one,minus1,minus2" data-title="表中每條 recurrence 的遞迴樹（按上面的掣切換）"></div>
 
   <h3>Counting Inversions</h3>
   <p>排名 a<sub>1</sub>, …, a<sub>n</sub> 中，i &lt; j 但 a<sub>i</sub> &gt; a<sub>j</sub> 就是一個 inversion。暴力檢查所有 pair 要 Θ(n²)。</p>
@@ -651,6 +741,8 @@ T(n) = n²T(1) + n² − n = O(n²)</code></pre>
     <p>合併兩個已排序的 A、B 時，每當從 <strong>B（右半）</strong>拿出元素，<mark>就加上 A 中剩下的元素數目</mark>，因為它們全部比這個元素大。合併 O(n)，所以 T(n) = 2T(n/2) + O(n) = <strong>O(n log n)</strong>。</p>
   </div>
   <p class="small">Slides 例子 1 5 4 8 10 2 | 6 9 12 11 3 7：左邊內部 5 個，右邊內部 8 個，跨兩邊 9 個，合共 <strong>22</strong>。</p>
+  <div class="ex" data-ex="mc" data-all="1 5 4 8 10 2 6 9 12 11 3 7" data-title="Slides 例子：一共 22 個 inversions"></div>
+  <div class="ex" id="ex-22q4" data-ex="mc" data-l="1 5 8 9 10 15" data-r="4 6 7 11 13 14" data-title="2022 Q4(a)：cross inversions（答案 16）"></div>
 
   <div class="lab" id="mc-lab">
     <div class="lab-head"><span class="lab-title">Merge-and-Count</span><span class="small muted">跟 2022 Q4 的答案格式一樣</span></div>
@@ -675,6 +767,7 @@ T(n) = n²T(1) + n² − n = O(n²)</code></pre>
   a ← f(l, m, A);  b ← f(m+1, h, A)
   return max(a, b)
 T(n) = 2T(n/2) + c  ⇒  O(n)</code></pre>
+  <div class="ex" data-ex="dc" data-kind="max" data-in="3 9 2 7 5 1 8 6" data-title="例子：A = [3, 9, 2, 7, 5, 1, 8, 6]"></div>
   <h4>(2) 最大和第二大（2022 Q5，n 個不同數字）</h4>
 <pre><code>f(low, high)                      // returns (largest, second largest)
   if low == high:      return (A[low], −∞)
@@ -687,9 +780,11 @@ T(n) = 2T(n/2) + c  ⇒  O(n)</code></pre>
 Comparisons: g(n) = 2g(n/2) + 2
            = 2^k g(n/2^k) + 2(2^k − 1)  ⇒  g(n) = O(n)</code></pre>
   <p class="small muted">合併時第二大只可能是「贏家那邊的第二大」或「輸家那邊的最大」，所以只需 2 次比較。2022 官方答案把四個數放入 array 再排序，同樣是 O(1)，也拿全分。</p>
+  <div class="ex" id="ex-22q5" data-ex="dc" data-kind="max2" data-in="12 5 9 20 3 15 8 11" data-title="例子：A = [12, 5, 9, 20, 3, 15, 8, 11]"></div>
   <h4>(3) Maximum subarray sum（Tutorial 5 extra）</h4>
   <p>在 mid 切開，最優 subarray 一定是三種之一：全在左邊、全在右邊、跨過 mid。跨過 mid 的那個由 mid 向左掃找最大後綴和、由 mid+1 向右掃找最大前綴和，相加即可，O(n)。所以 T(n) = 2T(n/2) + O(n) = <strong>O(n log n)</strong>。</p>
   <p class="small">例子 A = [−2, 1, −3, 4, −1, 2, 1, −5, 4] → 最大和 <strong>6</strong>，subarray [4, −1, 2, 1]，即 index 4 至 7（由 1 開始數）。</p>
+  <div class="ex" data-ex="msub" data-in="-2 1 -3 4 -1 2 1 -5 4" data-title="例子：A = [−2, 1, −3, 4, −1, 2, 1, −5, 4]"></div>
   <p class="small muted">Karatsuba multiplication 是 Fun part，不考。</p>
 </section>
 
@@ -698,19 +793,19 @@ Comparisons: g(n) = 2g(n/2) + 2
   <header><p class="eyebrow">Hard 分的關鍵</p><h2>證明模板</h2></header>
   <p>Midterm 的證明幾乎都是以下四種之一。先認出用哪一種，再套句式。</p>
   <div class="box write"><span class="tag">1 · Exchange argument</span>
-    <p class="small muted">用於：interval scheduling、interval cover（T4）、fractional knapsack、boat rescue</p>
+    <p class="small muted">用於：interval scheduling、interval cover（T4）、fractional knapsack、boat rescue。圖解：<a href="#fig-exchange">Interval scheduling 的 exchange</a></p>
     <div class="proof"><p>Let G = g<sub>1</sub>, g<sub>2</sub>, … be the greedy solution and OPT = o<sub>1</sub>, o<sub>2</sub>, … an optimal solution. Suppose they agree on the first r choices and g<sub>r+1</sub> ≠ o<sub>r+1</sub>. By the greedy rule, g<sub>r+1</sub> is <em>[at least as good as]</em> o<sub>r+1</sub>, so replacing o<sub>r+1</sub> with g<sub>r+1</sub> keeps OPT feasible and does not make it worse. We obtain an optimal solution that agrees with G on r+1 choices. Repeating this, we get an optimal solution identical to G. Hence G is optimal.</p></div>
   </div>
   <div class="box write"><span class="tag">2 · Inversion / adjacent swap</span>
-    <p class="small muted">用於：minimize lateness（EDF）、minimize waiting time（SJF）</p>
+    <p class="small muted">用於：minimize lateness（EDF）、minimize waiting time（SJF）。圖解：<a href="#fig-swap">EDF 的 adjacent swap</a></p>
     <div class="proof"><p>Take an optimal schedule (with no idle time). If it has an inversion, it has an adjacent inversion. Swapping the two adjacent jobs does not change the other jobs, reduces the number of inversions by one, and does not increase the objective. After finitely many swaps we reach the greedy schedule, which is therefore optimal.</p></div>
   </div>
   <div class="box write"><span class="tag">3 · Structural bound</span>
-    <p class="small muted">用於：interval partitioning（depth）</p>
+    <p class="small muted">用於：interval partitioning（depth）。圖解：<a href="#ex-22q1b">2022 Q1(b)(c) 最後一步的 depth</a></p>
     <div class="proof"><p>Every solution needs at least B (e.g. depth). The greedy algorithm uses at most B, because it only opens a new resource when B items overlap. So greedy is optimal.</p></div>
   </div>
   <div class="box write"><span class="tag">4 · Cut property ／ Induction</span>
-    <p class="small muted">用於：MST（cut property：換邊 T′ = T − ℓ′ + ℓ）；Dijkstra（對 |S| 歸納，分兩個 case）。全文見 <a href="#l3">L3</a>、<a href="#l4">L4</a>。</p>
+    <p class="small muted">用於：MST（cut property：換邊 T′ = T − ℓ′ + ℓ）；Dijkstra（對 |S| 歸納，分兩個 case）。全文見 <a href="#l3">L3</a>、<a href="#l4">L4</a>。圖解：<a href="#fig-cut">cut property</a>、<a href="#fig-djproof">Dijkstra 兩個 case</a>。</p>
   </div>
   <div class="box trap"><span class="tag">證明常見扣分</span>
     <ul>
@@ -748,34 +843,34 @@ Comparisons: g(n) = 2g(n/2) + 2
   <p>這些是按 2022 卷和今年 tutorial 題型出的練習題，不是真題。先自己寫，再打開答案。</p>
 
   <div class="q"><p><span class="pts">M1 · L2</span><br>Jobs (s, f)：(1,4), (3,5), (0,6), (5,7), (3,9), (5,9), (6,10), (8,11), (8,12), (2,14), (12,16)。用 greedy 求最多 compatible jobs，寫出主要步驟和 running time。</p>
-    <details class="answer"><summary>答案</summary><p>按 f 排序：(1,4) (3,5) (0,6) (5,7) (3,9) (5,9) (6,10) (8,11) (8,12) (2,14) (12,16)。選 (1,4) → (5,7) → (8,11) → (12,16)，共 <strong>4</strong> 份。O(n log n)。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>按 f 排序：(1,4) (3,5) (0,6) (5,7) (3,9) (5,9) (6,10) (8,11) (8,12) (2,14) (12,16)。選 (1,4) → (5,7) → (8,11) → (12,16)，共 <strong>4</strong> 份。O(n log n)。</p><div class="ex" data-ex="iv-s" data-in="(1,4),(3,5),(0,6),(5,7),(3,9),(5,9),(6,10),(8,11),(8,12),(2,14),(12,16)" data-title="M1 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M2 · L2</span><br>Lectures：(0,3), (1,4), (2,5), (3,6), (4,7), (5,8), (6,9)。求最少課室數和 depth。</p>
-    <details class="answer"><summary>答案</summary><p>按 s 已排好。Room 1：(0,3)(3,6)(6,9)；Room 2：(1,4)(4,7)；Room 3：(2,5)(5,8)。<strong>3</strong> 間。Depth = 3（例如時間 2.5 有 (0,3)(1,4)(2,5) 重疊），所以 optimal。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>按 s 已排好。Room 1：(0,3)(3,6)(6,9)；Room 2：(1,4)(4,7)；Room 3：(2,5)(5,8)。<strong>3</strong> 間。Depth = 3（例如時間 2.5 有 (0,3)(1,4)(2,5) 重疊），所以 optimal。</p><div class="ex" data-ex="iv-p" data-in="(0,3),(1,4),(2,5),(3,6),(4,7),(5,8),(6,9)" data-title="M2 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M3 · L3</span><br>無向圖邊：AB 4, AC 2, BC 1, BD 5, CD 8, CE 10, DE 2, DF 6, EF 3。(a) 用 Kruskal 求 MST，寫出加邊次序。(b) 用 Prim 由 A 開始。</p>
-    <details class="answer"><summary>答案</summary><p>(a) 排序：BC1, AC2, DE2, EF3, AB4, BD5, DF6, CD8, CE10。加 BC、AC、DE、EF；<strong>拒絕 AB</strong>（A、B 已經經 C 連通）；加 BD，已有 5 條 = |V|−1，停。(b) AC(2) → BC(1) → BD(5) → DE(2) → EF(3)。MST 總重 <strong>13</strong>。可用 <a href="#mst-lab">MST Lab</a> 的「模擬題 M3」逐步檢查。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>(a) 排序：BC1, AC2, DE2, EF3, AB4, BD5, DF6, CD8, CE10。加 BC、AC、DE、EF；<strong>拒絕 AB</strong>（A、B 已經經 C 連通）；加 BD，已有 5 條 = |V|−1，停。(b) AC(2) → BC(1) → BD(5) → DE(2) → EF(3)。MST 總重 <strong>13</strong>。可用 <a href="#mst-lab">MST Lab</a> 的「模擬題 M3」逐步檢查。</p><div class="ex" data-ex="mst" data-g="mock" data-alg="k" data-title="M3(a) Kruskal"></div><div class="ex" data-ex="mst" data-g="mock" data-alg="p" data-title="M3(b) Prim 由 A 開始"></div></details></div>
 
   <div class="q"><p><span class="pts">M4 · L4</span><br>有向圖：s→a 4, s→b 1, b→a 2, a→c 1, b→c 5, c→t 3, b→t 8。用 Dijkstra 求 s 到 t 的最短路徑，要有表格和 backtracking。</p>
-    <details class="answer"><summary>答案</summary><p>取出次序 s(0) → b(1) → a(3/b) → c(4/a) → t(7/c)。中途 a 由 4 降到 3，c 由 6 降到 4，t 由 9 降到 7。Backtracking：t ← c ← a ← b ← s，路徑 s→b→a→c→t，長度 <strong>7</strong>。<a href="#dj-lab">Dijkstra Lab</a> 有這幅圖。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>取出次序 s(0) → b(1) → a(3/b) → c(4/a) → t(7/c)。中途 a 由 4 降到 3，c 由 6 降到 4，t 由 9 降到 7。Backtracking：t ← c ← a ← b ← s，路徑 s→b→a→c→t，長度 <strong>7</strong>。<a href="#dj-lab">Dijkstra Lab</a> 有這幅圖。</p><div class="ex" data-ex="dj" data-g="m4" data-title="M4 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M5 · L6</span><br>兩個已排序的半邊 A = 2, 4, 7, 9 和 B = 1, 3, 8, 10。用 O(n) 方法數一個在 A、一個在 B 的 inversions，寫出中間步驟。</p>
-    <details class="answer"><summary>答案</summary><p>拿 1（B）→ +4；拿 2；拿 3（B）→ +3；拿 4；拿 7；拿 8（B）→ +1；拿 9；拿 10（B）→ +0。Total = 4 + 3 + 1 = <strong>8</strong>。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>拿 1（B）→ +4；拿 2；拿 3（B）→ +3；拿 4；拿 7；拿 8（B）→ +1；拿 9；拿 10（B）→ +0。Total = 4 + 3 + 1 = <strong>8</strong>。</p><div class="ex" data-ex="mc" data-l="2 4 7 9" data-r="1 3 8 10" data-title="M5 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M6 · L6</span><br>用 big-O 表示：(a) T(n) = 2T(n/2) + 1　(b) T(n) = T(n/2) + n　(c) T(n) = T(n−1) + n　(d) T(n) = T(n−2) + n。T(1) = T(2) = 1。</p>
-    <details class="answer"><summary>答案</summary><p>(a) 2<sup>k</sup>T(1) + (2<sup>k</sup> − 1) = 2n − 1 → <strong>O(n)</strong>。(b) n + n/2 + … ≤ 2n → <strong>O(n)</strong>。(c) n(n+1)/2 → <strong>O(n²)</strong>。(d) 約 n²/4 → <strong>O(n²)</strong>。考試要寫展開步驟。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>(a) 2<sup>k</sup>T(1) + (2<sup>k</sup> − 1) = 2n − 1 → <strong>O(n)</strong>。(b) n + n/2 + … ≤ 2n → <strong>O(n)</strong>。(c) n(n+1)/2 → <strong>O(n²)</strong>。(d) 約 n²/4 → <strong>O(n²)</strong>。考試要寫展開步驟。</p><div class="ex" data-ex="rec" data-keys="c1,half,minus1,minus2" data-title="M6 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M7 · L5</span><br>Fractional knapsack，W = 12 kg：a($20, 4kg)、b($18, 6kg)、c($15, 5kg)、d($8, 4kg)。</p>
-    <details class="answer"><summary>答案</summary><p>Unit price：a 5、b 3、c 3、d 2。拿 a 全部（4kg）、b 全部（6kg）、c 的 2kg（$6）→ <strong>$44</strong>。b、c 同價，次序可對調，總值一樣。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>Unit price：a 5、b 3、c 3、d 2。拿 a 全部（4kg）、b 全部（6kg）、c 的 2kg（$6）→ <strong>$44</strong>。b、c 同價，次序可對調，總值一樣。</p><div class="ex" data-ex="knap" data-in="(20,4),(18,6),(15,5),(8,4)" data-w="12" data-title="M7 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M8 · L5</span><br>Jobs (t, d)：J1(2, 3)、J2(1, 2)、J3(3, 7)、J4(2, 5)。求最小 maximum lateness 的 schedule。</p>
-    <details class="answer"><summary>答案</summary><p>EDF：J2 [0,1]、J1 [1,3]、J4 [3,5]、J3 [5,8]。只有 J3 遲 1 → L = <strong>1</strong>。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>EDF：J2 [0,1]、J1 [1,3]、J4 [3,5]、J3 [5,8]。只有 J3 遲 1 → L = <strong>1</strong>。</p><div class="ex" data-ex="edf" data-in="(2,3),(1,2),(3,7),(2,5)" data-title="M8 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M9 · L5</span><br>p = 5, 2, 8, 1, 4（J1–J5）。求令 total waiting time 最小的次序，並證明 algorithm 正確。</p>
-    <details class="answer"><summary>答案</summary><p>SJF：J4, J2, J5, J1, J3。Waiting 0, 1, 3, 7, 12 → total <strong>23</strong>，average 4.6。證明用 <a href="#l5">L5</a> 的 adjacent swap。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>SJF：J4, J2, J5, J1, J3。Waiting 0, 1, 3, 7, 12 → total <strong>23</strong>，average 4.6。證明用 <a href="#l5">L5</a> 的 adjacent swap。</p><div class="ex" data-ex="sjf" data-in="5, 2, 8, 1, 4" data-title="M9 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M10 · L4</span><br>Boat rescue：weights 20, 50, 50, 70, 80, 90，W = 100。</p>
-    <details class="answer"><summary>答案</summary><p>20+90 &gt; 100 → 90 獨自；20+80 = 100 → 一船；50+70 &gt; 100 → 70 獨自；50+50 = 100 → 一船。共 <strong>4</strong> 隻。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>20+90 &gt; 100 → 90 獨自；20+80 = 100 → 一船；50+70 &gt; 100 → 70 獨自；50+50 = 100 → 一船。共 <strong>4</strong> 隻。</p><div class="ex" data-ex="boat" data-in="20, 50, 50, 70, 80, 90" data-w="100" data-title="M10 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M11 · L6</span><br>寫一個 O(n) 的 divide-and-conquer algorithm，同時找出 array 的最小值和最大值。寫出 comparison 數目的 recurrence 並求解。</p>
     <details class="answer"><summary>答案</summary>
@@ -785,13 +880,13 @@ Comparisons: g(n) = 2g(n/2) + 2
   (m1, M1) ← f(low, mid);  (m2, M2) ← f(mid+1, high)
   return (min(m1, m2), max(M1, M2))
 g(n) = 2g(n/2) + 2,  g(1) = 0
-     = 2^k g(n/2^k) + 2(2^k − 1) = 2(n − 1)  ⇒  O(n)</code></pre></details></div>
+     = 2^k g(n/2^k) + 2(2^k − 1) = 2(n − 1)  ⇒  O(n)</code></pre><div class="ex" data-ex="dc" data-kind="minmax" data-in="7 2 9 4 1 8 6 3" data-title="M11 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M12 · L2/L5</span><br>證明 Tutorial 4 的 interval cover greedy（由最左未覆蓋點 y 放 [y, y+2]）是 optimal。</p>
-    <details class="answer"><summary>答案</summary><p>Let G = G<sub>1</sub>, …, G<sub>m</sub> be the greedy intervals and OPT = O<sub>1</sub>, …, O<sub>p</sub> sorted by left endpoint. Suppose G<sub>i</sub> = O<sub>i</sub> for i ≤ r and G<sub>r+1</sub> = [y, y+2] ≠ O<sub>r+1</sub> = [o, o+2]. y is the smallest uncovered point, and O<sub>r+1</sub> must cover it, so o ≤ y. Every point covered by O<sub>r+1</sub> but not by earlier intervals lies in [y, o+2] ⊆ [y, y+2]. Replacing O<sub>r+1</sub> with G<sub>r+1</sub> still covers all points and keeps p intervals. Repeating, OPT becomes G, so m = p.</p></details></div>
+    <details class="answer"><summary>答案</summary><p>Let G = G<sub>1</sub>, …, G<sub>m</sub> be the greedy intervals and OPT = O<sub>1</sub>, …, O<sub>p</sub> sorted by left endpoint. Suppose G<sub>i</sub> = O<sub>i</sub> for i ≤ r and G<sub>r+1</sub> = [y, y+2] ≠ O<sub>r+1</sub> = [o, o+2]. y is the smallest uncovered point, and O<sub>r+1</sub> must cover it, so o ≤ y. Every point covered by O<sub>r+1</sub> but not by earlier intervals lies in [y, o+2] ⊆ [y, y+2]. Replacing O<sub>r+1</sub> with G<sub>r+1</sub> still covers all points and keeps p intervals. Repeating, OPT becomes G, so m = p.</p><div class="ex" data-ex="cover-proof" data-title="M12 圖解"></div></details></div>
 
   <div class="q"><p><span class="pts">M13 · L1</span><br>邊：ab, ac, bc, bd, cd, ce, de。有沒有 Euler circuit？如果沒有，最少加幾條邊（可以是 parallel edge）？</p>
-    <details class="answer"><summary>答案</summary><p>Degree：a 2、b 3、c 4、d 3、e 2。b、d 是 odd，所以<strong>沒有</strong>。加一條 bd（parallel edge），全部變 even，就有 Euler circuit。在 <a href="#eu-lab">Euler 檢查器</a> 加入 <code>bd</code> 試試。</p></details></div>
+    <details class="answer"><summary>答案</summary><p>Degree：a 2、b 3、c 4、d 3、e 2。b、d 是 odd，所以<strong>沒有</strong>。加一條 bd（parallel edge），全部變 even，就有 Euler circuit。在 <a href="#eu-lab">Euler 檢查器</a> 加入 <code>bd</code> 試試。</p><div class="ex" data-ex="eu-m13" data-title="M13 圖解"></div></details></div>
 </section>
 
 <!-- ============================ files ============================ -->
@@ -812,26 +907,36 @@ g(n) = 2g(n/2) + 2,  g(1) = 0
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const NS = "http://www.w3.org/2000/svg";
-const fmt = x => x === Infinity ? "∞" : x === -Infinity ? "−∞" : Number.isInteger(x) ? String(x) : String(+x.toFixed(4));
+const fmt = x => x === Infinity ? "∞" : x === -Infinity ? "−∞" : (x < 0 ? "−" : "") + (Number.isInteger(x) ? String(Math.abs(x)) : String(+Math.abs(x).toFixed(4)));
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const sum = a => a.reduce((x, y) => x + y, 0);
 function svgEl(tag, attrs, parent) {
   const e = document.createElementNS(NS, tag);
   for (const k in attrs) e.setAttribute(k, attrs[k]);
   if (parent) parent.appendChild(e);
   return e;
 }
+function svgText(parent, x, y, s, cls, anchor = "middle", central = false) {
+  const t = svgEl("text", { x, y, class: cls, "text-anchor": anchor }, parent);
+  if (central) t.setAttribute("dominant-baseline", "central");
+  t.textContent = s;
+  return t;
+}
+const setView = (svg, w, h) => svg.setAttribute("viewBox", `0 0 ${Math.ceil(w)} ${Math.ceil(h)}`);
+const num = s => Number(s.replace("−", "-"));
 function parsePairs(str) {
-  const out = [], re = /\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)/g;
+  const out = [], re = /\(\s*([-−]?\d+(?:\.\d+)?)\s*,\s*([-−]?\d+(?:\.\d+)?)\s*\)/g;
   let m;
-  while ((m = re.exec(str))) out.push([+m[1], +m[2]]);
+  while ((m = re.exec(str))) out.push([num(m[1]), num(m[2])]);
   return out;
 }
-const parseNums = str => (str.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+const parseNums = str => (String(str).match(/[-−]?\d+(?:\.\d+)?/g) || []).map(num);
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
 };
 function press(group, active) { group.forEach(b => b.setAttribute("aria-pressed", String(b === active))); }
+const table = (head, rows, now = -1) => `<div class="tbl"><table><thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map((r, i) => `<tr${i === now ? ' class="now"' : ""}>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 
 /* ---------- countdown ---------- */
 (function countdown() {
@@ -853,11 +958,84 @@ $$(".plan input[type=checkbox]").forEach(cb => {
   });
 });
 
-/* ---------- graph drawing (shared by MST and Dijkstra) ---------- */
+/* ---------- stepper: one picture per step, the current step's words, and every step listed ----------
+   steps = [{ text (HTML), draw(svg), extra? (HTML under the controls) }] */
+let figSeq = 0;
+function stepper(host, steps, opt = {}) {
+  host.innerHTML = "";
+  host.classList.add("stepper");
+  const wrap = document.createElement("div");
+  wrap.className = "figwrap";
+  const svg = svgEl("svg", { class: "fig " + (opt.size || "narrow"), role: "img", "aria-label": opt.label || "圖解", id: "fig" + ++figSeq }, wrap);
+  const text = document.createElement("div");
+  text.className = "steptext";
+  text.setAttribute("aria-live", "polite");
+  host.append(wrap, text);
+  const multi = steps.length > 1;
+  let ctr, list, extra;
+  if (multi) {
+    ctr = document.createElement("div");
+    ctr.className = "controls";
+    ctr.innerHTML = '<button class="btn" type="button" data-go="prev">← 上一步</button><button class="btn primary" type="button" data-go="next">下一步 →</button><button class="btn" type="button" data-go="end">跳到最後</button><button class="btn" type="button" data-go="reset">重設</button><span class="stepcount"></span>';
+    host.append(ctr);
+  }
+  if (steps.some(s => s.extra)) {
+    extra = document.createElement("div");
+    extra.className = "extra";
+    host.append(extra);
+  }
+  if (multi) {
+    const head = document.createElement("p");
+    head.className = "steps-head";
+    head.textContent = "全部步驟（按任何一步，上面的圖會跳到那一步）";
+    list = document.createElement("ol");
+    list.className = "steps";
+    list.innerHTML = steps.map((s, i) => `<li><button type="button" data-i="${i}">${s.text}</button></li>`).join("");
+    host.append(head, list);
+  }
+  let k = opt.start === "end" ? steps.length - 1 : 0;
+  function show() {
+    const s = steps[k];
+    svg.innerHTML = "";
+    s.draw(svg);
+    const vb = svg.viewBox.baseVal;
+    if (vb && vb.width) svg.style.maxWidth = Math.round(vb.width * 1.3) + "px";
+    text.innerHTML = (multi ? `<b>第 ${k + 1} 步</b>　` : "") + s.text;
+    if (extra) extra.innerHTML = s.extra || "";
+    if (!multi) return;
+    ctr.querySelector(".stepcount").textContent = `${k + 1} / ${steps.length}`;
+    ctr.querySelector('[data-go="prev"]').disabled = ctr.querySelector('[data-go="reset"]').disabled = k === 0;
+    ctr.querySelector('[data-go="next"]').disabled = ctr.querySelector('[data-go="end"]').disabled = k === steps.length - 1;
+    [...list.children].forEach((li, i) => { li.className = i === k ? "now" : i > k ? "later" : ""; });
+  }
+  if (multi) {
+    ctr.addEventListener("click", e => {
+      const b = e.target.closest("[data-go]");
+      if (!b) return;
+      const go = b.dataset.go;
+      k = go === "prev" ? Math.max(0, k - 1) : go === "next" ? Math.min(steps.length - 1, k + 1) : go === "end" ? steps.length - 1 : 0;
+      show();
+    });
+    list.addEventListener("click", e => {
+      const b = e.target.closest("[data-i]");
+      if (b) { k = +b.dataset.i; show(); }
+    });
+  }
+  show();
+}
+
+/* ---------- drawing: graphs ---------- */
 function drawGraph(svg, g, st, directed) {
   svg.innerHTML = "";
-  svg.setAttribute("viewBox", `0 0 ${g.w} ${g.h}`);
-  const R = 18, id = svg.id;
+  setView(svg, g.w, g.h);
+  const R = 18, id = svg.id || (svg.id = "fig" + ++figSeq);
+  if (st.region) {
+    const r = st.region;
+    if (r.ellipse) svgEl("ellipse", { cx: r.ellipse[0], cy: r.ellipse[1], rx: r.ellipse[2], ry: r.ellipse[3], class: "g-region" }, svg);
+    else svgEl("rect", { x: r.rect[0], y: r.rect[1], width: r.rect[2], height: r.rect[3], rx: 12, class: "g-region" }, svg);
+  }
+  if (st.cut) svgEl("path", { d: st.cut, class: "g-cut" }, svg);
+  (st.tags || []).forEach(([x, y, t, a]) => svgText(svg, x, y, t, "g-tag", a || "middle"));
   if (directed) {
     const defs = svgEl("defs", {}, svg);
     for (const k of ["base", "chosen", "cand", "pick"]) {
@@ -889,11 +1067,12 @@ function drawGraph(svg, g, st, directed) {
     }
     const cls = (st.edge && st.edge[i]) || "base";
     const p = svgEl("path", { d, class: "g-edge " + (cls === "base" ? "" : cls) }, svg);
-    if (directed) p.setAttribute("marker-end", `url(#${id}-ah-${cls === "rej" ? "base" : cls})`);
-    labels.push([lx, ly, fmt(w)]);
+    if (directed) p.setAttribute("marker-end", `url(#${id}-ah-${["chosen", "cand", "pick"].includes(cls) ? cls : "base"})`);
+    const lab = st.label && st.label[i] != null ? String(st.label[i]) : w == null ? null : fmt(w);
+    if (lab) labels.push([lx, ly, lab]);
   });
   labels.forEach(([x, y, t]) => {
-    const wdt = 8 + 8 * t.length;
+    const wdt = 8 + [...t].reduce((a, ch) => a + (ch.charCodeAt(0) > 255 ? 14 : 8), 0);
     svgEl("rect", { x: x - wdt / 2, y: y - 9, width: wdt, height: 18, rx: 4, class: "g-lblbg" }, svg);
     svgEl("text", { x, y, class: "g-lbl" }, svg).textContent = t;
   });
@@ -907,68 +1086,313 @@ function drawGraph(svg, g, st, directed) {
       svgEl("text", { x, y: below ? y + R + 13 : y - R - 6, class: "g-sub" }, svg).textContent = st.sub[v];
     }
   }
+  (st.notes || []).forEach(([x, y, t]) => svgText(svg, x, y, t, "g-note"));
 }
 const edgeName = e => e[0] + e[1] + "(" + fmt(e[2]) + ")";
 
-/* ---------- Euler lab ---------- */
-function eulerRun() {
-  const out = $("#eu-out");
+/* ---------- drawing: time lines (intervals, schedules, knapsack, boats) ----------
+   rows = [{ label, dl?, pts?, bars: [{ s, f, text, cls, late? }] }] */
+function niceStep(span) {
+  const raw = span >= 4 ? Math.max(span / 16, 1) : span / 16 || 1, p = 10 ** Math.floor(Math.log10(raw));
+  return [1, 2, 5, 10].map(m => m * p).find(s => s >= raw - 1e-9);
+}
+function tlBlock(p, o) {
+  const W = o.W || 640, labelW = o.labelW || 70, rowH = o.rowH || 28, rows = o.rows, lo = o.lo, hi = o.hi, marks = o.marks || [];
+  const y0 = o.y0 || 0, top = y0 + (marks.some(m => m.text) ? 22 : 6), bottom = top + rows.length * rowH;
+  const x = t => labelW + (t - lo) / ((hi - lo) || 1) * (W - labelW - 16);
+  const step = o.step || niceStep(hi - lo), ticks = [];
+  for (let t = Math.ceil(lo / step - 1e-9) * step; t <= hi + 1e-9; t = +(t + step).toFixed(9)) ticks.push(t);
+  ticks.forEach((t, i) => {
+    svgEl("line", { x1: x(t), x2: x(t), y1: top, y2: bottom, class: "tl-grid" }, p);
+    svgText(p, x(t), bottom + 16, fmt(t) + (o.unit && i === ticks.length - 1 ? " " + o.unit : ""), "tl-tick");
+  });
+  rows.forEach((r, i) => {
+    const y = top + i * rowH, mid = y + rowH / 2;
+    svgText(p, 4, mid, r.label, "tl-row", "start", true);
+    (r.bars || []).forEach(b => {
+      const cls = b.cls || "", bx = x(b.s), bw = Math.max(2, x(b.f) - bx);
+      svgEl("rect", { x: bx + 1, y: y + 4, width: Math.max(2, bw - 2), height: rowH - 8, rx: 4, class: "tl-bar " + cls }, p);
+      if (b.late && r.dl != null && b.f > r.dl) {
+        const ls = x(Math.max(b.s, r.dl));
+        svgEl("rect", { x: ls, y: y + 4, width: Math.max(2, x(b.f) - ls), height: rowH - 8, rx: 3, class: "tl-late" }, p);
+      }
+      const tw = [...String(b.text || "")].reduce((a, ch) => a + (ch.charCodeAt(0) > 255 ? 11 : 6.7), 0);
+      if (b.text && tw <= bw - 4) svgText(p, bx + bw / 2, mid, b.text, "tl-txt " + cls);
+    });
+    (r.pts || []).forEach(pt => svgEl("circle", { cx: x(pt.t), cy: mid, r: 6, class: "tl-pt " + (pt.cls || "") }, p));
+    if (r.dl != null) {
+      if (r.dlInLabel) {
+        if (r.dl <= hi) svgEl("line", { x1: x(r.dl), x2: x(r.dl), y1: y + 1, y2: y + rowH - 1, class: "tl-dl" }, p);
+      } else if (r.dl <= hi) {
+        const right = x(r.dl) > W - 50;
+        svgEl("line", { x1: x(r.dl), x2: x(r.dl), y1: y + 1, y2: y + rowH - 1, class: "tl-dl" }, p);
+        svgText(p, x(r.dl) + (right ? -4 : 4), y + 10, "d=" + fmt(r.dl), "tl-dltxt", right ? "end" : "start");
+      } else svgText(p, W - 4, y + 10, `d=${fmt(r.dl)} →`, "tl-dltxt", "end");
+    }
+  });
+  marks.forEach(m => {
+    const mx = x(m.t);
+    svgEl("line", { x1: mx, x2: mx, y1: top - 4, y2: bottom, class: "tl-mark" }, p);
+    if (m.text) svgText(p, mx, top - 9, m.text, "tl-marktxt", mx > W - 40 ? "end" : mx < labelW + 30 ? "start" : "middle");
+  });
+  return { h: bottom + 24 - y0, x };
+}
+function drawTimeline(svg, rows, lo, hi, o = {}) {
+  svg.innerHTML = "";
+  const r = tlBlock(svg, { ...o, rows, lo, hi });
+  setView(svg, o.W || 640, r.h);
+}
+
+/* ---------- drawing: rows of boxes (arrays) ----------
+   cells = [{ t, cls, ptr?, top?, ann?, annCls? }]; split = index where the right half starts */
+function cellRow(p, o) {
+  const cw = o.cw || 38, ch = o.ch || 32, gap = o.gap || 6, x0 = (o.x0 || 0) + (o.labelW || 0), cells = o.cells, split = o.split, sg = 18;
+  const X = i => x0 + i * (cw + gap) + (split != null && i >= split ? sg : 0);
+  const head = cells.some(c => c.ptr || c.top) ? 18 : 0, y = (o.y0 || 0) + head;
+  if (o.label) svgText(p, o.x0 || 0, y + ch / 2, o.label, "c-lbl", "start");
+  cells.forEach((c, i) => {
+    const cls = c.cls || "";
+    svgEl("rect", { x: X(i), y, width: cw, height: ch, rx: 5, class: "c-box " + cls }, p);
+    if (c.t) svgText(p, X(i) + cw / 2, y + ch / 2, c.t, "c-txt " + cls);
+    if (c.ptr) svgText(p, X(i) + cw / 2, y - 5, c.ptr, "c-ptr");
+    else if (c.top) svgText(p, X(i) + cw / 2, y - 5, c.top, "c-idx");
+    if (c.ann) svgText(p, X(i) + cw / 2, y + ch + 15, c.ann, "c-ann " + (c.annCls || ""));
+  });
+  if (split != null && o.splitLine) {
+    const lx = X(split) - (sg + gap) / 2;
+    svgEl("line", { x1: lx, x2: lx, y1: y - 6, y2: y + ch + 6, class: "c-div" }, p);
+  }
+  return { h: head + ch + (cells.some(c => c.ann) ? 20 : 0), w: X(cells.length - 1) + cw };
+}
+
+/* ============================ L1 Euler ============================ */
+function parseEdges(str) {
   const edges = [];
-  for (const t of $("#eu-in").value.split(/[\s,;]+/).filter(Boolean)) {
+  for (const t of String(str).split(/[\s,;]+/).filter(Boolean)) {
     const parts = t.includes("-") ? t.split("-") : (t.length === 2 ? [t[0], t[1]] : null);
     if (parts && parts.length === 2 && parts[0] && parts[1]) edges.push(parts);
   }
-  if (!edges.length) { out.innerHTML = '<p class="err">請輸入邊，例如 ab bc ca。</p>'; return; }
+  return edges;
+}
+const EU_LAYOUTS = [
+  { w: 540, h: 320, nodes: { a: [40, 150], b: [160, 70], c: [160, 230], d: [280, 24], e: [400, 70], f: [280, 125], g: [300, 200], h: [320, 292], i: [500, 140], j: [470, 262] } },
+  { w: 400, h: 300, nodes: { a: [200, 150], b: [200, 36], c: [200, 264], d: [360, 150] } },
+  { w: 380, h: 330, nodes: { a: [50, 140], b: [180, 50], c: [180, 230], d: [320, 140], e: [320, 296] } }
+];
+function euLayout(V) {
+  const key = [...V].sort().join(" ");
+  const hit = EU_LAYOUTS.find(L => Object.keys(L.nodes).sort().join(" ") === key);
+  if (hit) return hit;
+  const w = 440, h = 340, nodes = {};
+  V.forEach((v, i) => {
+    const a = -Math.PI / 2 + 2 * Math.PI * i / V.length;
+    nodes[v] = [w / 2 + 150 * Math.cos(a), h / 2 + 130 * Math.sin(a)];
+  });
+  return { w, h, nodes };
+}
+function euGraph(edges, L) {
+  const total = {}, seen = {};
+  const key = (a, b) => a < b ? a + "|" + b : b + "|" + a;
+  edges.forEach(([a, b]) => { const k = key(a, b); total[k] = (total[k] || 0) + 1; });
+  return { w: L.w, h: L.h, nodes: L.nodes, edges: edges.map(([a, b]) => {
+    const k = key(a, b), n = total[k], i = seen[k] = (seen[k] || 0) + 1;
+    return [a, b, null, n > 1 ? { bend: (a < b ? 1 : -1) * (i - (n + 1) / 2) * 44 } : null];
+  }) };
+}
+function eulerSteps(edges, layout) {
   const deg = {}, adj = {};
   edges.forEach(([a, b], i) => {
     deg[a] = (deg[a] || 0) + 1; deg[b] = (deg[b] || 0) + 1;
     (adj[a] = adj[a] || []).push(i); (adj[b] = adj[b] || []).push(i);
   });
   const V = Object.keys(deg).sort();
+  const g = euGraph(edges, layout || euLayout(V));
   const other = (i, u) => edges[i][0] === u ? edges[i][1] : edges[i][0];
   const seen = new Set([V[0]]), stack = [V[0]];
   while (stack.length) { const u = stack.pop(); for (const i of adj[u]) { const w = other(i, u); if (!seen.has(w)) { seen.add(w); stack.push(w); } } }
   const connected = seen.size === V.length;
   const odd = V.filter(v => deg[v] % 2);
-  let html = '<div class="tbl"><table><thead><tr><th>Vertex</th>' + V.map(v => `<th>${esc(v)}</th>`).join("") +
-    '</tr></thead><tbody><tr><td>Degree</td>' + V.map(v => `<td class="${deg[v] % 2 ? "no" : "yes"}">${deg[v]}</td>`).join("") + "</tr></tbody></table></div>";
-  html += `<p>Connected：<strong>${connected ? "是" : "否"}</strong>；odd degree 頂點：<strong>${odd.length ? esc(odd.join(", ")) : "沒有"}</strong></p>`;
+  const draw = st => svg => drawGraph(svg, g, st, false);
+  const degSt = { sub: Object.fromEntries(V.map(v => [v, "deg " + deg[v]])), node: Object.fromEntries(odd.map(v => [v, "bad"])) };
+  const steps = [{ text: `數每個頂點的 degree（寫在頂點旁邊）：${V.map(v => `${esc(v)} = ${deg[v]}`).join("、")}。Connected：${connected ? "是" : "否"}。`, draw: draw(degSt) }];
   if (!connected || odd.length) {
-    out.innerHTML = html + `<p class="err">沒有 Euler circuit：${!connected ? "graph 不是 connected。" : ""}${odd.length ? "有 odd degree 頂點。" : ""}</p>`;
-    return;
+    steps.push({ text: `${connected ? "" : "Graph 不是 connected。"}${odd.length ? `${esc(odd.join("、"))} 的 degree 是 odd（紅色）。` : ""}所以<strong>沒有 Euler circuit</strong>。`, draw: draw(degSt) });
+    return steps;
   }
-  const used = new Array(edges.length).fill(false);
-  const walk = start => {
-    const path = [start];
-    let u = start;
+  steps[0].text += "全部都是 even，所以一定有 Euler circuit。";
+  const used = edges.map(() => false);
+  const walk = s => {
+    const verts = [s], eids = [];
+    let u = s;
     do {
-      const cand = adj[u].filter(i => !used[i]).sort((i, j) => other(i, u).localeCompare(other(j, u)) || i - j);
-      if (!cand.length) break;
-      used[cand[0]] = true;
-      u = other(cand[0], u);
-      path.push(u);
-    } while (u !== start);
-    return path;
+      const i = adj[u].find(j => !used[j]);
+      if (i === undefined) break;
+      used[i] = true; eids.push(i); u = other(i, u); verts.push(u);
+    } while (u !== s);
+    return { verts, eids };
   };
+  const path = vs => vs.map(esc).join("→");
+  const order = eids => Object.fromEntries(eids.map((i, k) => [i, k + 1]));
+  const paint = (eids, c) => Object.fromEntries(eids.map(i => [i, c]));
   let C = walk(edges[0][0]);
-  const steps = [`C1 = ${C.join("→")}`];
+  steps.push({ text: `由 ${esc(C.verts[0])} 出發，沿未用過的邊一直走，直到回到 ${esc(C.verts[0])}：C1 = ${path(C.verts)}（橙色，邊上數字是走的次序）。現在 C = C1。`, draw: draw({ edge: paint(C.eids, "pick"), label: order(C.eids), node: { [C.verts[0]]: "cur" } }) });
   let k = 1;
-  while (used.some(x => !x)) {
-    const idx = C.findIndex(v => adj[v].some(i => !used[i]));
-    const v = C[idx], Cp = walk(v);
+  while (used.some(u => !u)) {
+    const idx = C.verts.findIndex(v => adj[v].some(i => !used[i]));
+    const v = C.verts[idx], Cp = walk(v);
     k++;
-    steps.push(`${v} 還有未用的邊，由 ${v} 走出 C${k} = ${Cp.join("→")}`);
-    C = [...C.slice(0, idx), ...Cp, ...C.slice(idx + 1)];
-    steps.push(`合併：${C.join("→")}`);
+    steps.push({ text: `C 還沒有用完所有邊（灰色是未用的邊）。C 上的 ${esc(v)}（黃色）還有未用的邊，由 ${esc(v)} 再走一個 circuit：C${k} = ${path(Cp.verts)}（橙色）。`, draw: draw({ edge: { ...paint(C.eids, "chosen"), ...paint(Cp.eids, "pick") }, label: order(Cp.eids), node: { [v]: "cur" } }) });
+    C = { verts: [...C.verts.slice(0, idx), ...Cp.verts, ...C.verts.slice(idx + 1)], eids: [...C.eids.slice(0, idx), ...Cp.eids, ...C.eids.slice(idx)] };
+    steps.push({ text: `在 ${esc(v)} 把 C${k} 插入 C：C = ${path(C.verts)}（數字是合併後的次序）。`, draw: draw({ edge: paint(C.eids, "chosen"), label: order(C.eids), node: { [v]: "cur" } }) });
   }
-  out.innerHTML = html + '<ol class="log">' + steps.map(s => `<li>${esc(s)}</li>`).join("") + "</ol>" +
-    `<p class="result">Euler circuit：${esc(C.join("→"))}（共 ${edges.length} 條邊）</p>`;
+  steps.push({ text: `全部 ${edges.length} 條邊都剛好用了一次 → Euler circuit：<strong>${path(C.verts)}</strong>。`, draw: draw({ edge: paint(C.eids, "chosen"), label: order(C.eids) }) });
+  return steps;
+}
+function eulerRun() {
+  const out = $("#eu-out"), edges = parseEdges($("#eu-in").value);
+  if (!edges.length) { out.innerHTML = '<p class="err">請輸入邊，例如 ab bc ca。</p>'; return; }
+  stepper(out, eulerSteps(edges), { label: "Euler circuit 圖" });
 }
 $$("[data-eu]").forEach(b => b.addEventListener("click", () => { $("#eu-in").value = b.dataset.eu; eulerRun(); }));
 $("#eu-run").addEventListener("click", eulerRun);
 eulerRun();
 
-/* ---------- Interval lab ---------- */
+const EX = {};
+EX["eu-vs-ham"] = () => {
+  const L = { w: 400, h: 280, nodes: { a: [50, 50], b: [50, 230], c: [200, 140], d: [350, 50], e: [350, 230] } };
+  const g = euGraph(parseEdges("ab bc ca cd de ec"), L);
+  const deg = { a: "deg 2", b: "deg 2", c: "deg 4", d: "deg 2", e: "deg 2" };
+  return { steps: [
+    { text: "左右兩個三角形只在 c 相接。a、b、d、e 的 degree 是 2，c 是 4：全部 even，而且 connected。", draw: svg => drawGraph(svg, g, { sub: deg }, false) },
+    { text: "<strong>Euler circuit</strong>（每條<strong>邊</strong>剛好一次）：a→b→c→d→e→c→a，邊上數字是次序。c 經過兩次是允許的。", draw: svg => drawGraph(svg, g, { edge: { 0: "chosen", 1: "chosen", 2: "chosen", 3: "chosen", 4: "chosen", 5: "chosen" }, label: { 0: 1, 1: 2, 3: 3, 4: 4, 5: 5, 2: 6 } }, false) },
+    { text: "<strong>Hamiltonian cycle</strong>（每個<strong>頂點</strong>剛好一次）：由左邊三角形去右邊、再回到左邊，來回都一定要經過 c（橙色的邊都接著 c），c 會出現兩次 → <strong>沒有</strong> Hamiltonian cycle。", draw: svg => drawGraph(svg, g, { node: { c: "bad" }, edge: { 1: "pick", 2: "pick", 3: "pick", 5: "pick" } }, false) }
+  ] };
+};
+EX["eu-proof"] = () => {
+  const g = { w: 420, h: 250, nodes: { v: [210, 125], u: [50, 40], w: [370, 40], x: [50, 210], y: [370, 210] }, edges: [["u", "v", null], ["v", "w", null], ["x", "v", null], ["v", "y", null]] };
+  return { steps: [
+    { text: "沿 circuit 走，第一次經過 v：由一條邊<strong>入</strong>，再由另一條邊<strong>出</strong> → 用了 v 的 2 條邊。", draw: svg => drawGraph(svg, g, { edge: { 0: "chosen", 1: "chosen" }, label: { 0: "入 1", 1: "出 1" }, node: { v: "cur" } }, true) },
+    { text: "第二次經過 v，又是一入一出，再用 2 條。每條邊只用一次，所以 deg(v) = 2 × 經過次數，一定是 even。起點也一樣：第一條出去的邊和最後一條回來的邊配成一對。", draw: svg => drawGraph(svg, g, { edge: { 0: "chosen", 1: "chosen", 2: "pick", 3: "pick" }, label: { 0: "入 1", 1: "出 1", 2: "入 2", 3: "出 2" }, node: { v: "cur" }, sub: { v: "deg 4" } }, true) }
+  ] };
+};
+EX["eu-map"] = () => {
+  const L = { w: 360, h: 280, nodes: { A: [70, 60], B: [290, 60], C: [290, 220], D: [70, 220] } };
+  const g = euGraph(parseEdges("AB BC CD DA BD"), L);
+  const deg = { A: "deg 2", B: "deg 3", C: "deg 2", D: "deg 3" };
+  return { steps: [
+    { text: "每個區域變成一個頂點，每段共同邊界變成一條邊（這是一個 degree 和 slides 地圖相同的例子）。", draw: svg => drawGraph(svg, g, {}, false) },
+    { text: "數 degree：A = 2、B = 3、C = 2、D = 3。", draw: svg => drawGraph(svg, g, { sub: deg }, false) },
+    { text: "B、D 是 odd（紅色）→ <strong>沒有 Euler circuit</strong>。", draw: svg => drawGraph(svg, g, { sub: deg, node: { B: "bad", D: "bad" } }, false) }
+  ] };
+};
+EX["eu-m13"] = () => {
+  const L = EU_LAYOUTS[2], base = parseEdges("ab ac bc bd cd ce de"), aug = [...base, ["b", "d"]];
+  const gAug = euGraph(aug, L);
+  return { steps: [
+    ...eulerSteps(base, L),
+    { text: "一條邊會令兩端的 degree 各加 1。odd 頂點只有 b、d 兩個，所以<strong>最少加 1 條</strong>：在 b、d 之間加一條 parallel edge（橙色）。b、d 變成 4，全部 even。", draw: svg => drawGraph(svg, gAug, { edge: { 7: "pick" }, sub: { a: "deg 2", b: "deg 4", c: "deg 4", d: "deg 4", e: "deg 2" } }, false) },
+    ...eulerSteps(aug, L).slice(1)
+  ] };
+};
+
+/* ============================ L2 Interval ============================ */
+const parseJobs = str => parsePairs(str).map(([s, f], i) => ({ s, f, i, name: `(${fmt(s)},${fmt(f)})` }));
+const ivRange = jobs => [Math.floor(Math.min(...jobs.map(j => j.s))), Math.ceil(Math.max(...jobs.map(j => j.f)))];
+function ivSchedSteps(jobs) {
+  const [lo, hi] = ivRange(jobs);
+  const sorted = [...jobs].sort((a, b) => a.f - b.f || a.i - b.i);
+  const st = sorted.map(() => "");
+  const fig = (cls, marks) => svg => drawTimeline(svg, sorted.map((j, k) => ({ label: `#${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name, cls: cls[k] }] })), lo, hi, { marks });
+  const steps = [{ text: `Step 1：按 finish time 由小到大排序：${sorted.map(j => j.name).join(" ")}。`, draw: fig([...st], []) }];
+  let last = null;
+  sorted.forEach((j, k) => {
+    const marks = last ? [{ t: last.f, text: `上一份 f = ${fmt(last.f)}` }] : [];
+    const cur = [...st];
+    cur[k] = "cur";
+    if (last === null || j.s >= last.f) {
+      steps.push({ text: last ? `看 ${j.name}：s = ${fmt(j.s)} ≥ 上一份已選的 f = ${fmt(last.f)} → <strong>選</strong>。` : `看 ${j.name}：finish time 最早 → <strong>選</strong>。`, draw: fig(cur, marks) });
+      st[k] = "sel";
+      last = j;
+    } else {
+      steps.push({ text: `看 ${j.name}：s = ${fmt(j.s)} &lt; ${fmt(last.f)}，和 ${last.name} 重疊 → <strong>略過</strong>。`, draw: fig(cur, marks) });
+      st[k] = "skip";
+    }
+  });
+  const chosen = sorted.filter((j, k) => st[k] === "sel");
+  steps.push({ text: `答案：最多 <strong>${chosen.length}</strong> 份：${chosen.map(j => j.name).join(", ")}（藍色）。Running time O(n log n)。`, draw: fig([...st], []) });
+  return steps;
+}
+function ivPartSteps(jobs) {
+  const [lo, hi] = ivRange(jobs);
+  const sorted = [...jobs].sort((a, b) => a.s - b.s || a.i - b.i);
+  const rooms = [];
+  const roomFig = (cur, marks) => {
+    const snap = rooms.map(r => r.list.slice());
+    return svg => drawTimeline(svg, snap.map((list, k) => ({ label: `Room ${k + 1}`, bars: list.map(j => ({ s: j.s, f: j.f, text: j.name, cls: j === cur ? "cur" : "sel" })) })), lo, hi, { marks });
+  };
+  const steps = [{ text: `Step 1：按 start time 由小到大排序：${sorted.map(j => j.name).join(" ")}。`, draw: svg => drawTimeline(svg, sorted.map((j, k) => ({ label: `#${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name }] })), lo, hi) }];
+  for (const j of sorted) {
+    const k = rooms.findIndex(r => r.end <= j.s);
+    let text;
+    if (k < 0) {
+      const ends = rooms.map((r, i) => `Room ${i + 1} 要到 ${fmt(r.end)} 才空`);
+      rooms.push({ end: j.f, list: [j] });
+      text = rooms.length === 1 ? `${j.name}：還沒有課室 → 開 <strong>Room 1</strong>。` : `${j.name} 在 ${fmt(j.s)} 開始：${ends.join("、")}，全部未空 → 開 <strong>Room ${rooms.length}</strong>。`;
+    } else {
+      text = `${j.name} 在 ${fmt(j.s)} 開始：Room ${k + 1} 上一堂 ${fmt(rooms[k].end)} 結束 ≤ ${fmt(j.s)} → 放入 <strong>Room ${k + 1}</strong>。`;
+      rooms[k].list.push(j);
+      rooms[k].end = j.f;
+    }
+    steps.push({ text, draw: roomFig(j, [{ t: j.s, text: `s = ${fmt(j.s)}` }]) });
+  }
+  const ev = [];
+  jobs.forEach(j => { ev.push([j.s, 1]); ev.push([j.f, -1]); });
+  ev.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  let cur = 0, depth = 0, at = null;
+  for (const [t, dlt] of ev) { cur += dlt; if (cur > depth) { depth = cur; at = t; } }
+  steps.push({ text: `用了 <strong>${rooms.length}</strong> 間課室。Depth = ${depth}：在時間 ${fmt(at)}（虛線）有 ${depth} 堂同時進行。任何安排都要至少 depth 間，greedy 用 ${rooms.length} 間 = depth，所以 optimal。`, draw: roomFig(null, [{ t: at, text: `depth = ${depth}` }]) });
+  return steps;
+}
+function ivStages(jobsStr, stages, labels) {
+  const jobs = parseJobs(jobsStr), [lo, hi] = ivRange(jobs);
+  return { size: "wide", steps: stages.map(([text, cls]) => ({ text, draw: svg => drawTimeline(svg, jobs.map((j, k) => ({ label: labels ? labels[k] : `J${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name, cls: cls[k] || "" }] })), lo, hi) })) };
+}
+EX["iv-wrong-start"] = () => ivStages("(0,10),(1,2),(3,4)", [
+  ["三份 job：J1 = (0,10)、J2 = (1,2)、J3 = (3,4)。", {}],
+  ["<strong>Earliest start</strong>：先揀最早開始的 J1 = (0,10)（橙色）。J2、J3 都和它重疊，要刪掉（紅色）→ 只得 <strong>1</strong> 份。", { 0: "bad", 1: "skip", 2: "skip" }],
+  ["但揀 J2、J3 可以有 <strong>2</strong> 份（綠色），所以這條規則不 optimal。正確的 earliest finish time 會先揀 J2（f = 2 最早），再揀 J3。", { 0: "skip", 1: "ok", 2: "ok" }]
+]);
+EX["iv-wrong-short"] = () => ivStages("(0,5),(4,6),(5,10)", [
+  ["三份 job：J1 = (0,5)、J2 = (4,6)、J3 = (5,10)。", {}],
+  ["<strong>Shortest job</strong>：先揀最短的 J2 = (4,6)（長度 2，橙色）。J1、J3 都和它重疊（紅色）→ 只得 <strong>1</strong> 份。", { 1: "bad", 0: "skip", 2: "skip" }],
+  ["但 J1 = (0,5)、J3 = (5,10) 互不重疊，有 <strong>2</strong> 份（綠色）→ 規則錯。", { 1: "skip", 0: "ok", 2: "ok" }]
+]);
+EX["iv-wrong-conf"] = () => {
+  const s = "(2,6),(4,10),(4,10),(4,10),(8,12),(11,15),(14,18),(16,22),(16,22),(16,22),(20,24)";
+  const jobs = parseJobs(s);
+  const conf = jobs.map(a => jobs.filter(b => b !== a && a.s < b.f && b.s < a.f).length);
+  const rest = (c, other) => Object.fromEntries(jobs.map((_, k) => [k, c[k] || other]));
+  return ivStages(s, [
+    ["11 份 job。左邊寫出每份 job 和幾份重疊（衝突數）。J6 = (11,15) 只有 2 個衝突，最少。", {}],
+    ["<strong>Fewest conflicts</strong>：先揀 J6 = (11,15)（橙色），刪掉和它重疊的 J5、J7（紅色）。", { 5: "bad", 4: "skip", 6: "skip" }],
+    ["左邊 J1–J4 互相重疊，只能再揀 1 份；右邊 J8–J11 也只能揀 1 份 → 一共 <strong>3</strong> 份。", rest({ 5: "bad", 0: "bad", 10: "bad" }, "skip")],
+    ["最優是 J1、J5、J7、J11 = (2,6)、(8,12)、(14,18)、(20,24)，共 <strong>4</strong> 份（綠色）→ 規則錯。", rest({ 0: "ok", 4: "ok", 6: "ok", 10: "ok" }, "skip")]
+  ], jobs.map((j, k) => `J${k + 1} ${conf[k]}衝突`));
+};
+EX["iv-exchange"] = () => {
+  const G = [[0, 2, "i1"], [3, 5, "i2"], [6, 8, "i3"]], O = [[0, 2, "j1"], [2, 6, "j2"], [6, 8, "j3"]], O2 = [[0, 2, "j1"], [3, 5, "i2"], [6, 8, "j3"]];
+  const row = (label, arr, cls) => ({ label, bars: arr.map(([s, f, t], k) => ({ s, f, text: t, cls: cls[k] || "" })) });
+  const fig = (rows, marks) => svg => drawTimeline(svg, rows, 0, 8, { marks });
+  return { size: "wide", steps: [
+    { text: "G（greedy）和 OPT 都按 finish time 排好。頭 r = 1 份一樣：i1 = j1（綠色）。", draw: fig([row("G", G, ["ok"]), row("OPT", O, ["ok"])]) },
+    { text: "第 r+1 份開始不同：i2 ≠ j2（黃色）。Greedy 揀的是 compatible 而 finish time 最早的 job，所以 f(i2) = 5 ≤ f(j2) = 6。", draw: fig([row("G", G, ["ok", "cur"]), row("OPT", O, ["ok", "cur"])], [{ t: 5, text: "f(i2)" }, { t: 6, text: "f(j2)" }]) },
+    { text: "在 OPT 裡把 j2 換成 i2，得到 OPT′。i2 比 j2 早完成，所以仍然和 j3 compatible；份數沒有變 → OPT′ 也是 optimal，而且和 G 頭 r+1 份一樣。", draw: fig([row("G", G, ["ok", "ok"]), row("OPT", O, ["ok", "skip"]), row("OPT′", O2, ["ok", "sel"])]) },
+    { text: "一直這樣換，OPT 會變成 i1, …, ik, j(k+1), …。如果 OPT 比 G 多，j(k+1) 在 ik 完成之後才開始，greedy 一定會揀它，矛盾。所以 |G| = |OPT|。", draw: fig([row("G", G, ["ok", "ok", "ok"]), row("OPT′′", G, ["ok", "ok", "ok"])]) }
+  ] };
+};
+EX["iv-s"] = d => ({ size: "wide", steps: ivSchedSteps(parseJobs(d.in)) });
+EX["iv-p"] = d => ({ size: "wide", steps: ivPartSteps(parseJobs(d.in)) });
+
 const IV_PRESETS = [
   { mode: "s", label: "Tutorial 1 Ex.1", text: "(0,5),(1,2),(3,8),(2,5),(6,7),(4,11),(3,13),(6,7)" },
   { mode: "s", label: "Lecture 2 例子", text: "(0,10),(3,4),(2,8),(1,5),(4,5),(4,8),(5,6),(7,9)" },
@@ -987,82 +1411,28 @@ IV_PRESETS.forEach(p => {
   b.addEventListener("click", () => { $("#iv-in").value = p.text; setIvMode(p.mode); ivRun(); });
   $("#iv-presets").appendChild(b);
 });
-function drawTimeline(svg, rows, lo, hi) {
-  svg.innerHTML = "";
-  const W = 640, left = 70, right = 14, rowH = 28, top = 8;
-  const H = top + rows.length * rowH + 28;
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  const x = t => left + (t - lo) / ((hi - lo) || 1) * (W - left - right);
-  const span = hi - lo, step = span <= 16 ? 1 : span <= 32 ? 2 : Math.ceil(span / 16);
-  for (let t = Math.ceil(lo); t <= hi + 1e-9; t += step) {
-    svgEl("line", { x1: x(t), x2: x(t), y1: top, y2: H - 22, class: "tl-grid" }, svg);
-    svgEl("text", { x: x(t), y: H - 8, class: "tl-tick", "text-anchor": "middle" }, svg).textContent = fmt(t);
-  }
-  rows.forEach((r, i) => {
-    const y = top + i * rowH;
-    svgEl("text", { x: 4, y: y + rowH / 2, class: "tl-row", "dominant-baseline": "central" }, svg).textContent = r.label;
-    r.bars.forEach(b => {
-      svgEl("rect", { x: x(b.s), y: y + 4, width: Math.max(2, x(b.f) - x(b.s)), height: rowH - 8, rx: 4, class: "tl-bar" + (b.sel ? " sel" : "") }, svg);
-      svgEl("text", { x: (x(b.s) + x(b.f)) / 2, y: y + rowH / 2, class: "tl-txt" + (b.sel ? " sel" : "") }, svg).textContent = b.text;
-    });
-  });
-}
 function ivRun() {
-  const out = $("#iv-out"), svg = $("#iv-svg");
-  const jobs = parsePairs($("#iv-in").value).map(([s, f], i) => ({ s, f, i, name: `(${fmt(s)},${fmt(f)})` }));
-  if (!jobs.length) { out.innerHTML = '<p class="err">請用 (s,f),(s,f) 格式輸入。</p>'; svg.innerHTML = ""; return; }
-  if (jobs.some(j => j.f <= j.s)) { out.innerHTML = '<p class="err">每份 job 的 f 要大於 s。</p>'; svg.innerHTML = ""; return; }
-  const lo = Math.floor(Math.min(...jobs.map(j => j.s))), hi = Math.ceil(Math.max(...jobs.map(j => j.f)));
-  const log = [];
-  if (ivMode === "s") {
-    const sorted = [...jobs].sort((a, b) => a.f - b.f || a.i - b.i);
-    let last = null;
-    const sel = new Set();
-    for (const j of sorted) {
-      if (last === null || j.s >= last.f) {
-        log.push(`選 ${j.name}${last ? `：s = ${fmt(j.s)} ≥ 上一份的 f = ${fmt(last.f)}` : "：finish time 最早"}`);
-        sel.add(j); last = j;
-      } else log.push(`略過 ${j.name}：s = ${fmt(j.s)} &lt; ${fmt(last.f)}，與 ${last.name} 重疊`);
-    }
-    const chosen = sorted.filter(j => sel.has(j));
-    out.innerHTML = `<p><strong>Step 1</strong> 按 finish time 排序：${sorted.map(j => j.name).join(" ")}</p>` +
-      `<p><strong>Step 2</strong> 由頭掃到尾：</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol>` +
-      `<p class="result">最多 ${chosen.length} 份：${chosen.map(j => j.name).join(", ")}　Running time O(n log n)</p>`;
-    drawTimeline(svg, sorted.map((j, k) => ({ label: `#${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name, sel: sel.has(j) }] })), lo, hi);
-  } else {
-    const sorted = [...jobs].sort((a, b) => a.s - b.s || a.i - b.i);
-    const rooms = [];
-    for (const j of sorted) {
-      const k = rooms.findIndex(r => r.end <= j.s);
-      if (k < 0) { rooms.push({ end: j.f, list: [j] }); log.push(`${j.name}：現有課室都未空，開 Room ${rooms.length}`); }
-      else { rooms[k].list.push(j); log.push(`${j.name} → Room ${k + 1}（上一堂 ${fmt(rooms[k].end)} 結束 ≤ ${fmt(j.s)}）`); rooms[k].end = j.f; }
-    }
-    const ev = [];
-    jobs.forEach(j => { ev.push([j.s, 1]); ev.push([j.f, -1]); });
-    ev.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-    let cur = 0, depth = 0, at = null;
-    for (const [t, dlt] of ev) { cur += dlt; if (cur > depth) { depth = cur; at = t; } }
-    out.innerHTML = `<p><strong>Step 1</strong> 按 start time 排序：${sorted.map(j => j.name).join(" ")}</p>` +
-      `<p><strong>Step 2</strong> 逐堂分配（放入第一間可用的課室）：</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol>` +
-      `<p>${rooms.map((r, k) => `Room ${k + 1}：${r.list.map(j => j.name).join(" ")}`).join("<br>")}</p>` +
-      `<p class="result">最少 ${rooms.length} 間課室。Depth = ${depth}（例如剛過時間 ${fmt(at)}），greedy 用 ${rooms.length} 間 = depth，所以 optimal。</p>`;
-    drawTimeline(svg, rooms.map((r, k) => ({ label: `Room ${k + 1}`, bars: r.list.map(j => ({ s: j.s, f: j.f, text: j.name, sel: true })) })), lo, hi);
-  }
+  const out = $("#iv-out"), jobs = parseJobs($("#iv-in").value);
+  if (!jobs.length) { out.innerHTML = '<p class="err">請用 (s,f),(s,f) 格式輸入。</p>'; return; }
+  if (jobs.some(j => j.f <= j.s)) { out.innerHTML = '<p class="err">每份 job 的 f 要大於 s。</p>'; return; }
+  stepper(out, ivMode === "s" ? ivSchedSteps(jobs) : ivPartSteps(jobs), { size: "wide", label: "時間線" });
 }
 $("#iv-run").addEventListener("click", ivRun);
 $("#iv-in").value = IV_PRESETS[0].text;
 ivRun();
 
-/* ---------- MST lab ---------- */
+/* ============================ L3 MST ============================ */
 const MST_G = {
   lecture: { root: "A", w: 460, h: 430,
     nodes: { A: [40, 131], B: [203, 40], C: [414, 40], D: [124, 188], E: [313, 135], F: [410, 146], G: [313, 238], H: [146, 352], I: [410, 329], J: [225, 390] },
     edges: [["A","D",1],["C","F",1],["C","E",2],["E","G",2],["H","J",2],["F","G",3],["G","I",3],["I","J",3],["A","B",4],["B","D",4],["B","C",4],["G","J",4],["F","I",5],["D","H",5],["D","J",6],["B","J",10]] },
+  q22: { root: "s", w: 500, h: 280,
+    nodes: { s: [45, 140], a: [190, 50], b: [330, 50], d: [190, 230], c: [330, 230], v: [455, 140] },
+    edges: [["s","a",16],["s","d",13],["a","b",5],["a","d",1],["b","d",9],["b","c",10],["b","v",20],["d","c",15],["c","v",8]] },
   mock: { root: "A", w: 460, h: 340,
     nodes: { A: [50, 70], B: [230, 40], C: [140, 190], D: [330, 170], E: [260, 300], F: [420, 290] },
     edges: [["B","C",1],["A","C",2],["D","E",2],["E","F",3],["A","B",4],["B","D",5],["D","F",6],["C","D",8],["C","E",10]] }
 };
-let mstAlg = "k", mstKey = "lecture", mstSteps = [], mstK = 0, mstOrder = [];
 function kruskalSteps(g) {
   const order = g.edges.map((e, i) => ({ e, i })).sort((a, b) => a.e[2] - b.e[2] || a.i - b.i);
   const parent = {};
@@ -1096,51 +1466,57 @@ function primSteps(g) {
     const best = cross.reduce((a, b) => b.e[2] < a.e[2] ? b : a);
     const [u, v, w] = best.e, nv = S.has(u) ? v : u;
     const listed = [...cross].sort((a, b) => a.e[2] - b.e[2] || a.i - b.i).map(c => edgeName(c.e)).join("、");
-    steps.push({ S: [...S], status: { ...status }, cand: cross.map(c => c.i), pick: best.i, text: `跨越 cut (S, V−S) 的邊：${listed}。Light edge 是 ${edgeName(best.e)}。` });
+    steps.push({ S: [...S], status: { ...status }, cand: cross.map(c => c.i), pick: best.i, text: `跨越 cut (S, V−S) 的邊（橙色虛線）：${listed}。Light edge 是 ${edgeName(best.e)}。` });
     S.add(nv); status[best.i] = "ok"; total += w; added.push(edgeName(best.e));
     steps.push({ S: [...S], status: { ...status }, cand: [], text: `加入 ${edgeName(best.e)}，${nv} 進入 S。總重 ${fmt(total)}。` });
   }
   steps.push({ S: [...S], status: { ...status }, cand: [], text: `完成：加邊次序 ${added.join(" → ")}，MST 總重 = ${fmt(total)}。` });
   return { steps, order: g.edges.map((e, i) => ({ e, i })) };
 }
-function mstLoad() {
-  const g = MST_G[mstKey];
-  const r = mstAlg === "k" ? kruskalSteps(g) : primSteps(g);
-  mstSteps = r.steps; mstOrder = r.order; mstK = 0;
-  mstShow();
+function mstToSteps(g, alg) {
+  const r = alg === "k" ? kruskalSteps(g) : primSteps(g);
+  return r.steps.map(s => {
+    const st = { edge: {}, node: {} };
+    for (const i in s.status) st.edge[i] = s.status[i] === "ok" ? "chosen" : "rej";
+    if (alg === "k") {
+      for (const i in s.status) if (s.status[i] === "ok") { st.node[g.edges[i][0]] = "in"; st.node[g.edges[i][1]] = "in"; }
+      if (s.cur != null && s.status[s.cur] === "ok") st.edge[s.cur] = "pick";
+    } else {
+      s.S.forEach(v => st.node[v] = "in");
+      (s.cand || []).forEach(i => { if (!st.edge[i]) st.edge[i] = "cand"; });
+      if (s.pick != null) st.edge[s.pick] = "pick";
+    }
+    const chips = alg === "k"
+      ? r.order.map(({ e, i }) => `<span class="${s.status[i] === "ok" ? "ok" : s.status[i] === "rej" ? "rej" : ""}${s.cur === i ? " now" : ""}">${esc(edgeName(e))}</span>`).join("")
+      : `<span>S = {${s.S.map(esc).join(", ")}}</span>`;
+    return { text: esc(s.text), draw: svg => drawGraph(svg, g, st, false), extra: `<div class="edgelist" aria-label="邊的狀態">${chips}</div>` };
+  });
 }
-function mstShow() {
-  const g = MST_G[mstKey], s = mstSteps[mstK];
-  const st = { edge: {}, node: {} };
-  for (const i in s.status) st.edge[i] = s.status[i] === "ok" ? "chosen" : "rej";
-  if (mstAlg === "k") {
-    for (const i in s.status) if (s.status[i] === "ok") { st.node[g.edges[i][0]] = "in"; st.node[g.edges[i][1]] = "in"; }
-    if (s.cur != null && s.status[s.cur] === "ok") st.edge[s.cur] = "chosen";
-  } else {
-    s.S.forEach(v => st.node[v] = "in");
-    (s.cand || []).forEach(i => { if (!st.edge[i]) st.edge[i] = "cand"; });
-    if (s.pick != null) st.edge[s.pick] = "pick";
-  }
-  drawGraph($("#mst-svg"), g, st, false);
-  $("#mst-list").innerHTML = (mstAlg === "k" ? mstOrder : []).map(({ e, i }) => {
-    const c = s.status[i] === "ok" ? "ok" : s.status[i] === "rej" ? "rej" : "";
-    return `<span class="${c}${s.cur === i ? " now" : ""}">${esc(edgeName(e))}</span>`;
-  }).join("") || (mstAlg === "p" ? `<span>S = {${s.S.join(", ")}}</span>` : "");
-  $("#mst-text").textContent = s.text;
-  $("#mst-count").textContent = `步驟 ${mstK} / ${mstSteps.length - 1}`;
-  $("#mst-prev").disabled = mstK === 0;
-  $("#mst-next").disabled = $("#mst-end").disabled = mstK === mstSteps.length - 1;
-}
-const mstAlgBtns = [$("#mst-a-k"), $("#mst-a-p")], mstGBtns = [$("#mst-g-lecture"), $("#mst-g-mock")];
+let mstAlg = "k", mstKey = "lecture";
+function mstLoad() { stepper($("#mst-host"), mstToSteps(MST_G[mstKey], mstAlg), { label: "MST 圖" }); }
+const mstAlgBtns = [$("#mst-a-k"), $("#mst-a-p")], mstGBtns = [$("#mst-g-lecture"), $("#mst-g-q22"), $("#mst-g-mock")];
 mstAlgBtns.forEach(b => b.addEventListener("click", () => { mstAlg = b.id.endsWith("k") ? "k" : "p"; press(mstAlgBtns, b); mstLoad(); }));
 mstGBtns.forEach(b => b.addEventListener("click", () => { mstKey = b.id.replace("mst-g-", ""); press(mstGBtns, b); mstLoad(); }));
-$("#mst-prev").addEventListener("click", () => { if (mstK > 0) { mstK--; mstShow(); } });
-$("#mst-next").addEventListener("click", () => { if (mstK < mstSteps.length - 1) { mstK++; mstShow(); } });
-$("#mst-end").addEventListener("click", () => { mstK = mstSteps.length - 1; mstShow(); });
-$("#mst-reset").addEventListener("click", () => { mstK = 0; mstShow(); });
 mstLoad();
+EX["mst"] = d => ({ steps: mstToSteps(MST_G[d.g], d.alg) });
+EX["cut"] = () => {
+  const g = { w: 400, h: 360, nodes: { a: [70, 60], b: [150, 180], c: [70, 300], d: [330, 60], e: [250, 180], f: [330, 300] },
+    edges: [["a","b",2],["b","c",3],["a","c",5],["d","e",3],["e","f",1],["d","f",5],["a","d",4],["b","e",4],["c","f",6]] };
+  const base = { region: { rect: [8, 8, 184, 344] }, cut: "M200,6 L200,354", tags: [[24, 30, "S", "start"], [392, 30, "V − S", "end"]] };
+  const A = { 0: "chosen", 4: "chosen" }, T = { 0: "chosen", 4: "chosen", 1: "tree", 3: "tree", 6: "tree" };
+  const l = [200, 160, "ℓ"], l2 = [200, 40, "ℓ′"];
+  const draw = st => svg => drawGraph(svg, g, { ...base, ...st }, false);
+  return { steps: [
+    { text: "A = {ab, ef}（藍色）是 good：A 在某棵 MST 裡面。Cut (S, V−S)：S = {a, b, c}（淺藍區），虛線是 cut。A 沒有邊跨過這個 cut。", draw: draw({ edge: A }) },
+    { text: "跨過 cut 的邊：ad(4)、be(4)、cf(6)（橙色虛線）。最輕是 4，取 ℓ = be(4) 做 light edge（橙色粗線）。", draw: draw({ edge: { ...A, 6: "cand", 8: "cand", 7: "pick" }, notes: [l] }) },
+    { text: "設 T 是一棵包含 A 的 MST：T = {ab, ef, bc, de, ad}（藍 + 綠），總重 13。ℓ = be 不在 T 裡。", draw: draw({ edge: { ...T, 7: "pick" }, notes: [l] }) },
+    { text: "把 ℓ 加入 T，會形成一個 cycle：b → e → d → a → b（橙色）。", draw: draw({ edge: { ...T, 7: "pick", 3: "pick", 6: "pick", 0: "pick" }, notes: [l] }) },
+    { text: "這個 cycle 由 S 過去 V−S 再回來，所以一定還有另一條邊跨過 cut：ℓ′ = ad(4)（紅色虛線）。A 沒有邊跨 cut，所以 ℓ′ ∉ A；ℓ 是 light edge，所以 w(ℓ) = 4 ≤ w(ℓ′) = 4。", draw: draw({ edge: { ...T, 7: "pick", 6: "rej" }, notes: [l, l2] }) },
+    { text: "T′ = T − ℓ′ + ℓ = {ab, ef, bc, de, be}：仍然是 spanning tree，w(T′) = 13 − 4 + 4 = 13 ≤ w(T)，所以 T′ 也是 MST，而且包含 A ∪ {be} → be 是 <strong>safe edge</strong>。", draw: draw({ edge: { 0: "chosen", 4: "chosen", 7: "chosen", 1: "tree", 3: "tree", 6: "ghost" } }) }
+  ] };
+};
 
-/* ---------- Dijkstra lab ---------- */
+/* ============================ L4 Dijkstra, boats ============================ */
 const DJ_G = [
   { key: "lecture", label: "Lecture 4 例子", src: "A", dst: "D", w: 420, h: 260,
     nodes: { A: [45, 130], B: [175, 45], C: [175, 215], D: [370, 45], E: [370, 215] },
@@ -1155,7 +1531,6 @@ const DJ_G = [
     nodes: { s: [40, 130], a: [180, 45], b: [180, 215], c: [320, 45], t: [400, 180] },
     edges: [["s","a",4],["s","b",1],["b","a",2],["a","c",1],["b","c",5],["c","t",3],["b","t",8]] }
 ];
-let djG = DJ_G[0], djSteps = [], djK = 0;
 function dijkstraSteps(g) {
   const V = Object.keys(g.nodes), d = {}, pi = {};
   V.forEach(v => { d[v] = Infinity; pi[v] = null; });
@@ -1176,37 +1551,37 @@ function dijkstraSteps(g) {
       else if (nd < d[v]) { notes.push(`${v}：${fmt(d[v])} → ${fmt(nd)}（π = ${u}）`); d[v] = nd; pi[v] = u; }
       else notes.push(`${v}：${fmt(d[v])} ≤ ${fmt(nd)}，不變`);
     });
-    steps.push({ S: [...S], d: { ...d }, pi: { ...pi }, u, relaxed, text: `EXTRACT-MIN 取出 ${u}（d = ${fmt(d[u])}），S = {${S.join(", ")}}。Relax ${u} 的出邊：${notes.join("；") || "沒有出邊"}。` });
+    steps.push({ S: [...S], d: { ...d }, pi: { ...pi }, u, relaxed, text: `EXTRACT-MIN 取出 ${u}（d = ${fmt(d[u])}），S = {${S.join(", ")}}。Relax ${u} 的出邊（橙色）：${notes.join("；") || "沒有出邊"}。` });
   }
   const path = [];
   if (d[g.dst] < Infinity) for (let x = g.dst; x; x = pi[x]) path.push(x);
   const last = steps[steps.length - 1];
-  steps.push({ ...last, u: null, relaxed: [], final: true,
-    text: path.length ? `Backtracking：${path.join(" ← ")}。最短路徑 ${[...path].reverse().join(" → ")}，總長 ${fmt(d[g.dst])}。` : `${g.dst} 不能由 ${g.src} 到達。` });
+  steps.push({ ...last, u: null, relaxed: [], final: true, path,
+    text: path.length ? `Backtracking：${path.join(" ← ")}。最短路徑 ${[...path].reverse().join(" → ")}（橙色），總長 ${fmt(d[g.dst])}。` : `${g.dst} 不能由 ${g.src} 到達。` });
   return steps;
 }
-function djLoad() { djSteps = dijkstraSteps(djG); djK = 0; djShow(); }
-function djShow() {
-  const g = djG, s = djSteps[djK], V = Object.keys(g.nodes);
-  const st = { edge: {}, node: {}, sub: {} };
-  V.forEach(v => {
-    if (s.S.includes(v)) st.node[v] = "in";
-    if (s.pi[v]) { const i = g.edges.findIndex(e => e[0] === s.pi[v] && e[1] === v); if (i >= 0) st.edge[i] = "chosen"; }
-    st.sub[v] = fmt(s.d[v]);
+function djToSteps(g) {
+  const raw = dijkstraSteps(g), V = Object.keys(g.nodes);
+  return raw.map((s, k) => {
+    const st = { edge: {}, node: {}, sub: {} };
+    const edgeOf = (a, b) => g.edges.findIndex(e => e[0] === a && e[1] === b);
+    V.forEach(v => {
+      if (s.S.includes(v)) st.node[v] = "in";
+      if (s.pi[v]) { const i = edgeOf(s.pi[v], v); if (i >= 0) st.edge[i] = "chosen"; }
+      st.sub[v] = fmt(s.d[v]);
+    });
+    s.relaxed.forEach(i => { if (!st.edge[i]) st.edge[i] = "cand"; });
+    if (s.u) st.node[s.u] = "cur";
+    if (s.final) for (let i = 0; i + 1 < s.path.length; i++) { const e = edgeOf(s.path[i + 1], s.path[i]); if (e >= 0) st.edge[e] = "pick"; }
+    const rows = raw.slice(0, k + 1).filter(r => !r.final);
+    const tbl = `<div class="tbl"><table><thead><tr><th>Step</th>${V.map(v => `<th class="mono">${esc(v)}</th>`).join("")}<th>S</th></tr></thead><tbody>` +
+      rows.map((r, i) => `<tr><td>${i === 0 ? "Init" : `Step ${i}`}</td>` + V.map(v => `<td class="mono${r.u === v ? " cur" : r.S.includes(v) ? " inS" : ""}">${fmt(r.d[v])}/${r.pi[v] || "NIL"}</td>`).join("") + `<td class="mono">{${r.S.join(", ")}}</td></tr>`).join("") +
+      '</tbody></table></div><p class="small muted">表格就是考試寫法：每格寫 <code>d/π</code>；藍底 = 已在 S；黃底 = 這一步 EXTRACT-MIN 取出的頂點。圖中頂點旁邊的數字是 d。</p>';
+    return { text: esc(s.text), draw: svg => drawGraph(svg, g, st, true), extra: tbl };
   });
-  s.relaxed.forEach(i => { if (!st.edge[i]) st.edge[i] = "cand"; });
-  if (s.u) st.node[s.u] = "cur";
-  drawGraph($("#dj-svg"), g, st, true);
-  $("#dj-text").textContent = s.text;
-  $("#dj-count").textContent = `步驟 ${djK} / ${djSteps.length - 1}`;
-  $("#dj-prev").disabled = djK === 0;
-  $("#dj-next").disabled = $("#dj-end").disabled = djK === djSteps.length - 1;
-  const rows = djSteps.slice(0, djK + 1).filter(r => !r.final);
-  $("#dj-table").innerHTML = `<table><thead><tr><th>Step</th>${V.map(v => `<th class="mono">${esc(v)}</th>`).join("")}<th>S</th></tr></thead><tbody>` +
-    rows.map((r, k) => `<tr><td>${k === 0 ? "Init" : `Step ${k}`}</td>` +
-      V.map(v => `<td class="mono${r.u === v ? " cur" : r.S.includes(v) ? " inS" : ""}">${fmt(r.d[v])}/${r.pi[v] || "NIL"}</td>`).join("") +
-      `<td class="mono">{${r.S.join(", ")}}</td></tr>`).join("") + "</tbody></table>";
 }
+let djG = DJ_G[0];
+function djLoad() { stepper($("#dj-host"), djToSteps(djG), { label: "有向圖" }); }
 DJ_G.forEach((g, k) => {
   const b = document.createElement("button");
   b.className = "btn"; b.textContent = `${g.label}（${g.src} → ${g.dst}）`;
@@ -1214,13 +1589,227 @@ DJ_G.forEach((g, k) => {
   b.addEventListener("click", () => { djG = g; press($$("#dj-presets .btn"), b); djLoad(); });
   $("#dj-presets").appendChild(b);
 });
-$("#dj-prev").addEventListener("click", () => { if (djK > 0) { djK--; djShow(); } });
-$("#dj-next").addEventListener("click", () => { if (djK < djSteps.length - 1) { djK++; djShow(); } });
-$("#dj-end").addEventListener("click", () => { djK = djSteps.length - 1; djShow(); });
-$("#dj-reset").addEventListener("click", () => { djK = 0; djShow(); });
 djLoad();
+EX["dj"] = d => ({ steps: djToSteps(DJ_G.find(g => g.key === d.g)) });
+EX["dj-neg"] = () => {
+  const g = { w: 380, h: 230, nodes: { s: [50, 115], u: [210, 40], v: [210, 190] }, edges: [["s","u",2],["s","v",1],["u","v",-10]] };
+  const draw = st => svg => drawGraph(svg, g, st, true);
+  const d1 = { s: "0", u: "2", v: "1" };
+  return { steps: [
+    { text: "Initialize：d[s] = 0，d[u] = d[v] = ∞（頂點旁邊的數字是 d）。", draw: draw({ sub: { s: "0", u: "∞", v: "∞" }, node: { s: "cur" } }) },
+    { text: "取出 s，relax 出邊：d[u] = 2，d[v] = 1。", draw: draw({ sub: d1, node: { s: "in" }, edge: { 0: "cand", 1: "cand" } }) },
+    { text: "取出 d 最小的 v（d = 1），v 放入 S。Dijkstra 認為 d[v] = 1 已經是最終答案，之後不會再改。", draw: draw({ sub: d1, node: { s: "in", v: "cur" }, edge: { 0: "chosen", 1: "chosen" } }) },
+    { text: "取出 u（d = 2），relax u→v：2 + (−10) = −8 &lt; 1，但 v 已經在 S，不會更新。", draw: draw({ sub: d1, node: { s: "in", v: "in", u: "cur" }, edge: { 0: "chosen", 1: "chosen", 2: "cand" } }) },
+    { text: "Dijkstra 的答案：s 到 v 是 1。但 s→u→v = 2 + (−10) = <strong>−8</strong> 更短（橙色）→ 有 negative edge 時 Dijkstra 會錯。", draw: draw({ sub: { s: "0", u: "2", v: "1 ✗" }, node: { s: "in", u: "in", v: "bad" }, edge: { 0: "pick", 2: "pick" } }) }
+  ] };
+};
+EX["dj-proof"] = () => {
+  const g = { w: 420, h: 280, nodes: { s: [70, 150], x: [190, 95], y: [345, 60], v: [335, 215] }, edges: [["s","x",null],["x","v",null],["x","y",null],["y","v",null]] };
+  const base = { region: { ellipse: [140, 150, 122, 108] }, tags: [[40, 70, "S", "middle"]] };
+  const draw = st => svg => drawGraph(svg, g, { ...base, ...st }, true);
+  return { steps: [
+    { text: "S（淺藍區）裡面每個頂點的 d 都已經正確。這一步 Dijkstra 取出 v（Q 裡 d[v] 最小）。設 P 是任何一條 s 到 v 的路，x 是 P 上最後一個在 S 裡的頂點。", draw: draw({ node: { s: "in", x: "in", v: "cur" }, edge: { 0: "chosen" }, label: { 0: "P 的前段" } }) },
+    { text: "<strong>Case 1</strong>：x 之後就是 v。w(P) ≥ d[x] + w(x, v) ≥ d[v]，因為 x 放入 S 時已經 relax 過 (x, v)。", draw: draw({ node: { s: "in", x: "in", v: "cur" }, edge: { 0: "chosen", 1: "pick" }, label: { 0: "P 的前段" } }) },
+    { text: "<strong>Case 2</strong>：P 經 (x, y) 離開 S，y ≠ v。w(P) ≥ d[x] + w(x, y) ≥ d[y] ≥ d[v]：relax 令 d[y] ≤ d[x] + w(x, y)；Dijkstra 揀 d 最小的 v，所以 d[y] ≥ d[v]；y 之後的邊都 ≥ 0。", draw: draw({ node: { s: "in", x: "in", v: "cur" }, edge: { 0: "chosen", 2: "pick", 3: "pick" }, label: { 0: "P 的前段", 3: "≥ 0" } }) },
+    { text: "兩個 case 都得到 w(P) ≥ d[v]：沒有路比 d[v] 短，所以 v 放入 S 時 d[v] 正確。對 |S| 歸納，全部正確。", draw: draw({ node: { s: "in", x: "in", v: "in" } }) }
+  ] };
+};
+function drawBoat(svg, w, state, l, r, boats, W, cur) {
+  svg.innerHTML = "";
+  const cells = w.map((x, i) => ({ t: fmt(x), cls: i === l || i === r ? "cur" : state[i], ptr: i === l && i === r ? "l=r" : i === l ? "l" : i === r ? "r" : "" }));
+  const top = cellRow(svg, { x0: 8, y0: 2, cells, label: "排序", labelW: 50 });
+  let h = top.h + 10;
+  if (boats.length) {
+    const rows = boats.map((b, k) => {
+      let s = 0;
+      return { label: `船 ${k + 1}`, bars: b.map(x => { const bar = { s, f: s + x, text: fmt(x), cls: k === cur ? "cur" : "sel" }; s += x; return bar; }) };
+    });
+    h += tlBlock(svg, { y0: h, rows, lo: 0, hi: W, W: 560, marks: [{ t: W, text: `上限 W = ${fmt(W)}` }] }).h;
+  }
+  setView(svg, Math.max(560, top.w + 10), h);
+}
+function boatSteps(ws, W) {
+  const w = [...ws].sort((a, b) => a - b), n = w.length, state = w.map(() => ""), boats = [];
+  const fig = (l, r, cur) => { const s = [...state], b = boats.map(x => x.slice()); return svg => drawBoat(svg, w, s, l, r, b, W, cur); };
+  const steps = [{ text: `由輕到重排序：${w.map(fmt).join(", ")}。l 指最輕的人，r 指最重的人。每隻船最多 2 人，載重 ≤ ${fmt(W)}。`, draw: fig(0, n - 1, -1) }];
+  let l = 0, r = n - 1;
+  while (l <= r) {
+    const L = l, R = r;
+    let text;
+    if (l < r && w[l] + w[r] <= W) {
+      boats.push([w[r], w[l]]); state[l] = state[r] = "done";
+      text = `${fmt(w[l])} + ${fmt(w[r])} = ${fmt(w[l] + w[r])} ≤ ${fmt(W)} → 最重配最輕，一齊上<strong>船 ${boats.length}</strong>。l、r 都向內移一格。`;
+      l++; r--;
+    } else if (l === r) {
+      boats.push([w[r]]); state[r] = "done";
+      text = `只剩 ${fmt(w[r])} 一個人 → 自己上<strong>船 ${boats.length}</strong>。`;
+      r--;
+    } else {
+      boats.push([w[r]]); state[r] = "done";
+      text = `${fmt(w[l])} + ${fmt(w[r])} = ${fmt(w[l] + w[r])} &gt; ${fmt(W)}：最重的 ${fmt(w[r])} 連最輕的人都不能同船 → 獨自上<strong>船 ${boats.length}</strong>。r 向左移一格。`;
+      r--;
+    }
+    steps.push({ text, draw: fig(L, R, boats.length - 1) });
+  }
+  steps.push({ text: `全部人都上船了：最少 <strong>${boats.length}</strong> 隻船。Running time O(n log n)（排序）。`, draw: fig(-1, -1, -1) });
+  return steps;
+}
+EX["boat"] = d => ({ size: "wide", steps: boatSteps(parseNums(d.in), +d.w) });
 
-/* ---------- Greedy lab ---------- */
+/* ============================ L5 Greedy ============================ */
+function knapSteps(items, W) {
+  const arr = items.map(([v, w], i) => ({ v, w, i, r: v / w, name: `($${fmt(v)}, ${fmt(w)}kg)` })).sort((a, b) => b.r - a.r || a.i - b.i);
+  const got = arr.map(() => 0), segs = [];
+  let cap = W, val = 0, x = 0;
+  const tbl = now => table(["Item", "Unit price ($/kg)", "拿多少", "價值"], arr.map((it, k) => [it.name, fmt(it.r), got[k] === it.w ? `全部 ${fmt(it.w)}kg` : got[k] > 0 ? `${fmt(got[k])}kg（${fmt(got[k])}/${fmt(it.w)}）` : "—", got[k] > 0 ? "$" + fmt(it.v * got[k] / it.w) : "—"]), now);
+  const fig = cur => { const s = segs.map(z => ({ ...z })); return svg => drawTimeline(svg, [{ label: "背包", bars: s.map((z, k) => ({ ...z, cls: k === cur ? "cur" : "sel" })) }], 0, W, { rowH: 46, unit: "kg" }); };
+  const steps = [{ text: `計每件的 unit price = 價值 ÷ 重量，由高到低排（下表）。背包 W = ${fmt(W)}kg，現在是空的。`, draw: fig(-1), extra: tbl(-1) }];
+  for (let k = 0; k < arr.length && cap > 1e-9; k++) {
+    const it = arr[k], t = Math.min(it.w, cap), v = it.v * t / it.w;
+    got[k] = t; cap -= t; val += v;
+    segs.push({ s: x, f: x + t, text: t === it.w ? it.name : `${fmt(t)}kg / ${it.name}` });
+    x += t;
+    steps.push({ text: t === it.w
+      ? `Unit price 第 ${k + 1} 高的 ${it.name}（$${fmt(it.r)}/kg）放得下 → 拿全部 ${fmt(t)}kg，值 $${fmt(v)}。剩 ${fmt(cap)}kg，總值 $${fmt(val)}。`
+      : `${it.name}（$${fmt(it.r)}/kg）有 ${fmt(it.w)}kg，但只剩 ${fmt(t)}kg → 拿 ${fmt(t)}/${fmt(it.w)}，值 $${fmt(it.v)} × ${fmt(t)}/${fmt(it.w)} = $${fmt(v)}。背包滿了。`,
+      draw: fig(segs.length - 1), extra: tbl(k) });
+  }
+  steps.push({ text: `${cap > 1e-9 ? `全部物品都放入了，還剩 ${fmt(cap)}kg。` : "背包已滿，其餘物品不拿。"}Total value = <strong>$${fmt(val)}</strong>。`, draw: fig(-1), extra: tbl(-1) });
+  return steps;
+}
+EX["knap"] = d => ({ size: "wide", steps: knapSteps(parsePairs(d.in), +d.w) });
+EX["knap01"] = () => {
+  const fig = rows => svg => drawTimeline(svg, rows, 0, 20, { unit: "kg", rowH: 40 });
+  const items = [{ label: "a", bars: [{ s: 0, f: 10, text: "a：$10, 10kg" }] }, { label: "b", bars: [{ s: 0, f: 10, text: "b：$10, 10kg" }] }, { label: "c", bars: [{ s: 0, f: 11, text: "c：$12, 11kg" }] }];
+  const greedy = { label: "Greedy", bars: [{ s: 0, f: 11, text: "c  $12", cls: "bad" }, { s: 11, f: 20, text: "剩 9kg，放不下 a/b", cls: "wait" }] };
+  const best = { label: "最優", bars: [{ s: 0, f: 10, text: "a  $10", cls: "ok" }, { s: 10, f: 20, text: "b  $10", cls: "ok" }] };
+  return { size: "wide", steps: [
+    { text: "W = 20kg。Unit price：a = $1/kg、b = $1/kg、c = $12/11 ≈ $1.09/kg，c 最高。", draw: fig(items) },
+    { text: "Greedy 先拿 unit price 最高的 c（11kg）。剩 9kg，但 a、b 都要 10kg；0–1 版本不可以只拿一部分 → 只得 <strong>$12</strong>。", draw: fig([greedy]) },
+    { text: "最優是拿 a + b：剛好 20kg，<strong>$20</strong> &gt; $12 → 0–1 knapsack 不能用這個 greedy（要用 DP）。", draw: fig([greedy, best]) }
+  ] };
+};
+function edfSteps(pairs) {
+  const jobs = pairs.map(([t, d], i) => ({ t, d, i, n: "J" + (i + 1) }));
+  const order = [...jobs].sort((a, b) => a.d - b.d || a.i - b.i);
+  let time = 0;
+  order.forEach(j => { j.s = time; time += j.t; j.f = time; j.late = Math.max(0, j.f - j.d); });
+  const hi = Math.max(time, ...jobs.map(j => j.d));
+  const fig = (k, cur) => svg => drawTimeline(svg, order.map((j, idx) => ({ label: `${j.n} t=${fmt(j.t)} d=${fmt(j.d)}`, dl: j.d, dlInLabel: true, bars: idx < k ? [{ s: j.s, f: j.f, text: j.n, cls: idx === cur ? "cur" : "sel", late: true }] : [] })), 0, hi, { labelW: 112 });
+  const steps = [{ text: `按 deadline 由小到大排序：${order.map(j => `${j.n}(d=${fmt(j.d)})`).join(", ")}。紅線是每份 job 的 deadline。`, draw: fig(0, -1) }];
+  order.forEach((j, k) => steps.push({ text: `${j.n}（t = ${fmt(j.t)}）接著做：由 ${fmt(j.s)} 做到 ${fmt(j.f)}，deadline ${fmt(j.d)} → ${j.late ? `<strong>遲 ${fmt(j.late)}</strong>（紅色部分）` : "準時"}。`, draw: fig(k + 1, k) }));
+  const L = Math.max(...order.map(j => j.late));
+  steps.push({ text: `中間沒有空檔。Maximum lateness L = max(${order.map(j => fmt(j.late)).join(", ")}) = <strong>${fmt(L)}</strong>。Running time O(n log n)。`, draw: fig(order.length, -1) });
+  return steps;
+}
+EX["edf"] = d => ({ size: "wide", steps: edfSteps(parsePairs(d.in)) });
+function latStages(J, hi, stages) {
+  return { size: "wide", steps: stages.map(([text, order, cls]) => {
+    const pos = {};
+    if (order) { let t = 0; order.forEach(i => { pos[i] = [t, t + J[i].t]; t += J[i].t; }); }
+    return { text, draw: svg => drawTimeline(svg, J.map((j, i) => ({ label: `${j.n} t=${fmt(j.t)} d=${fmt(j.d)}`, dl: j.d, dlInLabel: true, bars: pos[i] ? [{ s: pos[i][0], f: pos[i][1], text: j.n, cls, late: true }] : [] })), 0, hi, { labelW: 112 }) };
+  }) };
+}
+EX["lat-wrong-spt"] = () => latStages([{ n: "J1", t: 1, d: 100 }, { n: "J2", t: 10, d: 10 }], 12, [
+  ["兩份 job：J1（t = 1, d = 100）、J2（t = 10, d = 10）。紅線是 deadline。", null],
+  ["<strong>Shortest processing time</strong>：先做短的 J1：J1 [0,1]、J2 [1,11]。J2 遲 1（紅色）→ L = <strong>1</strong>。", [0, 1], "bad"],
+  ["EDF 先做 deadline 早的 J2：J2 [0,10] 準時、J1 [10,11] 也準時 → L = <strong>0</strong>，比較好。", [1, 0], "ok"]
+]);
+EX["lat-wrong-slack"] = () => latStages([{ n: "J1", t: 1, d: 2 }, { n: "J2", t: 10, d: 10 }], 12, [
+  ["兩份 job：J1（t = 1, d = 2）、J2（t = 10, d = 10）。", null],
+  ["<strong>Smallest slack</strong>：slack = d − t，J1 = 1、J2 = 0，所以先做 J2：J2 [0,10] 準時，J1 [10,11] 遲 9 → L = <strong>9</strong>。", [1, 0], "bad"],
+  ["EDF 先做 J1（d = 2）：J1 [0,1] 準時，J2 [1,11] 遲 1 → L = <strong>1</strong>，比 9 好。", [0, 1], "ok"]
+]);
+EX["lat-swap"] = () => {
+  const fig = (j, i, marks) => svg => drawTimeline(svg, [
+    { label: "前面的 jobs", bars: [{ s: 0, f: 4, text: "其他", cls: "wait" }] },
+    { label: "j  d=8", dl: 8, dlInLabel: true, bars: [j] },
+    { label: "i  d=5", dl: 5, dlInLabel: true, bars: [i] }], 0, 10, { labelW: 92, marks });
+  return { size: "wide", steps: [
+    { text: "相鄰的 inversion：d_i = 5 &lt; d_j = 8，但 j 排在 i 前面。j [4,7] 準時；i [7,9]，ℓ_i = 9 − 5 = <strong>4</strong>（紅色）。", draw: fig({ s: 4, f: 7, text: "j", cls: "sel", late: true }, { s: 7, f: 9, text: "i", cls: "bad", late: true }, [{ t: 9, text: "f_i = 9" }]) },
+    { text: "交換 j、i：前面的 jobs 不受影響。i 提早完成：ℓ′_i = 6 − 5 = 1 ≤ ℓ_i。j 現在在 9 完成，正是原本 i 完成的時間：ℓ′_j = 9 − 8 = 1 ≤ 9 − 5 = ℓ_i。最大 lateness 沒有變大，inversion 少了 1 個。", draw: fig({ s: 6, f: 9, text: "j", cls: "ok", late: true }, { s: 4, f: 6, text: "i", cls: "ok", late: true }, [{ t: 9, text: "f′_j = f_i" }]) }
+  ] };
+};
+const sjfRows = order => { let t = 0; return order.map(j => { const r = { ...j, s: t, f: t + j.p }; t += j.p; return r; }); };
+function sjfFig(rows, k, cur, cls = "sel") {
+  const hi = sum(rows.map(r => r.p));
+  return svg => drawTimeline(svg, rows.map((j, idx) => ({ label: `${j.n} p=${fmt(j.p)}`, bars: idx < k ? [...(j.s > 0 ? [{ s: 0, f: j.s, text: `等 ${fmt(j.s)}`, cls: "wait" }] : []), { s: j.s, f: j.f, text: j.n, cls: idx === cur ? "cur" : cls }] : [] })), 0, hi, { labelW: 76 });
+}
+function sjfSteps(p, compare) {
+  const jobs = p.map((x, i) => ({ p: x, i, n: "J" + (i + 1) }));
+  const orig = sjfRows(jobs), sorted = sjfRows([...jobs].sort((a, b) => a.p - b.p || a.i - b.i));
+  const waits = rows => rows.map(r => fmt(r.s)).join(" + "), tot = rows => sum(rows.map(r => r.s));
+  const steps = [];
+  if (compare) steps.push({ text: `原本次序 ${orig.map(j => j.n).join(", ")}：灰色虛線是每份 job 要等的時間，total = ${waits(orig)} = <strong>${fmt(tot(orig))}</strong>。`, draw: sjfFig(orig, orig.length, -1, "bad") });
+  steps.push({ text: `Shortest Job First：按 p 由小到大排：${sorted.map(j => `${j.n}(${fmt(j.p)})`).join(", ")}。`, draw: sjfFig(sorted, 0, -1) });
+  sorted.forEach((j, k) => steps.push({ text: `${j.n}（p = ${fmt(j.p)}）在 ${fmt(j.s)} 開始 → waiting time = ${k ? `前面的 ${sorted.slice(0, k).map(x => fmt(x.p)).join(" + ")} = ` : ""}${fmt(j.s)}。`, draw: sjfFig(sorted, k + 1, k) }));
+  steps.push({ text: `Total waiting time = ${waits(sorted)} = <strong>${fmt(tot(sorted))}</strong>，average = ${fmt(tot(sorted) / p.length)}${compare ? `，比原本的 ${fmt(tot(orig))} 少` : ""}。Running time O(n log n)。`, draw: sjfFig(sorted, sorted.length, -1) });
+  return steps;
+}
+EX["sjf"] = d => ({ size: "wide", steps: sjfSteps(parseNums(d.in), d.compare === "1") });
+EX["sjf-q6"] = () => {
+  const J = [{ n: "J1", p: 3 }, { n: "J2", p: 1 }, { n: "J3", p: 5 }];
+  const st = (idx, text, cls) => { const rows = sjfRows(idx.map(i => J[i])); return { text, draw: sjfFig(rows, rows.length, -1, cls) }; };
+  return { size: "wide", steps: [
+    st([0, 1, 2], "題目例子 t1 = 3、t2 = 1、t3 = 5。次序 J1, J2, J3：waiting time 0, 3, 4，total = <strong>7</strong>。", "bad"),
+    st([2, 1, 0], "次序 J3, J2, J1：waiting time 0, 5, 6，total = <strong>11</strong>。長的 job 排前面，後面每個人都要等。", "bad"),
+    st([1, 0, 2], "SJF 次序 J2, J1, J3（p = 1, 3, 5）：waiting time 0, 1, 4，total = <strong>5</strong>，最少。", "ok")
+  ] };
+};
+EX["sjf-swap"] = () => {
+  const other = { label: "前面的 jobs", bars: [{ s: 0, f: 3, text: "其他", cls: "wait" }] };
+  const fig = rows => svg => drawTimeline(svg, [other, ...rows], 0, 10, { labelW: 92 });
+  return { size: "wide", steps: [
+    { text: "相鄰 inversion：Ja（p = 5）排在 Jb（p = 2）前面。w(Ja) = 3，w(Jb) = 3 + 5 = 8，兩份合共 11。", draw: fig([
+      { label: "Ja p=5", bars: [{ s: 0, f: 3, text: "等 3", cls: "wait" }, { s: 3, f: 8, text: "Ja", cls: "bad" }] },
+      { label: "Jb p=2", bars: [{ s: 0, f: 8, text: "等 8", cls: "wait" }, { s: 8, f: 10, text: "Jb", cls: "bad" }] }]) },
+    { text: "交換：其他 job 不變。w′(Jb) = 3 = w(Ja)；w′(Ja) = 3 + 2 = 5 &lt; 3 + 5 = w(Jb)。合共由 11 變 8 → total 不會變差，inversion 少 1。重複下去就得到 SJF。", draw: fig([
+      { label: "Jb p=2", bars: [{ s: 0, f: 3, text: "等 3", cls: "wait" }, { s: 3, f: 5, text: "Jb", cls: "ok" }] },
+      { label: "Ja p=5", bars: [{ s: 0, f: 5, text: "等 5", cls: "wait" }, { s: 5, f: 10, text: "Ja", cls: "ok" }] }]) }
+  ] };
+};
+function coverFig(X, rows, lo, hi, pc, marks) {
+  return svg => {
+    svg.innerHTML = "";
+    const r = tlBlock(svg, { rows: [{ label: "點", pts: X.map((t, k) => ({ t, cls: pc[k] })) }, ...rows], lo, hi, marks });
+    setView(svg, 640, r.h);
+  };
+}
+function coverSteps(X0, L) {
+  const X = [...X0].sort((a, b) => a - b);
+  const lo = Math.floor(X[0]), hi = Math.ceil(X[X.length - 1] + L);
+  const ivs = [], pc = X.map(() => "");
+  const fig = (cur, yk) => {
+    const p = [...pc];
+    if (yk != null) p[yk] = "cur";
+    return coverFig(X, ivs.map((v, k) => ({ label: `I${k + 1}`, bars: [{ s: v.s, f: v.f, text: `[${fmt(v.s)}, ${fmt(v.f)}]`, cls: k === cur ? "cur" : "sel" }] })), lo, hi, p);
+  };
+  const steps = [{ text: `把點排序：${X.map(fmt).join(", ")}（白色 = 未覆蓋）。每個 interval 長度 ${fmt(L)}。`, draw: fig(-1) }];
+  let k = 0;
+  while (k < X.length) {
+    const y = X[k], yk = k, end = y + L, cov = [];
+    while (k < X.length && X[k] <= end + 1e-9) { cov.push(X[k]); pc[k] = "sel"; k++; }
+    ivs.push({ s: y, f: end });
+    steps.push({ text: `最左未覆蓋的點 y = ${fmt(y)}（黃色）→ 放 [${fmt(y)}, ${fmt(end)}]，覆蓋 ${cov.map(fmt).join(", ")}（變藍色）。`, draw: fig(ivs.length - 1, yk) });
+  }
+  steps.push({ text: `全部點都覆蓋了：最少 <strong>${ivs.length}</strong> 個 interval：${ivs.map(v => `[${fmt(v.s)}, ${fmt(v.f)}]`).join("、")}。`, draw: fig(-1) });
+  return steps;
+}
+EX["cover"] = d => ({ size: "wide", steps: coverSteps(parseNums(d.in), +d.l) });
+EX["cover-proof"] = () => {
+  const X = [1.5, 1.56, 1.9, 2.9, 3.4, 5.8, 5.99, 6.32, 10], blue = X.map(() => "sel");
+  const G = [[1.5, 3.5], [5.8, 7.8], [10, 12]], O = [[1.4, 3.4], [5.5, 7.5], [9, 11]];
+  const bars = (arr, cls) => arr.map(([s, f], k) => ({ s, f, text: `[${fmt(s)}, ${fmt(f)}]`, cls: cls[k] || "" }));
+  const fig = (rows, marks) => coverFig(X, rows, 1, 12, blue, marks);
+  const gRow = { label: "G", bars: bars(G, ["sel", "sel", "sel"]) };
+  return { size: "wide", steps: [
+    { text: "G 是 greedy 的 interval（藍色），OPT 是任何一個 optimal 答案（綠色），兩個都按左端排好。", draw: fig([gRow, { label: "OPT", bars: bars(O, ["ok", "ok", "ok"]) }]) },
+    { text: "第一個不同的是 G1 = [1.5, 3.5] 和 O1 = [1.4, 3.4]（黃色）。y = 1.5 是最左未覆蓋的點，O1 一定要覆蓋 y，所以 O1 的左端 o = 1.4 ≤ y。", draw: fig([{ label: "G", bars: bars(G, ["cur", "sel", "sel"]) }, { label: "OPT", bars: bars(O, ["cur", "ok", "ok"]) }], [{ t: 1.5, text: "y" }]) },
+    { text: "O1 覆蓋、而前面未覆蓋的點，都在 [y, o + 2] = [1.5, 3.4] 裡面，而 [1.5, 3.4] ⊆ G1 = [1.5, 3.5]。所以把 O1 換成 G1，仍然覆蓋所有點，數目不變。", draw: fig([gRow, { label: "OPT′", bars: bars([G[0], O[1], O[2]], ["sel", "ok", "ok"]) }]) },
+    { text: "對 O2、O3 重複同樣的交換，OPT 變成 G，數目一直沒有變 → |G| = |OPT|，greedy 是 optimal。", draw: fig([gRow, { label: "OPT′′", bars: bars(G, ["sel", "sel", "sel"]) }]) }
+  ] };
+};
+
 let grTab = "knap";
 $$("#gr-lab .tab").forEach(t => t.addEventListener("click", () => {
   grTab = t.dataset.tab;
@@ -1228,120 +1817,362 @@ $$("#gr-lab .tab").forEach(t => t.addEventListener("click", () => {
   $$("#gr-lab [data-panel]").forEach(p => p.hidden = p.dataset.panel !== grTab);
   grRun();
 }));
-const table = (head, rows) => `<div class="tbl"><table><thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 const GR = {
   knap() {
     const items = parsePairs($("#kn-items").value), W = parseNums($("#kn-w").value)[0];
     if (!items.length || !(W > 0)) return '<p class="err">請輸入 ($value, kg) 和正數 W。</p>';
     if (items.some(([v, w]) => !(w > 0))) return '<p class="err">每件物品重量要大於 0。</p>';
-    const arr = items.map(([v, w], i) => ({ v, w, i, r: v / w })).sort((a, b) => b.r - a.r || a.i - b.i);
-    let cap = W, val = 0;
-    const rows = arr.map(it => {
-      const t = Math.min(it.w, Math.max(cap, 0));
-      cap -= t; val += it.v * t / it.w;
-      return [`($${fmt(it.v)}, ${fmt(it.w)}kg)`, fmt(it.r), t === it.w ? `全部 ${fmt(t)}kg` : t > 0 ? `${fmt(t)}kg（${fmt(t)}/${fmt(it.w)}）` : "—", t > 0 ? "$" + fmt(it.v * t / it.w) : "—"];
-    });
-    return `<p><strong>Step 1</strong> 計 unit price 並由高到低排序。<strong>Step 2</strong> 由高到低拿，直到 W = ${fmt(W)}kg 滿。</p>` +
-      table(["Item", "Unit price ($/kg)", "拿多少", "價值"], rows) + `<p class="result">Total value = $${fmt(val)}</p>`;
+    return knapSteps(items, W);
   },
   edf() {
-    const jobs = parsePairs($("#edf-in").value).map(([t, d], i) => ({ t, d, i, n: "J" + (i + 1) }));
-    if (!jobs.length) return '<p class="err">請用 (t,d) 格式輸入。</p>';
-    const order = [...jobs].sort((a, b) => a.d - b.d || a.i - b.i);
-    let time = 0, L = 0;
-    const rows = order.map(j => {
-      const s = time; time += j.t;
-      const late = Math.max(0, time - j.d); L = Math.max(L, late);
-      return [j.n, fmt(j.t), fmt(j.d), `[${fmt(s)}, ${fmt(time)}]`, late ? `<b>${fmt(late)}</b>` : "0"];
-    });
-    return `<p><strong>Step 1</strong> 按 deadline 排序：${order.map(j => `${j.n}(d=${fmt(j.d)})`).join(", ")}。<strong>Step 2</strong> 由時間 0 開始連續做。</p>` +
-      table(["Job", "t", "d", "[s, f]", "Lateness"], rows) + `<p class="result">Maximum lateness L = ${fmt(L)}</p>`;
+    const pairs = parsePairs($("#edf-in").value);
+    if (!pairs.length) return '<p class="err">請用 (t,d) 格式輸入。</p>';
+    return edfSteps(pairs);
   },
   sjf() {
     const p = parseNums($("#sjf-in").value);
     if (!p.length) return '<p class="err">請輸入 processing times。</p>';
-    const order = p.map((x, i) => ({ x, i, n: "J" + (i + 1) })).sort((a, b) => a.x - b.x || a.i - b.i);
-    let t = 0, tot = 0;
-    const rows = order.map(j => { const w = t; tot += w; t += j.x; return [j.n, fmt(j.x), fmt(w)]; });
-    return `<p>按 processing time 排序：${order.map(j => `${j.n}(${fmt(j.x)})`).join(", ")}</p>` +
-      table(["Job", "p", "Waiting time"], rows) + `<p class="result">Total waiting time = ${fmt(tot)}，average = ${fmt(tot / p.length)}</p>`;
+    return sjfSteps(p, false);
   },
   boat() {
-    const w = parseNums($("#boat-in").value).sort((a, b) => a - b), W = parseNums($("#boat-w").value)[0];
+    const w = parseNums($("#boat-in").value), W = parseNums($("#boat-w").value)[0];
     if (!w.length || !(W > 0)) return '<p class="err">請輸入體重和 W。</p>';
-    if (w[w.length - 1] > W) return `<p class="err">有人重過 W = ${fmt(W)}，不可能載。</p>`;
-    let l = 0, r = w.length - 1, boats = 0;
-    const log = [];
-    while (l <= r) {
-      boats++;
-      if (l < r && w[l] + w[r] <= W) { log.push(`${fmt(w[l])} + ${fmt(w[r])} = ${fmt(w[l] + w[r])} ≤ ${fmt(W)} → 一齊上船 ${boats}`); l++; r--; }
-      else if (l === r) { log.push(`只剩 ${fmt(w[r])} → 船 ${boats}`); r--; }
-      else { log.push(`${fmt(w[l])} + ${fmt(w[r])} = ${fmt(w[l] + w[r])} &gt; ${fmt(W)} → ${fmt(w[r])} 獨自上船 ${boats}`); r--; }
-    }
-    return `<p>排序：${w.map(fmt).join(", ")}</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol><p class="result">最少 ${boats} 隻船</p>`;
+    if (Math.max(...w) > W) return `<p class="err">有人重過 W = ${fmt(W)}，不可能載。</p>`;
+    return boatSteps(w, W);
   },
   cover() {
-    const X = parseNums($("#cov-in").value).sort((a, b) => a - b), L = parseNums($("#cov-l").value)[0];
+    const X = parseNums($("#cov-in").value), L = parseNums($("#cov-l").value)[0];
     if (!X.length || !(L > 0)) return '<p class="err">請輸入點和正數長度。</p>';
-    const iv = [], log = [];
-    let k = 0;
-    while (k < X.length) {
-      const y = X[k], end = y + L, cov = [];
-      while (k < X.length && X[k] <= end + 1e-9) cov.push(X[k++]);
-      iv.push(`[${fmt(y)}, ${fmt(end)}]`);
-      log.push(`最左未覆蓋點 y = ${fmt(y)} → 放 [${fmt(y)}, ${fmt(end)}]，覆蓋 ${cov.map(fmt).join(", ")}`);
-    }
-    return `<p>排序：${X.map(fmt).join(", ")}</p><ol class="log">${log.map(s => `<li>${s}</li>`).join("")}</ol><p class="result">${iv.length} 個 interval：${iv.join(", ")}</p>`;
+    return coverSteps(X, L);
   }
 };
-function grRun() { $("#gr-out").innerHTML = GR[grTab](); }
+function grRun() {
+  const r = GR[grTab](), out = $("#gr-out");
+  if (typeof r === "string") out.innerHTML = r;
+  else stepper(out, r, { size: "wide" });
+}
 $("#gr-run").addEventListener("click", grRun);
 grRun();
 
-/* ---------- Merge-and-count lab ---------- */
+/* ============================ L6 Divide and conquer ============================ */
+const invPairs = a => { const out = []; for (let i = 0; i < a.length; i++) for (let j = i + 1; j < a.length; j++) if (a[i] > a[j]) out.push([a[i], a[j]]); return out; };
+function mcWhole(all) {
+  const h = Math.ceil(all.length / 2), L = all.slice(0, h), R = all.slice(h);
+  return { L, R, pa: invPairs(L), pb: invPairs(R), A: [...L].sort((x, y) => x - y), B: [...R].sort((x, y) => x - y) };
+}
+function mcSteps(A, B, whole) {
+  const n = A.length + B.length, steps = [];
+  const fig = (i, j, merged, take, adds, totalTxt) => svg => {
+    svg.innerHTML = "";
+    const cells = [
+      ...A.map((x, k) => ({ t: fmt(x), cls: k < i ? "done" : take === "B" && k >= i ? "big" : take === "A" && k === i ? "cur" : "", ptr: k === i ? "i" : "" })),
+      ...B.map((x, k) => ({ t: fmt(x), cls: k < j ? "done" : take === "B" && k === j ? "cur" : "", ptr: k === j ? "j" : "", ann: adds[k] != null ? "+" + adds[k] : "" }))
+    ];
+    const r1 = cellRow(svg, { x0: 6, y0: 0, cells, labelW: 64, label: "A ｜ B", split: A.length, cw: 34 });
+    const r2 = cellRow(svg, { x0: 6, y0: r1.h + 12, labelW: 64, label: "merged", cw: 34, cells: Array.from({ length: n }, (_, k) => ({ t: k < merged.length ? fmt(merged[k]) : "", cls: k >= merged.length ? "empty" : take && k === merged.length - 1 ? "cur" : "" })) });
+    svgText(svg, 6, r1.h + r2.h + 38, `Total = ${totalTxt}`, "c-total", "start");
+    setView(svg, Math.max(r1.w, r2.w) + 10, r1.h + r2.h + 48);
+  };
+  const halves = (cells, split, label, line) => svg => {
+    svg.innerHTML = "";
+    const r = cellRow(svg, { x0: 6, y0: 0, cells: cells.map(x => ({ t: fmt(x) })), labelW: 64, label, split, splitLine: line, cw: 34 });
+    setView(svg, r.w + 10, r.h + 6);
+  };
+  const pairsTxt = ps => ps.length && ps.length <= 12 ? `：${ps.map(([a, b]) => `(${fmt(a)},${fmt(b)})`).join("、")}` : "";
+  if (whole) {
+    steps.push({ text: `把 list 分成兩半（紅線）：左 ${whole.L.map(fmt).join(" ")}，右 ${whole.R.map(fmt).join(" ")}。`, draw: halves([...whole.L, ...whole.R], whole.L.length, "list", true) });
+    steps.push({ text: `遞迴（Sort-and-Count）處理兩半：左半內部 ${whole.pa.length} 個 inversion${pairsTxt(whole.pa)}；右半內部 ${whole.pb.length} 個${pairsTxt(whole.pb)}。兩半排好序就是 A、B。`, draw: halves([...A, ...B], A.length, "排序後", false) });
+  }
+  steps.push({ text: `A = ${A.map(fmt).join(", ")}，B = ${B.map(fmt).join(", ")}，兩邊都已排序。i、j 指向兩邊未處理的第一個數，Total = 0。`, draw: fig(0, 0, [], null, {}, "0") });
+  let i = 0, j = 0, total = 0;
+  const merged = [], adds = {}, addList = [];
+  const totTxt = () => addList.length > 1 ? `${addList.join(" + ")} = ${total}` : String(total);
+  while (i < A.length && j < B.length) {
+    if (A[i] <= B[j]) {
+      merged.push(A[i]);
+      steps.push({ text: `${fmt(A[i])} ≤ ${fmt(B[j])}：把 A 的 ${fmt(A[i])} 放入 merged，不用加。`, draw: fig(i, j, merged.slice(), "A", { ...adds }, totTxt()) });
+      i++;
+    } else {
+      const k = A.length - i;
+      total += k; adds[j] = k; addList.push(k); merged.push(B[j]);
+      steps.push({ text: `${fmt(A[i])} &gt; ${fmt(B[j])}：把 B 的 ${fmt(B[j])} 放入 merged。A 剩下的 ${A.slice(i).map(fmt).join(", ")} 共 ${k} 個都比 ${fmt(B[j])} 大（紅色）→ <strong>+${k}</strong>，Total = ${totTxt()}。`, draw: fig(i, j, merged.slice(), "B", { ...adds }, totTxt()) });
+      j++;
+    }
+  }
+  if (i < A.length) {
+    const rest = A.slice(i);
+    merged.push(...rest);
+    steps.push({ text: `B 已經用完：把 A 剩下的 ${rest.map(fmt).join(", ")} 抄到 merged，不用加。`, draw: fig(A.length, j, merged.slice(), null, { ...adds }, totTxt()) });
+  }
+  if (j < B.length) {
+    const rest = B.slice(j);
+    merged.push(...rest);
+    rest.forEach((_, k) => { adds[j + k] = 0; });
+    steps.push({ text: `A 已經用完：B 剩下的 ${rest.map(fmt).join(", ")} 直接抄到 merged；A 沒有剩下的數，每個 +0。`, draw: fig(i, B.length, merged.slice(), null, { ...adds }, totTxt()) });
+  }
+  steps.push({ text: `Cross inversions = ${addList.join(" + ") || "0"} = <strong>${total}</strong>。Merge 只掃一次，O(n)。${whole ? `整個 list：左 ${whole.pa.length} + 右 ${whole.pb.length} + 跨兩邊 ${total} = <strong>${whole.pa.length + whole.pb.length + total}</strong> 個 inversions。` : ""}`, draw: fig(A.length, B.length, merged.slice(), null, { ...adds }, totTxt()) });
+  return steps;
+}
+EX["mc"] = d => {
+  if (d.all) { const w = mcWhole(parseNums(d.all)); return { size: "wide", steps: mcSteps(w.A, w.B, w) }; }
+  return { size: "wide", steps: mcSteps(parseNums(d.l), parseNums(d.r), null) };
+};
 function mcSplit() {
-  const a = parseNums($("#mc-all").value);
-  const h = Math.ceil(a.length / 2);
+  const a = parseNums($("#mc-all").value), h = Math.ceil(a.length / 2);
   $("#mc-l").value = a.slice(0, h).sort((x, y) => x - y).join(" ");
   $("#mc-r").value = a.slice(h).sort((x, y) => x - y).join(" ");
 }
-const brute = a => { let c = 0; for (let i = 0; i < a.length; i++) for (let j = i + 1; j < a.length; j++) if (a[i] > a[j]) c++; return c; };
 function mcRun(fromList) {
   const out = $("#mc-out");
-  let A = parseNums($("#mc-l").value), B = parseNums($("#mc-r").value);
+  const A = parseNums($("#mc-l").value), B = parseNums($("#mc-r").value);
   if (!A.length || !B.length) { out.innerHTML = '<p class="err">兩邊都要有數字。</p>'; return; }
   const note = [];
   if (A.some((x, i) => i && x < A[i - 1])) { A.sort((x, y) => x - y); note.push("左半未排序，已先排序"); }
   if (B.some((x, i) => i && x < B[i - 1])) { B.sort((x, y) => x - y); note.push("右半未排序，已先排序"); }
-  let i = 0, j = 0, total = 0;
-  const rows = [], adds = [], merged = [];
-  while (i < A.length && j < B.length) {
-    if (A[i] <= B[j]) { merged.push(A[i]); rows.push([`${fmt(A[i])} vs ${fmt(B[j])}`, `${fmt(A[i])}（A）`, "—", fmt(total)]); i++; }
-    else {
-      const k = A.length - i; total += k; adds.push(k); merged.push(B[j]);
-      rows.push([`${fmt(A[i])} vs ${fmt(B[j])}`, `${fmt(B[j])}（B）`, `<b>+${k}</b>（${A.slice(i).map(fmt).join(", ")} 比它大）`, fmt(total)]);
-      j++;
-    }
-  }
-  while (i < A.length) { merged.push(A[i]); rows.push(["B 已空", `${fmt(A[i])}（A）`, "—", fmt(total)]); i++; }
-  while (j < B.length) { merged.push(B[j]); rows.push(["A 已空", `${fmt(B[j])}（B）`, "+0", fmt(total)]); adds.push(0); j++; }
-  let extra = "";
-  if (fromList) {
-    const all = parseNums($("#mc-all").value), h = Math.ceil(all.length / 2);
-    const ra = brute(all.slice(0, h)), rb = brute(all.slice(h));
-    extra = `<p>整個 list：左半內部 ${ra} 個 + 右半內部 ${rb} 個 + 跨兩邊 ${total} 個 = <strong>${ra + rb + total}</strong> 個 inversions。</p>`;
-  }
-  out.innerHTML = (note.length ? `<p class="small muted">${note.join("；")}。</p>` : "") +
-    `<p>A = ${A.map(fmt).join(", ")}　B = ${B.map(fmt).join(", ")}</p>` +
-    table(["比較", "放入 merged", "加多少", "累計"], rows) +
-    `<p>Merged：${merged.map(fmt).join(", ")}</p>` +
-    `<p class="result">Cross inversions = ${adds.filter(x => x).join(" + ") || "0"} = ${total}</p>` + extra;
+  stepper(out, mcSteps(A, B, fromList ? mcWhole(parseNums($("#mc-all").value)) : null), { size: "wide", label: "Merge-and-count 圖" });
+  if (note.length) out.insertAdjacentHTML("afterbegin", `<p class="small muted">${note.join("；")}。</p>`);
 }
 $("#mc-split").addEventListener("click", () => { mcSplit(); mcRun(true); });
 $("#mc-run").addEventListener("click", () => mcRun(false));
 $$("[data-mc]").forEach(b => b.addEventListener("click", () => { $("#mc-all").value = b.dataset.mc; mcSplit(); mcRun(true); }));
 $$("[data-mcl]").forEach(b => b.addEventListener("click", () => { $("#mc-l").value = b.dataset.mcl; $("#mc-r").value = b.dataset.mcr; mcRun(false); }));
 mcSplit(); mcRun(true);
+
+/* recursion tree for the D&C examples: divide top-down, then conquer bottom-up */
+function treeDraw(svg, n, nodes, o) {
+  svg.innerHTML = "";
+  const cw = 34, gap = 10, ch = 30, lvH = 84, pad = 10;
+  const X = i => pad + i * (cw + gap), Y = d => 12 + d * lvH;
+  const cx = nd => (X(nd.lo) + X(nd.hi) + cw) / 2;
+  const on = nd => nd.depth >= o.retFrom;
+  const shown = nodes.filter(nd => nd.depth <= o.showD);
+  shown.forEach(nd => {
+    if (!nd.parent) return;
+    const p = nd.parent;
+    svgEl("line", { x1: cx(p), y1: Y(p.depth) + ch + (on(p) && p.retText ? 28 : 6), x2: cx(nd), y2: Y(nd.depth) - 6, class: "c-line" }, svg);
+  });
+  shown.forEach(nd => {
+    const y = Y(nd.depth), hl = nd.depth === o.hlD;
+    svgEl("rect", { x: X(nd.lo) - 4, y: y - 4, width: X(nd.hi) - X(nd.lo) + cw + 8, height: ch + 8, rx: 7, class: "c-out" + (hl ? " hl" : "") }, svg);
+    const vals = o.kind === "msort" && on(nd) ? nd.sorted : nd.vals;
+    const cls = o.kind === "msort" && on(nd) && hl && nd.kids.length ? "ok" : "";
+    vals.forEach((v, k) => {
+      svgEl("rect", { x: X(nd.lo + k), y, width: cw, height: ch, rx: 5, class: "c-box " + cls }, svg);
+      svgText(svg, X(nd.lo + k) + cw / 2, y + ch / 2, fmt(v), "c-txt " + cls);
+    });
+    if (on(nd) && nd.retText) svgText(svg, cx(nd), y + ch + 19, nd.retText, "c-ret");
+  });
+  const maxD = Math.max(...nodes.map(nd => nd.depth));
+  setView(svg, X(n - 1) + cw + pad, Y(maxD) + ch + 30);
+}
+function dcSteps(A, kind) {
+  const n = A.length, nodes = [];
+  const build = (lo, hi, depth, parent) => {
+    const nd = { lo, hi, depth, parent, vals: A.slice(lo, hi + 1), kids: [] };
+    nodes.push(nd);
+    if (!(kind === "max2" ? hi - lo <= 1 : lo === hi)) {
+      const mid = Math.floor((lo + hi) / 2);
+      nd.kids = [build(lo, mid, depth + 1, nd), build(mid + 1, hi, depth + 1, nd)];
+    }
+    return nd;
+  };
+  const root = build(0, n - 1, 0, null);
+  const maxD = Math.max(...nodes.map(nd => nd.depth));
+  const rng = nd => nd.lo === nd.hi ? `A[${nd.lo + 1}]` : `A[${nd.lo + 1}..${nd.hi + 1}]`;
+  const pair = (a, b) => `(${fmt(a)}, ${fmt(b)})`;
+  let comps = 0;
+  [...nodes].sort((a, b) => b.depth - a.depth).forEach(nd => {
+    const [L, R] = nd.kids;
+    if (kind === "msort") {
+      if (!L) { nd.sorted = [...nd.vals]; return; }
+      nd.sorted = [...L.sorted, ...R.sorted].sort((a, b) => a - b);
+      nd.say = `merge [${L.sorted.map(fmt).join(", ")}] + [${R.sorted.map(fmt).join(", ")}] → [${nd.sorted.map(fmt).join(", ")}]`;
+    } else if (kind === "max") {
+      if (!L) nd.ret = nd.vals[0];
+      else { nd.ret = Math.max(L.ret, R.ret); comps++; nd.say = `max(${fmt(L.ret)}, ${fmt(R.ret)}) = ${fmt(nd.ret)}`; }
+      nd.retText = fmt(nd.ret);
+    } else if (kind === "minmax") {
+      if (!L) nd.ret = [nd.vals[0], nd.vals[0]];
+      else {
+        nd.ret = [Math.min(L.ret[0], R.ret[0]), Math.max(L.ret[1], R.ret[1])];
+        comps += 2;
+        nd.say = `${pair(...L.ret)} 和 ${pair(...R.ret)} → (${fmt(nd.ret[0])}, ${fmt(nd.ret[1])})`;
+      }
+      nd.retText = `(${fmt(nd.ret[0])},${fmt(nd.ret[1])})`;
+    } else {
+      if (!L) {
+        if (nd.lo === nd.hi) { nd.ret = [nd.vals[0], -Infinity]; nd.say = `${fmt(nd.vals[0])} 只有一個數 → (${fmt(nd.vals[0])}, −∞)`; }
+        else { const [a, b] = nd.vals; nd.ret = [Math.max(a, b), Math.min(a, b)]; comps++; nd.say = `${fmt(a)}、${fmt(b)} 比較 1 次 → ${pair(...nd.ret)}`; }
+      } else {
+        const [x1, y1] = L.ret, [x2, y2] = R.ret;
+        comps += 2;
+        nd.ret = x1 > x2 ? [x1, Math.max(y1, x2)] : [x2, Math.max(x1, y2)];
+        nd.say = x1 > x2
+          ? `${pair(x1, y1)} 對 ${pair(x2, y2)}：${fmt(x1)} &gt; ${fmt(x2)} → 最大 ${fmt(x1)}，第二大 = max(${fmt(y1)}, ${fmt(x2)}) = ${fmt(nd.ret[1])}`
+          : `${pair(x1, y1)} 對 ${pair(x2, y2)}：${fmt(x1)} &lt; ${fmt(x2)} → 最大 ${fmt(x2)}，第二大 = max(${fmt(x1)}, ${fmt(y2)}) = ${fmt(nd.ret[1])}`;
+      }
+      nd.retText = `(${fmt(nd.ret[0])},${fmt(nd.ret[1])})`;
+    }
+  });
+  const fig = (showD, retFrom, hlD) => svg => treeDraw(svg, n, nodes, { showD, retFrom, hlD, kind });
+  const steps = [{ text: `整個 array：${rng(root)} = [${A.map(fmt).join(", ")}]。`, draw: fig(0, Infinity, 0) }];
+  for (let d = 1; d <= maxD; d++) {
+    const parents = nodes.filter(nd => nd.depth === d - 1 && nd.kids.length);
+    steps.push({ text: `Divide：${parents.map(p => `${rng(p)} → ${rng(p.kids[0])} ｜ ${rng(p.kids[1])}`).join("；")}。${d === maxD ? `到了 base case（${kind === "max2" ? "1 或 2 個數" : "1 個數"}）。` : ""}`, draw: fig(d, Infinity, d) });
+  }
+  const retName = { max: "最大值", minmax: "(min, max)", max2: "(最大, 第二大)" }[kind];
+  for (let d = maxD; d >= 0; d--) {
+    const lvl = nodes.filter(nd => nd.depth === d), says = lvl.map(nd => nd.say).filter(Boolean);
+    let text;
+    if (!says.length) text = kind === "msort" ? "Base case：每格只有一個數，已經排好。" : `Base case：一個數直接 return ${kind === "max" ? "自己" : "(自己, 自己)"}，不用比較（綠色是 return 的值）。`;
+    else text = `Conquer${retName ? `（綠色是 return 的 ${retName}）` : "（綠色是剛 merge 好的）"}：${says.join("；")}。`;
+    steps.push({ text, draw: fig(maxD, d, d) });
+  }
+  const fin = {
+    max: () => `答案：最大值 = <strong>${fmt(root.ret)}</strong>。每個內部節點比較 1 次，共 ${comps} = n − 1 次：T(n) = 2T(n/2) + c → O(n)。`,
+    minmax: () => `答案：(min, max) = <strong>(${fmt(root.ret[0])}, ${fmt(root.ret[1])})</strong>。每次合併比較 2 次，共 ${comps} = 2(n − 1) 次：g(n) = 2g(n/2) + 2 → O(n)。`,
+    max2: () => `答案：最大 <strong>${fmt(root.ret[0])}</strong>，第二大 <strong>${fmt(root.ret[1])}</strong>。共比較 ${comps} 次：g(n) = 2g(n/2) + 2 → O(n)。`,
+    msort: () => `排好了：[${root.sorted.map(fmt).join(", ")}]。每一層 merge 合共 n 步，共 log₂n 層：T(n) = 2T(n/2) + n → O(n log n)。`
+  }[kind]();
+  steps.push({ text: fin, draw: fig(maxD, 0, -1) });
+  return steps;
+}
+EX["dc"] = d => ({ size: "narrow", steps: dcSteps(parseNums(d.in), d.kind) });
+function msubSteps(A) {
+  const n = A.length, mid = Math.floor((1 + n) / 2);
+  const best = (lo, hi) => {
+    let b = null;
+    for (let i = lo; i <= hi; i++) { let s = 0; for (let j = i; j <= hi; j++) { s += A[j - 1]; if (!b || s > b.s) b = { s, i, j }; } }
+    return b;
+  };
+  const Lb = best(1, mid), Rb = best(mid + 1, n), suf = {}, pre = {};
+  let s = 0, bs = mid, bp = mid + 1;
+  for (let k = mid; k >= 1; k--) { s += A[k - 1]; suf[k] = s; if (s > suf[bs]) bs = k; }
+  s = 0;
+  for (let k = mid + 1; k <= n; k++) { s += A[k - 1]; pre[k] = s; if (s > pre[bp]) bp = k; }
+  const cross = { s: suf[bs] + pre[bp], i: bs, j: bp };
+  const ans = [Lb, Rb, cross].reduce((a, b) => b.s > a.s ? b : a);
+  const span = r => r.i === r.j ? `index ${r.i}` : `index ${r.i}..${r.j}`;
+  const sub = r => `[${A.slice(r.i - 1, r.j).map(fmt).join(", ")}]`;
+  const fig = (hl, ann) => svg => {
+    svg.innerHTML = "";
+    const cells = A.map((x, k) => {
+      const i = k + 1, h = hl.find(([a, b]) => i >= a && i <= b);
+      return { t: fmt(x), top: String(i), cls: h ? h[2] : "", ann: ann[i] != null ? fmt(ann[i]) : "", annCls: "sum" };
+    });
+    const r = cellRow(svg, { x0: 4, y0: 0, cells, split: mid, splitLine: true, cw: 40 });
+    setView(svg, r.w + 8, r.h + 6);
+  };
+  const sufList = Array.from({ length: mid }, (_, t) => fmt(suf[mid - t])).join(", ");
+  const preList = Array.from({ length: n - mid }, (_, t) => fmt(pre[mid + 1 + t])).join(", ");
+  return [
+    { text: `mid = ⌊(1 + ${n}) / 2⌋ = ${mid}：分成左 A[1..${mid}] 和右 A[${mid + 1}..${n}]（紅線）。格上面的小字是 index。最大的 subarray 只有三種：全在左、全在右、跨過 mid。`, draw: fig([], {}) },
+    { text: `遞迴求左半：最大和 = <strong>${fmt(Lb.s)}</strong>，${sub(Lb)}（${span(Lb)}，綠色）。`, draw: fig([[Lb.i, Lb.j, "ok"]], {}) },
+    { text: `遞迴求右半：最大和 = <strong>${fmt(Rb.s)}</strong>，${sub(Rb)}（${span(Rb)}，綠色）。`, draw: fig([[Rb.i, Rb.j, "ok"]], {}) },
+    { text: `跨過 mid 的左段一定包含 A[${mid}]。由 index ${mid} 向左逐個加（寫在格下面）：${sufList} → 最大 ${fmt(suf[bs])}（index ${bs}..${mid}，藍框）。`, draw: fig([[bs, mid, "hl"]], suf) },
+    { text: `跨過 mid 的右段一定包含 A[${mid + 1}]。由 index ${mid + 1} 向右逐個加：${preList} → 最大 ${fmt(pre[bp])}（index ${mid + 1}..${bp}，藍框）。`, draw: fig([[bs, mid, "hl"], [mid + 1, bp, "hl"]], { ...suf, ...pre }) },
+    { text: `跨過 mid = ${fmt(suf[bs])} + ${fmt(pre[bp])} = <strong>${fmt(cross.s)}</strong>。答案 = max(${fmt(Lb.s)}, ${fmt(Rb.s)}, ${fmt(cross.s)}) = <strong>${fmt(ans.s)}</strong>：${sub(ans)}（${span(ans)}）。跨 mid 那部分只掃一次 O(n)，所以 T(n) = 2T(n/2) + O(n) = O(n log n)。`, draw: fig([[ans.i, ans.j, "ok"]], {}) }
+  ];
+}
+EX["msub"] = d => ({ size: "narrow", steps: msubSteps(parseNums(d.in)) });
+
+/* recursion trees for recurrences: level = [boxes drawn, box label, left note, level total, more?]; null = ⋮ */
+const REC = {
+  c: { name: "2T(n/2) + c", a: 2,
+    levels: [[1, "c", "1 個", "c"], [2, "c", "2 個", "2c"], [4, "c", "4 個", "4c"], null, [8, "T(1)", "n 個", "n·T(1)", true]],
+    says: ["第 0 層：整個問題。分開後把兩邊答案合併要 c（例如 max(a, b) 比較一次）。", "第 1 層：2 個大小 n/2 的 subproblem，每個也要 c → 這層共 2c。", "第 2 層：4 個大小 n/4 → 這層共 4c。每往下一層，個數 ×2。", "第 i 層有 2^i 個，共 2^i·c。設 n = 2^k，最後一層內部節點在第 k − 1 層。", "最底一層：n 個 base case T(1)。"],
+    total: "全部加起來：c(1 + 2 + … + 2^(k−1)) + nT(1) = c(2^k − 1) + nT(1) = c(n − 1) + nT(1) = <strong>O(n)</strong>。找最大值、最大＋第二大都是這條。" },
+  c1: { name: "2T(n/2) + 1", a: 2,
+    levels: [[1, "1", "1 個", "1"], [2, "1", "2 個", "2"], [4, "1", "4 個", "4"], null, [8, "T(1)", "n 個", "n·T(1) = n", true]],
+    says: ["第 0 層：自己做 1。", "第 1 層：2 個 T(n/2)，各做 1 → 2。", "第 2 層：4 個 → 4。每層 ×2。", "設 n = 2^k，內部節點共 k 層：1 + 2 + … + 2^(k−1)。", "最底 n 個 T(1) = 1 → n。"],
+    total: "(1 + 2 + … + 2^(k−1)) + n = (n − 1) + n = 2n − 1 → <strong>O(n)</strong>。" },
+  n: { name: "2T(n/2) + n", a: 2,
+    levels: [[1, "n", "1 個", "n"], [2, "n/2", "2 個", "n"], [4, "n/4", "4 個", "n"], null, [8, "T(1)", "n 個", "n·T(1)", true]],
+    says: ["第 0 層：merge 整個 array 要 n。", "第 1 層：2 個大小 n/2，各要 n/2 → 這層共 n。", "第 2 層：4 個 n/4 → 也是共 n。每一層都是 n。", "設 n = 2^k，一共 k = log₂n 層，每層 n。", "最底 n 個 T(1)（merge sort 的 T(1) = 0）。"],
+    total: "T(n) = n + n + … + n（log₂n 層）+ nT(1) = n log₂n + nT(1) = <strong>O(n log n)</strong>。Merge sort、counting inversions、max subarray 都是這條。" },
+  "4n": { name: "4T(n/2) + n", a: 4,
+    levels: [[1, "n", "1 個", "n"], [4, "n/2", "4 個", "2n"], [8, "n/4", "16 個", "4n", true], null, [8, "T(1)", "n² 個", "n²·T(1)", true]],
+    says: ["第 0 層：n。", "第 1 層：4 個 n/2 → 4 × n/2 = 2n。", "第 2 層：16 個 n/4 → 4n。每層 ×2。", "第 i 層：4^i 個 n/2^i → 2^i·n。設 n = 2^k，共 k 層。", "最底：4^k = (2^k)² = n² 個 T(1)。"],
+    total: "n(1 + 2 + … + 2^(k−1)) + n²T(1) = n(n − 1) + n²T(1) = <strong>O(n²)</strong>。" },
+  half: { name: "T(n/2) + n", a: 1,
+    levels: [[1, "n", "size n", "n"], [1, "n/2", "size n/2", "n/2"], [1, "n/4", "size n/4", "n/4"], null, [1, "T(1)", "size 1", "1"]],
+    says: ["第 0 層：n。", "只有 1 個 subproblem，大小 n/2 → n/2。", "再減半 → n/4。", "一直減半，共 log₂n 層。", "最底 T(1)。"],
+    total: "n + n/2 + n/4 + … + 1 ≤ 2n（等比數列）→ <strong>O(n)</strong>。" },
+  one: { name: "T(n/2) + 1", a: 1,
+    levels: [[1, "1", "size n", "1"], [1, "1", "size n/2", "1"], [1, "1", "size n/4", "1"], null, [1, "T(1)", "size 1", "1"]],
+    says: ["第 0 層：做 1 次比較。", "只剩一半（binary search 只看一邊）→ 1。", "再減半 → 1。", "每層 1，共 log₂n 層。", "最底 T(1)。"],
+    total: "1 + 1 + … + 1（log₂n + 1 個）→ <strong>O(log n)</strong>。Binary search。" },
+  minus1: { name: "T(n−1) + n", a: 1,
+    levels: [[1, "n", "size n", "n"], [1, "n−1", "size n−1", "n − 1"], [1, "n−2", "size n−2", "n − 2"], null, [1, "1", "size 1", "1"]],
+    says: ["第 0 層：n。", "每次只細 1 → n − 1。", "→ n − 2。", "一共 n 層。", "最底 T(1) = 1。"],
+    total: "n + (n − 1) + … + 1 = n(n + 1)/2 → <strong>O(n²)</strong>。" },
+  minus2: { name: "T(n−2) + n", a: 1,
+    levels: [[1, "n", "size n", "n"], [1, "n−2", "size n−2", "n − 2"], [1, "n−4", "size n−4", "n − 4"], null, [1, "T(2)", "size 2", "1"]],
+    says: ["第 0 層：n。", "每次細 2 → n − 2。", "→ n − 4。", "n 是偶數時一共約 n/2 層。", "最底 T(2) = 1。"],
+    total: "n + (n − 2) + … + 4 + T(2) = (n²/4 + n/2 − 2) + 1 = n²/4 + n/2 − 1 → <strong>O(n²)</strong>。2022 官方答案把每一項都當作 ≤ n：T(2) + (n/2 − 1)n = 1 + n²/2 − n，一樣是 O(n²)。" }
+};
+function costTree(svg, spec, upto) {
+  svg.innerHTML = "";
+  const W = 640, left = 96, right = 520, boxH = 28, lvH = 54, pos = [];
+  spec.levels.slice(0, upto).forEach((L, d) => {
+    const y = 8 + d * lvH;
+    if (!L) {
+      svgText(svg, (left + right) / 2, y + boxH / 2, "⋮", "c-txt");
+      svgText(svg, W - 8, y + boxH / 2, "⋮", "c-ret", "end", true);
+      pos.push(null);
+      return;
+    }
+    const [k, label, note, total, more] = L, slots = more ? k + 1 : k, gap = 8;
+    const bw = Math.min(120, (right - left - (slots - 1) * gap) / slots);
+    const x0 = left + (right - left - (slots * bw + (slots - 1) * gap)) / 2, centers = [];
+    for (let s = 0; s < slots; s++) {
+      const x = x0 + s * (bw + gap);
+      if (more && s === slots - 2) { svgText(svg, x + bw / 2, y + boxH / 2, "…", "c-txt"); continue; }
+      svgEl("rect", { x, y, width: bw, height: boxH, rx: 5, class: "c-box" }, svg);
+      svgText(svg, x + bw / 2, y + boxH / 2, label, "c-txt sm");
+      centers.push(x + bw / 2);
+    }
+    pos.push(more ? null : centers);
+    svgText(svg, 4, y + boxH / 2, note, "c-lbl", "start");
+    svgText(svg, W - 8, y + boxH / 2, "= " + total, "c-ret", "end", true);
+    const prev = pos[d - 1];
+    if (d > 0 && prev && pos[d] && pos[d].length === prev.length * spec.a)
+      prev.forEach((px, i) => { for (let c = 0; c < spec.a; c++) svgEl("line", { x1: px, y1: y - lvH + boxH, x2: pos[d][i * spec.a + c], y2: y, class: "c-line" }, svg); });
+  });
+  svgText(svg, W - 8, 4 + spec.levels.length * lvH - 2, "每層合共", "c-idx", "end");
+  setView(svg, W, 8 + spec.levels.length * lvH + 4);
+}
+function recWidget(host, keys) {
+  const tabs = document.createElement("div"), body = document.createElement("div");
+  tabs.className = "tabs";
+  tabs.setAttribute("role", "tablist");
+  host.append(tabs, body);
+  const load = key => {
+    const sp = REC[key];
+    const steps = sp.levels.map((L, d) => ({ text: `T(n) = ${sp.name}。${sp.says[d]}`, draw: svg => costTree(svg, sp, d + 1) }));
+    steps.push({ text: sp.total, draw: svg => costTree(svg, sp, sp.levels.length) });
+    stepper(body, steps, { size: "wide", label: "遞迴樹" });
+  };
+  if (keys.length > 1) keys.forEach((key, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "tab"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", String(i === 0));
+    b.textContent = "T(n) = " + REC[key].name;
+    b.addEventListener("click", () => { $$(".tab", tabs).forEach(x => x.setAttribute("aria-selected", String(x === b))); load(key); });
+    tabs.appendChild(b);
+  });
+  else tabs.remove();
+  load(keys[0]);
+}
+
+/* ---------- mount every 圖解 block on the page ---------- */
+$$(".ex[data-ex]").forEach(el => {
+  const d = el.dataset;
+  el.innerHTML = (d.title ? `<p class="ex-title">${esc(d.title)}</p>` : "") + '<div class="ex-body"></div>';
+  const body = el.querySelector(".ex-body");
+  if (d.ex === "rec") { recWidget(body, d.keys.split(",")); return; }
+  const r = EX[d.ex](d);
+  stepper(body, r.steps, { size: r.size || "narrow", label: d.title || "圖解" });
+});
 
 /* ---------- file index ---------- */
 const FILES = {
