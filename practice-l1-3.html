@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L1–3 練習卷</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: one reading column on faint graph paper; lecture tabs stick to the top; each lab sits right where its topic is taught. Light-only, as requested. */
+:root{
+  --paper:#F4F7FB;
+  --paper-glass:rgba(244,247,251,.93);
+  --grid:#E5EBF3;
+  --card:#FFFFFF;
+  --ink:#1C2532;
+  --muted:#5A6577;
+  --line:#D6DEE9;
+  --edge:#9AA7B8;
+  --blue:#1D5DA6;
+  --blue-soft:#E7EFF9;
+  --on-blue:#FFFFFF;
+  --mark:#FFEC8F;
+  --ok:#2C7650; --ok-soft:#E1F1E7;
+  --no:#A63A3A; --no-soft:#F9E6E6;
+  --warn:#9A6200; --warn-soft:#FFF3D6;
+  --f-display:"Bitter",Georgia,"Times New Roman",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper);scroll-padding-top:64px}
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 80px;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;max-width:900px;margin:0 auto;background:var(--paper-glass);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topnav .inner{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+.topnav a{flex:none;font-size:13.5px;line-height:1.4;text-decoration:none;color:var(--muted);padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.topnav a:hover{color:var(--blue);border-color:var(--blue)}
+main{max-width:900px;margin:0 auto}
+
+h1,h2,h3{font-family:var(--f-display);line-height:1.25;text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:clamp(2.1rem,7vw,3.3rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,4.2vw,1.95rem);font-weight:700}
+h3{font-size:1.2rem;font-weight:700;margin-top:1.8em}
+h4{font-size:1rem;margin:1.2em 0 .2em}
+p,li{max-width:72ch}
+p{margin:.6em 0}
+ul,ol{padding-left:1.4em;margin:.5em 0}
+li{margin:.2em 0}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin:0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+mark{background:linear-gradient(transparent 52%,var(--mark) 52%);color:inherit;padding:0 1px}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--blue-soft);padding:1px 5px;border-radius:4px}
+pre{font-family:var(--f-mono);font-size:13.5px;line-height:1.6;background:var(--blue-soft);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:.8em 0;white-space:pre}
+pre code{background:none;padding:0;font-size:inherit}
+
+section{padding-block:44px 8px;border-top:1px solid var(--line)}
+section>header{display:grid;gap:4px;margin-bottom:14px}
+
+.hero{padding-block:36px 28px;display:grid;gap:14px}
+.lede{font-size:1.08rem;margin:0}
+.hero-grid{display:grid;grid-template-columns:minmax(150px,200px) 1fr;gap:16px;align-items:start}
+.count{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:2px}
+.count b{font-family:var(--f-display);font-size:3.2rem;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.count small{font-size:13.5px;color:var(--muted)}
+.range{display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;line-height:1.35;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.chip.no{background:var(--no-soft);border-color:transparent;color:var(--no);text-decoration:line-through;text-decoration-thickness:1px}
+@media (max-width:560px){.hero-grid{grid-template-columns:1fr}}
+
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:1em 0}
+.box>.tag{display:inline-block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 8px;border-radius:4px;margin-bottom:4px}
+.box.must>.tag{background:var(--mark);color:var(--ink)}
+.box.trap>.tag{background:var(--no-soft);color:var(--no)}
+.box.write>.tag{background:var(--blue-soft);color:var(--blue)}
+.box.ans>.tag{background:var(--ok-soft);color:var(--ok)}
+.box p:first-of-type{margin-top:.2em}
+.proof{font-family:var(--f-body);font-size:14.5px;line-height:1.7;background:var(--paper);border:1px dashed var(--line);border-radius:8px;padding:10px 14px;margin:.6em 0}
+.proof ol{margin:.2em 0}
+
+.tbl{overflow-x:auto;margin:.8em 0}
+table{border-collapse:collapse;font-size:14.5px;font-variant-numeric:tabular-nums;width:100%}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top;background:var(--card)}
+th{background:var(--blue-soft);font-weight:600;white-space:nowrap}
+td.mono,th.mono{font-family:var(--f-mono);font-size:13.5px}
+td.inS{background:var(--blue-soft)}
+td.cur{background:var(--mark);font-weight:700}
+td.yes{color:var(--ok);font-weight:600}
+td.no{color:var(--no);font-weight:600}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.twocol>*{min-width:0}
+@media (max-width:640px){.twocol{grid-template-columns:1fr}}
+
+.lab{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:1.4em 0;display:grid;gap:12px}
+.lab>*{min-width:0}
+.lab-head{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.lab-title{font-family:var(--f-display);font-weight:700;font-size:1.08rem}
+.lab-title::before{content:"LAB";font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--blue);border:1px solid var(--blue);border-radius:4px;padding:0 5px;margin-right:8px;vertical-align:2px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:inherit;font-size:14px;line-height:1.3;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:8px;cursor:pointer}
+.btn:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.btn.primary:hover:not(:disabled){color:var(--on-blue);filter:brightness(1.08)}
+.btn[aria-pressed="true"],.tab[aria-selected="true"]{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
+.stepcount{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+label.fld{display:grid;gap:3px;font-size:13.5px;color:var(--muted);flex:1 1 220px}
+input[type=text],textarea{font-family:var(--f-mono);font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:100%}
+textarea{resize:vertical;min-height:2.6em}
+.steptext{background:var(--paper);border-radius:8px;padding:10px 12px;font-size:14.5px;min-height:3em}
+.out{font-size:14.5px}
+.out .result{font-weight:700;color:var(--ok)}
+.out .err{color:var(--no)}
+ol.log{font-size:14px;margin:.2em 0;max-height:300px;overflow:auto;padding-left:1.8em}
+ol.log li{max-width:none}
+.edgelist{display:flex;flex-wrap:wrap;gap:5px}
+.edgelist span{font-family:var(--f-mono);font-size:12.5px;padding:2px 7px;border-radius:5px;border:1px solid var(--line);background:var(--paper)}
+.edgelist span.ok{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.edgelist span.rej{background:var(--no-soft);border-color:transparent;color:var(--no);text-decoration:line-through}
+.edgelist span.now{outline:2px solid var(--warn);outline-offset:1px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+
+.figwrap{overflow-x:auto}
+svg.fig{width:100%;height:auto;display:block;margin:0 auto}
+svg.fig.narrow{max-width:560px}
+svg.fig.wide{min-width:560px}
+
+/* 圖解 blocks: every example gets a picture per step plus the written steps */
+.ex{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:12px;padding:12px 14px;margin:1em 0}
+.ex-title{font-family:var(--f-display);font-weight:700;font-size:1.02rem;line-height:1.4;margin:0 0 10px}
+.ex-title::before{content:"圖解";font-family:var(--f-body);font-size:11.5px;font-weight:700;color:var(--ok);border:1px solid var(--ok);border-radius:4px;padding:0 6px;margin-right:8px;vertical-align:2px}
+.stepper{display:grid;gap:10px}
+.stepper>*{min-width:0}
+.stepper .extra:empty{display:none}
+.steps-head{font-size:13px;color:var(--muted);margin:0}
+ol.steps{font-size:14px;margin:0;padding-left:2em}
+ol.steps li{max-width:none;margin:1px 0}
+ol.steps button{display:block;font:inherit;line-height:1.6;color:inherit;text-align:left;background:none;border:0;border-radius:6px;padding:2px 6px;width:100%;cursor:pointer}
+ol.steps button:hover{background:var(--blue-soft)}
+ol.steps li.now button{background:var(--mark)}
+ol.steps li.later{color:var(--muted)}
+tr.now td{background:var(--mark)}
+.g-edge{stroke:var(--edge);stroke-width:2;fill:none}
+.g-edge.chosen{stroke:var(--blue);stroke-width:4.5}
+.g-edge.rej{stroke:var(--no);stroke-width:2.5;stroke-dasharray:6 5}
+.g-edge.cand{stroke:var(--warn);stroke-width:2.5;stroke-dasharray:5 4}
+.g-edge.pick{stroke:var(--warn);stroke-width:4.5}
+.ah{fill:var(--edge)}
+.ah.ah-chosen{fill:var(--blue)}
+.ah.ah-cand,.ah.ah-pick{fill:var(--warn)}
+.g-lblbg{fill:var(--card);stroke:var(--line);stroke-width:1}
+.g-lbl{font:600 13px var(--f-mono);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.g-node circle{fill:var(--card);stroke:var(--ink);stroke-width:1.6}
+.g-node text{font:700 15px var(--f-display);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.g-node.in circle{fill:var(--blue);stroke:var(--blue)}
+.g-node.in text{fill:var(--on-blue)}
+.g-node.cur circle{fill:var(--mark);stroke:var(--warn);stroke-width:2.5}
+.g-node.cur text{fill:var(--ink)}
+.g-sub{font:600 11.5px var(--f-mono);fill:var(--blue);text-anchor:middle}
+.tl-grid{stroke:var(--grid);stroke-width:1}
+.tl-tick{font:11px var(--f-mono);fill:var(--muted)}
+.tl-row{font:12px var(--f-mono);fill:var(--muted)}
+.tl-bar{fill:var(--paper);stroke:var(--edge);stroke-width:1}
+.tl-bar.sel{fill:var(--blue);stroke:var(--blue)}
+.tl-txt{font:11px var(--f-mono);fill:var(--muted);text-anchor:middle;dominant-baseline:central}
+.tl-txt.sel{fill:var(--on-blue);font-weight:600}
+.g-node.bad circle{fill:var(--no-soft);stroke:var(--no);stroke-width:2.5}
+.g-edge.tree{stroke:var(--ok);stroke-width:4.5}
+.g-edge.ghost{stroke:var(--line);stroke-width:1.5;stroke-dasharray:3 4}
+.g-region{fill:var(--blue-soft);opacity:.6}
+.g-map{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.g-maplbl{font:700 18px var(--f-display);fill:var(--ink)}
+.g-cut{stroke:var(--warn);stroke-width:2;stroke-dasharray:8 6;fill:none}
+.g-tag{font:700 15px var(--f-display);fill:var(--blue)}
+.g-note{font:700 16px var(--f-display);fill:var(--warn)}
+.tl-bar.cur{fill:var(--mark);stroke:var(--warn);stroke-width:2}
+.tl-txt.cur{fill:var(--ink);font-weight:600}
+.tl-bar.skip{fill:var(--no-soft);stroke:var(--no);stroke-dasharray:4 3}
+.tl-txt.skip{fill:var(--no)}
+.tl-bar.bad{fill:var(--warn);stroke:var(--warn)}
+.tl-bar.ok{fill:var(--ok);stroke:var(--ok)}
+.tl-txt.bad,.tl-txt.ok{fill:var(--on-blue);font-weight:600}
+.tl-bar.wait{fill:var(--grid);stroke:var(--edge);stroke-dasharray:3 3}
+.tl-txt.wait{fill:var(--muted)}
+.tl-late{fill:var(--no);opacity:.8}
+.tl-dl{stroke:var(--no);stroke-width:2.5}
+.tl-dltxt{font:600 10.5px var(--f-mono);fill:var(--no);paint-order:stroke;stroke:var(--card);stroke-width:3px}
+.tl-mark{stroke:var(--warn);stroke-width:2;stroke-dasharray:5 4}
+.tl-marktxt{font:600 11.5px var(--f-mono);fill:var(--warn)}
+.tl-pt{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.tl-pt.sel{fill:var(--blue);stroke:var(--blue)}
+.tl-pt.cur{fill:var(--mark);stroke:var(--warn);stroke-width:2.5}
+.c-box{fill:var(--card);stroke:var(--edge);stroke-width:1.2}
+.c-box.cur{fill:var(--mark);stroke:var(--warn);stroke-width:2}
+.c-box.done{fill:var(--paper);stroke:var(--line)}
+.c-box.big{fill:var(--no-soft);stroke:var(--no);stroke-width:1.8}
+.c-box.hl{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2}
+.c-box.ok{fill:var(--ok);stroke:var(--ok)}
+.c-box.empty{fill:none;stroke:var(--line);stroke-dasharray:3 3}
+.c-txt{font:600 14px var(--f-mono);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.c-txt.sm{font-size:12.5px}
+.c-txt.done{fill:var(--edge)}
+.c-txt.ok{fill:var(--on-blue)}
+.c-lbl{font:12px var(--f-mono);fill:var(--muted);dominant-baseline:central}
+.c-ptr{font:700 12.5px var(--f-mono);fill:var(--warn);text-anchor:middle}
+.c-idx{font:11px var(--f-mono);fill:var(--muted)}
+.c-ann{font:700 12.5px var(--f-mono);fill:var(--no);text-anchor:middle}
+.c-ann.sum{fill:var(--blue)}
+.c-ret{font:700 13px var(--f-mono);fill:var(--ok)}
+.c-total{font:700 14px var(--f-mono);fill:var(--ink)}
+.c-line{stroke:var(--edge);stroke-width:1.3}
+.c-div{stroke:var(--no);stroke-width:2.5}
+.c-out{fill:none;stroke:var(--line);stroke-width:1.2}
+.c-out.hl{stroke:var(--warn);stroke-width:2.2}
+
+details.answer{margin:.6em 0;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:8px 14px}
+details.answer>summary{cursor:pointer;color:var(--blue);font-weight:600;font-size:14.5px}
+details.answer[open]>summary{margin-bottom:6px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:1em 0}
+.q>p:first-child{margin-top:0}
+.q .pts{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+
+.plan{list-style:none;padding:0;display:grid;gap:8px}
+.plan li{max-width:none;display:grid;grid-template-columns:auto 6.2em 1fr;gap:10px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.plan input{margin-top:6px;width:18px;height:18px;accent-color:var(--blue)}
+.plan .day{font-family:var(--f-mono);font-size:13px;color:var(--blue);padding-top:3px;font-variant-numeric:tabular-nums}
+.plan .day b{display:block;font-family:var(--f-display);font-size:15px;color:var(--ink)}
+.plan li.exam{border-color:var(--blue);background:var(--blue-soft)}
+.plan input:checked~div{color:var(--muted);text-decoration:line-through}
+.plan .todo{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;margin-top:6px;font-size:13px;text-decoration:none}
+.plan .todo>span{color:var(--muted)}
+.plan .todo a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:1px 9px;background:var(--paper)}
+.plan .todo a:hover{border-color:var(--blue)}
+.q .ex{margin:.6em 0}
+
+.files{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.files>div{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.files h4{margin:.8em 0 .2em;font-family:var(--f-mono);font-size:12.5px;color:var(--muted);font-weight:600}
+.files ul{list-style:none;padding:0;margin:0;font-size:14px}
+.files li{max-width:none;overflow-wrap:anywhere}
+@media (max-width:640px){.files{grid-template-columns:1fr}}
+footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+/* quiz */
+.scorebar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;max-width:900px;margin:0 auto;background:var(--paper-glass);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:10px 0}
+.scorebar .score{font-size:14px;color:var(--muted)}
+.scorebar .score b{font-family:var(--f-display);font-size:1.35rem;color:var(--blue);font-variant-numeric:tabular-nums}
+.scorebar .tabs{margin-left:auto}
+.qz{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:1.2em 0;display:grid;gap:12px;scroll-margin-top:70px}
+.qz>*{min-width:0}
+.qz-head{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.qz-no{font-family:var(--f-display);font-weight:700;font-size:1.15rem;color:var(--blue)}
+.qz-meta{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.qz-status{margin-left:auto;font-size:13px;font-weight:600;padding:1px 10px;border-radius:999px}
+.qz-status:empty{display:none}
+.qz-status.ok{background:var(--ok-soft);color:var(--ok)}
+.qz-status.part{background:var(--warn-soft);color:var(--warn)}
+.qz-status.no{background:var(--no-soft);color:var(--no)}
+.qz-stem p{margin:.2em 0}
+.qz figure{margin:0}
+.qz figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:4px}
+.qz-parts{margin:0;padding-left:1.7em;display:grid;gap:14px}
+.qz-parts>li{max-width:none;padding-left:4px}
+.qz-parts.single{list-style:none;padding-left:0}
+.qz-parts.single>li{padding-left:0}
+.qz-prompt{margin:0 0 6px}
+.opts{display:flex;flex-wrap:wrap;gap:6px 16px}
+.opts.col{flex-direction:column;gap:8px}
+.opts label{display:flex;gap:8px;align-items:baseline;cursor:pointer;font-size:15px;line-height:1.5}
+.opts input{accent-color:var(--blue);flex:none;transform:translateY(2px)}
+.qz input[type=number]{font-family:var(--f-mono);font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:9em}
+.qz label.fld{max-width:520px}
+.order-row{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;margin:6px 0}
+.order-row select{font:inherit;font-size:14px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.order-row span{font-size:15px;line-height:1.55}
+.pf{display:block;font-size:14px;margin-top:6px}
+.pf:empty{display:none}
+li.ok>.pf{color:var(--ok)}
+li.no>.pf{color:var(--no)}
+.qz-sol{border-top:1px dashed var(--line);padding-top:12px;display:grid;gap:12px}
+.qz-sol[hidden]{display:none}
+.model{background:var(--paper);border:1px dashed var(--line);border-radius:8px;padding:10px 14px;font-size:14.5px}
+.model>b:first-child{display:block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);margin-bottom:4px}
+.model p,.model li{max-width:none}
+</style>
+</head>
+<body>
+
+<div class="scorebar" role="region" aria-label="得分">
+  <span class="score">得分 <b id="sc-pts">0</b> / <span id="sc-max">–</span></span>
+  <span class="score">已檢查 <b id="sc-done">0</b> / <span id="sc-n">–</span> 題</span>
+  <div class="tabs" role="tablist" aria-label="篩選">
+    <button class="tab" role="tab" aria-selected="true" data-lec="all">全部</button>
+    <button class="tab" role="tab" aria-selected="false" data-lec="1">L1 Euler</button>
+    <button class="tab" role="tab" aria-selected="false" data-lec="2">L2 Interval</button>
+    <button class="tab" role="tab" aria-selected="false" data-lec="3">L3 MST</button>
+  </div>
+</div>
+
+<main>
+<header class="hero" id="top">
+  <p class="eyebrow"><a href="index.html">← CS4335 Midterm 溫習</a></p>
+  <h1>Lecture 1–3 練習卷</h1>
+  <p class="lede">15 題<strong>英文題目</strong>，全部是新題，和溫習頁的例子、模擬題都不同。</p>
+  <ul class="small">
+    <li>作答後按 <strong>檢查答案</strong>：每一小題即時顯示對錯；錯的話會說錯在哪裏（例如「BC 會形成 cycle」）。</li>
+    <li>有多個正確答案的題目（Euler circuit、同重量的邊次序）只要合法就算對。</li>
+    <li>按 <strong>看詳解</strong>：英文 model answer（考試可以照寫）和逐步圖解。</li>
+    <li>答案會記在這部機的瀏覽器裏，下次打開還在。</li>
+  </ul>
+  <div class="controls"><button class="btn" id="clear-all" type="button">清除全部答案</button></div>
+</header>
+
+<section id="sec-1" data-lec="1"><header><p class="eyebrow">Lecture 1</p><h2>Euler Circuits</h2></header><div class="qlist"></div></section>
+<section id="sec-2" data-lec="2"><header><p class="eyebrow">Lecture 2</p><h2>Interval Scheduling &amp; Partitioning</h2></header><div class="qlist"></div></section>
+<section id="sec-3" data-lec="3"><header><p class="eyebrow">Lecture 3</p><h2>Minimum Spanning Trees</h2></header><div class="qlist"></div></section>
+</main>
+
+<footer>題目按 CS4335 Lecture 1–3 的內容和 2022 Midterm 題型新出，不是真題。<a href="index.html">回到溫習頁</a></footer>
+
+<script>
+(() => {
+"use strict";
+/* ---- figure engine, copied from index.html by build-quiz.js ---- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const NS = "http://www.w3.org/2000/svg";
+const fmt = x => x === Infinity ? "∞" : x === -Infinity ? "−∞" : (x < 0 ? "−" : "") + (Number.isInteger(x) ? String(Math.abs(x)) : String(+Math.abs(x).toFixed(4)));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const sum = a => a.reduce((x, y) => x + y, 0);
+function svgEl(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function svgText(parent, x, y, s, cls, anchor = "middle", central = false) {
+  const t = svgEl("text", { x, y, class: cls, "text-anchor": anchor }, parent);
+  if (central) t.setAttribute("dominant-baseline", "central");
+  t.textContent = s;
+  return t;
+}
+const setView = (svg, w, h) => svg.setAttribute("viewBox", `0 0 ${Math.ceil(w)} ${Math.ceil(h)}`);
+const num = s => Number(s.replace("−", "-"));
+function parsePairs(str) {
+  const out = [], re = /\(\s*([-−]?\d+(?:\.\d+)?)\s*,\s*([-−]?\d+(?:\.\d+)?)\s*\)/g;
+  let m;
+  while ((m = re.exec(str))) out.push([num(m[1]), num(m[2])]);
+  return out;
+}
+const parseNums = str => (String(str).match(/[-−]?\d+(?:\.\d+)?/g) || []).map(num);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
+};
+let figSeq = 0;
+function stepper(host, steps, opt = {}) {
+  host.innerHTML = "";
+  host.classList.add("stepper");
+  const wrap = document.createElement("div");
+  wrap.className = "figwrap";
+  const svg = svgEl("svg", { class: "fig " + (opt.size || "narrow"), role: "img", "aria-label": opt.label || "圖解", id: "fig" + ++figSeq }, wrap);
+  const text = document.createElement("div");
+  text.className = "steptext";
+  text.setAttribute("aria-live", "polite");
+  host.append(wrap, text);
+  const multi = steps.length > 1;
+  let ctr, list, extra;
+  if (multi) {
+    ctr = document.createElement("div");
+    ctr.className = "controls";
+    ctr.innerHTML = '<button class="btn" type="button" data-go="prev">← 上一步</button><button class="btn primary" type="button" data-go="next">下一步 →</button><button class="btn" type="button" data-go="end">跳到最後</button><button class="btn" type="button" data-go="reset">重設</button><span class="stepcount"></span>';
+    host.append(ctr);
+  }
+  if (steps.some(s => s.extra)) {
+    extra = document.createElement("div");
+    extra.className = "extra";
+    host.append(extra);
+  }
+  if (multi) {
+    const head = document.createElement("p");
+    head.className = "steps-head";
+    head.textContent = "全部步驟（按任何一步，上面的圖會跳到那一步）";
+    list = document.createElement("ol");
+    list.className = "steps";
+    list.innerHTML = steps.map((s, i) => `<li><button type="button" data-i="${i}">${s.text}</button></li>`).join("");
+    host.append(head, list);
+  }
+  let k = opt.start === "end" ? steps.length - 1 : 0;
+  function show() {
+    const s = steps[k];
+    svg.innerHTML = "";
+    s.draw(svg);
+    const vb = svg.viewBox.baseVal;
+    if (vb && vb.width) svg.style.maxWidth = Math.round(vb.width * 1.3) + "px";
+    text.innerHTML = (multi ? `<b>第 ${k + 1} 步</b>　` : "") + s.text;
+    if (extra) extra.innerHTML = s.extra || "";
+    if (!multi) return;
+    ctr.querySelector(".stepcount").textContent = `${k + 1} / ${steps.length}`;
+    ctr.querySelector('[data-go="prev"]').disabled = ctr.querySelector('[data-go="reset"]').disabled = k === 0;
+    ctr.querySelector('[data-go="next"]').disabled = ctr.querySelector('[data-go="end"]').disabled = k === steps.length - 1;
+    [...list.children].forEach((li, i) => { li.className = i === k ? "now" : i > k ? "later" : ""; });
+  }
+  if (multi) {
+    ctr.addEventListener("click", e => {
+      const b = e.target.closest("[data-go]");
+      if (!b) return;
+      const go = b.dataset.go;
+      k = go === "prev" ? Math.max(0, k - 1) : go === "next" ? Math.min(steps.length - 1, k + 1) : go === "end" ? steps.length - 1 : 0;
+      show();
+    });
+    list.addEventListener("click", e => {
+      const b = e.target.closest("[data-i]");
+      if (b) { k = +b.dataset.i; show(); }
+    });
+  }
+  show();
+}
+function drawGraph(svg, g, st, directed) {
+  svg.innerHTML = "";
+  setView(svg, g.w, g.h);
+  const R = 18, id = svg.id || (svg.id = "fig" + ++figSeq);
+  if (st.region) {
+    const r = st.region;
+    if (r.ellipse) svgEl("ellipse", { cx: r.ellipse[0], cy: r.ellipse[1], rx: r.ellipse[2], ry: r.ellipse[3], class: "g-region" }, svg);
+    else svgEl("rect", { x: r.rect[0], y: r.rect[1], width: r.rect[2], height: r.rect[3], rx: 12, class: "g-region" }, svg);
+  }
+  (st.rects || []).forEach(([x, y, w, h, t]) => {
+    svgEl("rect", { x, y, width: w, height: h, class: "g-map" }, svg);
+    if (t) svgText(svg, x + w / 2, y + h / 2, t, "g-maplbl", "middle", true);
+  });
+  if (st.cut) svgEl("path", { d: st.cut, class: "g-cut" }, svg);
+  (st.tags || []).forEach(([x, y, t, a]) => svgText(svg, x, y, t, "g-tag", a || "middle"));
+  if (directed) {
+    const defs = svgEl("defs", {}, svg);
+    for (const k of ["base", "chosen", "cand", "pick"]) {
+      const m = svgEl("marker", { id: `${id}-ah-${k}`, viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto" }, defs);
+      svgEl("path", { d: "M0,0 L10,5 L0,10 z", class: `ah ah-${k}` }, m);
+    }
+  }
+  const has = new Set(g.edges.map(e => e[0] + ">" + e[1]));
+  const unit = (x, y) => { const l = Math.hypot(x, y) || 1; return [x / l, y / l]; };
+  const labels = [];
+  g.edges.forEach((e, i) => {
+    const [u, v, w, opt] = e;
+    const [x1, y1] = g.nodes[u], [x2, y2] = g.nodes[v];
+    const [ux, uy] = unit(x2 - x1, y2 - y1);
+    const nx = -uy, ny = ux;
+    const bend = opt && opt.bend != null ? opt.bend : (directed && has.has(v + ">" + u) ? 22 : 0);
+    const endGap = directed ? R + 3 : R;
+    let d, lx, ly;
+    if (bend) {
+      const cx = (x1 + x2) / 2 + nx * bend, cy = (y1 + y2) / 2 + ny * bend;
+      const a = unit(cx - x1, cy - y1), b = unit(cx - x2, cy - y2);
+      d = `M${x1 + a[0] * R},${y1 + a[1] * R} Q${cx},${cy} ${x2 + b[0] * endGap},${y2 + b[1] * endGap}`;
+      const s = Math.sign(bend);
+      lx = 0.25 * x1 + 0.5 * cx + 0.25 * x2 + nx * 11 * s;
+      ly = 0.25 * y1 + 0.5 * cy + 0.25 * y2 + ny * 11 * s;
+    } else {
+      d = `M${x1 + ux * R},${y1 + uy * R} L${x2 - ux * endGap},${y2 - uy * endGap}`;
+      lx = (x1 + x2) / 2; ly = (y1 + y2) / 2;
+    }
+    const cls = (st.edge && st.edge[i]) || "base";
+    const p = svgEl("path", { d, class: "g-edge " + (cls === "base" ? "" : cls) }, svg);
+    if (directed) p.setAttribute("marker-end", `url(#${id}-ah-${["chosen", "cand", "pick"].includes(cls) ? cls : "base"})`);
+    const lab = st.label && st.label[i] != null ? String(st.label[i]) : w == null ? null : fmt(w);
+    if (lab) labels.push([lx, ly, lab]);
+  });
+  labels.forEach(([x, y, t]) => {
+    const wdt = 8 + [...t].reduce((a, ch) => a + (ch.charCodeAt(0) > 255 ? 14 : 8), 0);
+    svgEl("rect", { x: x - wdt / 2, y: y - 9, width: wdt, height: 18, rx: 4, class: "g-lblbg" }, svg);
+    svgEl("text", { x, y, class: "g-lbl" }, svg).textContent = t;
+  });
+  for (const v in g.nodes) {
+    const [x, y] = g.nodes[v];
+    const grp = svgEl("g", { class: "g-node " + ((st.node && st.node[v]) || "") }, svg);
+    svgEl("circle", { cx: x, cy: y, r: R }, grp);
+    svgEl("text", { x, y }, grp).textContent = v;
+    if (st.sub && st.sub[v] != null) {
+      const below = y + R + 14 <= g.h - 2;
+      svgEl("text", { x, y: below ? y + R + 13 : y - R - 6, class: "g-sub" }, svg).textContent = st.sub[v];
+    }
+  }
+  (st.notes || []).forEach(([x, y, t]) => svgText(svg, x, y, t, "g-note"));
+}
+const edgeName = e => e[0] + e[1] + "(" + fmt(e[2]) + ")";
+function niceStep(span) {
+  const raw = span >= 4 ? Math.max(span / 16, 1) : span / 16 || 1, p = 10 ** Math.floor(Math.log10(raw));
+  return [1, 2, 5, 10].map(m => m * p).find(s => s >= raw - 1e-9);
+}
+function tlBlock(p, o) {
+  const W = o.W || 640, labelW = o.labelW || 70, rowH = o.rowH || 28, rows = o.rows, lo = o.lo, hi = o.hi, marks = o.marks || [];
+  const y0 = o.y0 || 0, top = y0 + (marks.some(m => m.text) ? 22 : 6), bottom = top + rows.length * rowH;
+  const x = t => labelW + (t - lo) / ((hi - lo) || 1) * (W - labelW - 16);
+  const step = o.step || niceStep(hi - lo), ticks = [];
+  for (let t = Math.ceil(lo / step - 1e-9) * step; t <= hi + 1e-9; t = +(t + step).toFixed(9)) ticks.push(t);
+  ticks.forEach((t, i) => {
+    svgEl("line", { x1: x(t), x2: x(t), y1: top, y2: bottom, class: "tl-grid" }, p);
+    svgText(p, x(t), bottom + 16, fmt(t) + (o.unit && i === ticks.length - 1 ? " " + o.unit : ""), "tl-tick");
+  });
+  rows.forEach((r, i) => {
+    const y = top + i * rowH, mid = y + rowH / 2;
+    svgText(p, 4, mid, r.label, "tl-row", "start", true);
+    (r.bars || []).forEach(b => {
+      const cls = b.cls || "", bx = x(b.s), bw = Math.max(2, x(b.f) - bx);
+      svgEl("rect", { x: bx + 1, y: y + 4, width: Math.max(2, bw - 2), height: rowH - 8, rx: 4, class: "tl-bar " + cls }, p);
+      if (b.late && r.dl != null && b.f > r.dl) {
+        const ls = x(Math.max(b.s, r.dl));
+        svgEl("rect", { x: ls, y: y + 4, width: Math.max(2, x(b.f) - ls), height: rowH - 8, rx: 3, class: "tl-late" }, p);
+      }
+      const tw = [...String(b.text || "")].reduce((a, ch) => a + (ch.charCodeAt(0) > 255 ? 11 : 6.7), 0);
+      if (b.text && tw <= bw - 4) svgText(p, bx + bw / 2, mid, b.text, "tl-txt " + cls);
+    });
+    (r.pts || []).forEach(pt => svgEl("circle", { cx: x(pt.t), cy: mid, r: 6, class: "tl-pt " + (pt.cls || "") }, p));
+    if (r.dl != null) {
+      if (r.dlInLabel) {
+        if (r.dl <= hi) svgEl("line", { x1: x(r.dl), x2: x(r.dl), y1: y + 1, y2: y + rowH - 1, class: "tl-dl" }, p);
+      } else if (r.dl <= hi) {
+        const right = x(r.dl) > W - 50;
+        svgEl("line", { x1: x(r.dl), x2: x(r.dl), y1: y + 1, y2: y + rowH - 1, class: "tl-dl" }, p);
+        svgText(p, x(r.dl) + (right ? -4 : 4), y + 10, "d=" + fmt(r.dl), "tl-dltxt", right ? "end" : "start");
+      } else svgText(p, W - 4, y + 10, `d=${fmt(r.dl)} →`, "tl-dltxt", "end");
+    }
+  });
+  marks.forEach(m => {
+    const mx = x(m.t);
+    svgEl("line", { x1: mx, x2: mx, y1: top - 4, y2: bottom, class: "tl-mark" }, p);
+    if (m.text) svgText(p, mx, top - 9, m.text, "tl-marktxt", mx > W - 40 ? "end" : mx < labelW + 30 ? "start" : "middle");
+  });
+  return { h: bottom + 24 - y0, x };
+}
+function drawTimeline(svg, rows, lo, hi, o = {}) {
+  svg.innerHTML = "";
+  const r = tlBlock(svg, { ...o, rows, lo, hi });
+  setView(svg, o.W || 640, r.h);
+}
+function parseEdges(str) {
+  const edges = [];
+  for (const t of String(str).split(/[\s,;]+/).filter(Boolean)) {
+    const parts = t.includes("-") ? t.split("-") : (t.length === 2 ? [t[0], t[1]] : null);
+    if (parts && parts.length === 2 && parts[0] && parts[1]) edges.push(parts);
+  }
+  return edges;
+}
+function euLayout(V) {
+  const key = [...V].sort().join(" ");
+  const hit = EU_LAYOUTS.find(L => Object.keys(L.nodes).sort().join(" ") === key);
+  if (hit) return hit;
+  const w = 440, h = 340, nodes = {};
+  V.forEach((v, i) => {
+    const a = -Math.PI / 2 + 2 * Math.PI * i / V.length;
+    nodes[v] = [w / 2 + 150 * Math.cos(a), h / 2 + 130 * Math.sin(a)];
+  });
+  return { w, h, nodes };
+}
+function euGraph(edges, L) {
+  const total = {}, seen = {};
+  const key = (a, b) => a < b ? a + "|" + b : b + "|" + a;
+  edges.forEach(([a, b]) => { const k = key(a, b); total[k] = (total[k] || 0) + 1; });
+  return { w: L.w, h: L.h, nodes: L.nodes, edges: edges.map(([a, b]) => {
+    const k = key(a, b), n = total[k], i = seen[k] = (seen[k] || 0) + 1;
+    return [a, b, null, n > 1 ? { bend: (a < b ? 1 : -1) * (i - (n + 1) / 2) * 44 } : null];
+  }) };
+}
+function eulerSteps(edges, layout) {
+  const deg = {}, adj = {};
+  edges.forEach(([a, b], i) => {
+    deg[a] = (deg[a] || 0) + 1; deg[b] = (deg[b] || 0) + 1;
+    (adj[a] = adj[a] || []).push(i); (adj[b] = adj[b] || []).push(i);
+  });
+  const V = Object.keys(deg).sort();
+  const g = euGraph(edges, layout || euLayout(V));
+  const other = (i, u) => edges[i][0] === u ? edges[i][1] : edges[i][0];
+  const seen = new Set([V[0]]), stack = [V[0]];
+  while (stack.length) { const u = stack.pop(); for (const i of adj[u]) { const w = other(i, u); if (!seen.has(w)) { seen.add(w); stack.push(w); } } }
+  const connected = seen.size === V.length;
+  const odd = V.filter(v => deg[v] % 2);
+  const draw = st => svg => drawGraph(svg, g, st, false);
+  const degSt = { sub: Object.fromEntries(V.map(v => [v, "deg " + deg[v]])), node: Object.fromEntries(odd.map(v => [v, "bad"])) };
+  const steps = [{ text: `數每個頂點的 degree（寫在頂點旁邊）：${V.map(v => `${esc(v)} = ${deg[v]}`).join("、")}。Connected：${connected ? "是" : "否"}。`, draw: draw(degSt) }];
+  if (!connected || odd.length) {
+    steps.push({ text: `${connected ? "" : "Graph 不是 connected。"}${odd.length ? `${esc(odd.join("、"))} 的 degree 是 odd（紅色）。` : ""}所以<strong>沒有 Euler circuit</strong>。`, draw: draw(degSt) });
+    return steps;
+  }
+  steps[0].text += "全部都是 even，所以一定有 Euler circuit。";
+  const used = edges.map(() => false);
+  const walk = s => {
+    const verts = [s], eids = [];
+    let u = s;
+    do {
+      const i = adj[u].find(j => !used[j]);
+      if (i === undefined) break;
+      used[i] = true; eids.push(i); u = other(i, u); verts.push(u);
+    } while (u !== s);
+    return { verts, eids };
+  };
+  const path = vs => vs.map(esc).join("→");
+  const order = eids => Object.fromEntries(eids.map((i, k) => [i, k + 1]));
+  const paint = (eids, c) => Object.fromEntries(eids.map(i => [i, c]));
+  let C = walk(edges[0][0]);
+  steps.push({ text: `由 ${esc(C.verts[0])} 出發，沿未用過的邊一直走，直到回到 ${esc(C.verts[0])}：C1 = ${path(C.verts)}（橙色，邊上數字是走的次序）。現在 C = C1。`, draw: draw({ edge: paint(C.eids, "pick"), label: order(C.eids), node: { [C.verts[0]]: "cur" } }) });
+  let k = 1;
+  while (used.some(u => !u)) {
+    const idx = C.verts.findIndex(v => adj[v].some(i => !used[i]));
+    const v = C.verts[idx], Cp = walk(v);
+    k++;
+    steps.push({ text: `C 還沒有用完所有邊（灰色是未用的邊）。C 上的 ${esc(v)}（黃色）還有未用的邊，由 ${esc(v)} 再走一個 circuit：C${k} = ${path(Cp.verts)}（橙色）。`, draw: draw({ edge: { ...paint(C.eids, "chosen"), ...paint(Cp.eids, "pick") }, label: order(Cp.eids), node: { [v]: "cur" } }) });
+    C = { verts: [...C.verts.slice(0, idx), ...Cp.verts, ...C.verts.slice(idx + 1)], eids: [...C.eids.slice(0, idx), ...Cp.eids, ...C.eids.slice(idx)] };
+    steps.push({ text: `在 ${esc(v)} 把 C${k} 插入 C：C = ${path(C.verts)}（數字是合併後的次序）。`, draw: draw({ edge: paint(C.eids, "chosen"), label: order(C.eids), node: { [v]: "cur" } }) });
+  }
+  steps.push({ text: `全部 ${edges.length} 條邊都剛好用了一次 → Euler circuit：<strong>${path(C.verts)}</strong>。`, draw: draw({ edge: paint(C.eids, "chosen"), label: order(C.eids) }) });
+  return steps;
+}
+const parseJobs = str => parsePairs(str).map(([s, f], i) => ({ s, f, i, name: `(${fmt(s)},${fmt(f)})` }));
+const ivRange = jobs => [Math.floor(Math.min(...jobs.map(j => j.s))), Math.ceil(Math.max(...jobs.map(j => j.f)))];
+function ivSchedSteps(jobs) {
+  const [lo, hi] = ivRange(jobs);
+  const sorted = [...jobs].sort((a, b) => a.f - b.f || a.i - b.i);
+  const st = sorted.map(() => "");
+  const fig = (cls, marks) => svg => drawTimeline(svg, sorted.map((j, k) => ({ label: `#${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name, cls: cls[k] }] })), lo, hi, { marks });
+  const steps = [{ text: `Step 1：按 finish time 由小到大排序：${sorted.map(j => j.name).join(" ")}。`, draw: fig([...st], []) }];
+  let last = null;
+  sorted.forEach((j, k) => {
+    const marks = last ? [{ t: last.f, text: `上一份 f = ${fmt(last.f)}` }] : [];
+    const cur = [...st];
+    cur[k] = "cur";
+    if (last === null || j.s >= last.f) {
+      steps.push({ text: last ? `看 ${j.name}：s = ${fmt(j.s)} ≥ 上一份已選的 f = ${fmt(last.f)} → <strong>選</strong>。` : `看 ${j.name}：finish time 最早 → <strong>選</strong>。`, draw: fig(cur, marks) });
+      st[k] = "sel";
+      last = j;
+    } else {
+      steps.push({ text: `看 ${j.name}：s = ${fmt(j.s)} &lt; ${fmt(last.f)}，和 ${last.name} 重疊 → <strong>略過</strong>。`, draw: fig(cur, marks) });
+      st[k] = "skip";
+    }
+  });
+  const chosen = sorted.filter((j, k) => st[k] === "sel");
+  steps.push({ text: `答案：最多 <strong>${chosen.length}</strong> 份：${chosen.map(j => j.name).join(", ")}（藍色）。Running time O(n log n)。`, draw: fig([...st], []) });
+  return steps;
+}
+function ivPartSteps(jobs) {
+  const [lo, hi] = ivRange(jobs);
+  const sorted = [...jobs].sort((a, b) => a.s - b.s || a.i - b.i);
+  const rooms = [];
+  const roomFig = (cur, marks) => {
+    const snap = rooms.map(r => r.list.slice());
+    return svg => drawTimeline(svg, snap.map((list, k) => ({ label: `Room ${k + 1}`, bars: list.map(j => ({ s: j.s, f: j.f, text: j.name, cls: j === cur ? "cur" : "sel" })) })), lo, hi, { marks });
+  };
+  const steps = [{ text: `Step 1：按 start time 由小到大排序：${sorted.map(j => j.name).join(" ")}。`, draw: svg => drawTimeline(svg, sorted.map((j, k) => ({ label: `#${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name }] })), lo, hi) }];
+  for (const j of sorted) {
+    const k = rooms.findIndex(r => r.end <= j.s);
+    let text;
+    if (k < 0) {
+      const ends = rooms.map((r, i) => `Room ${i + 1} 要到 ${fmt(r.end)} 才空`);
+      rooms.push({ end: j.f, list: [j] });
+      text = rooms.length === 1 ? `${j.name}：還沒有課室 → 開 <strong>Room 1</strong>。` : `${j.name} 在 ${fmt(j.s)} 開始：${ends.join("、")}，全部未空 → 開 <strong>Room ${rooms.length}</strong>。`;
+    } else {
+      text = `${j.name} 在 ${fmt(j.s)} 開始：Room ${k + 1} 上一堂 ${fmt(rooms[k].end)} 結束 ≤ ${fmt(j.s)} → 放入 <strong>Room ${k + 1}</strong>。`;
+      rooms[k].list.push(j);
+      rooms[k].end = j.f;
+    }
+    steps.push({ text, draw: roomFig(j, [{ t: j.s, text: `s = ${fmt(j.s)}` }]) });
+  }
+  const ev = [];
+  jobs.forEach(j => { ev.push([j.s, 1]); ev.push([j.f, -1]); });
+  ev.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  let cur = 0, depth = 0, at = null;
+  for (const [t, dlt] of ev) { cur += dlt; if (cur > depth) { depth = cur; at = t; } }
+  steps.push({ text: `用了 <strong>${rooms.length}</strong> 間課室。Depth = ${depth}：在時間 ${fmt(at)}（虛線）有 ${depth} 堂同時進行。任何安排都要至少 depth 間，greedy 用 ${rooms.length} 間 = depth，所以 optimal。`, draw: roomFig(null, [{ t: at, text: `depth = ${depth}` }]) });
+  return steps;
+}
+function ivStages(jobsStr, stages, labels) {
+  const jobs = parseJobs(jobsStr), [lo, hi] = ivRange(jobs);
+  return { size: "wide", steps: stages.map(([text, cls]) => ({ text, draw: svg => drawTimeline(svg, jobs.map((j, k) => ({ label: labels ? labels[k] : `J${k + 1}`, bars: [{ s: j.s, f: j.f, text: j.name, cls: cls[k] || "" }] })), lo, hi) })) };
+}
+function kruskalSteps(g) {
+  const order = g.edges.map((e, i) => ({ e, i })).sort((a, b) => a.e[2] - b.e[2] || a.i - b.i);
+  const parent = {};
+  Object.keys(g.nodes).forEach(v => parent[v] = v);
+  const find = v => parent[v] === v ? v : (parent[v] = find(parent[v]));
+  const n = Object.keys(g.nodes).length, status = {};
+  let taken = 0, total = 0;
+  const steps = [{ status: {}, cur: null, text: `把 ${g.edges.length} 條邊按重量排序（下面一行）。開始時每個頂點自成一個 component。` }];
+  for (const { e, i } of order) {
+    if (taken === n - 1) break;
+    const [u, v, w] = e, ru = find(u), rv = find(v);
+    if (ru !== rv) {
+      parent[ru] = rv; status[i] = "ok"; taken++; total += w;
+      steps.push({ status: { ...status }, cur: i, text: `加入 ${edgeName(e)}：${u}、${v} 在不同 component，合併。已選 ${taken} 條，總重 ${fmt(total)}。` });
+    } else {
+      status[i] = "rej";
+      steps.push({ status: { ...status }, cur: i, text: `拒絕 ${edgeName(e)}：${u}、${v} 已經連通，加入會形成 cycle。` });
+    }
+  }
+  steps.push({ status: { ...status }, cur: null, text: `完成：選了 |V| − 1 = ${n - 1} 條邊，MST 總重 = ${fmt(total)}。之後的邊不用再看。` });
+  return { steps, order };
+}
+function primSteps(g) {
+  const V = Object.keys(g.nodes), S = new Set([g.root]), status = {};
+  let total = 0;
+  const steps = [{ S: [...S], status: {}, cand: [], text: `選 root ${g.root}，S = {${g.root}}。` }];
+  const added = [];
+  while (S.size < V.length) {
+    const cross = g.edges.map((e, i) => ({ e, i })).filter(({ e }) => S.has(e[0]) !== S.has(e[1]));
+    if (!cross.length) break;
+    const best = cross.reduce((a, b) => b.e[2] < a.e[2] ? b : a);
+    const [u, v, w] = best.e, nv = S.has(u) ? v : u;
+    const listed = [...cross].sort((a, b) => a.e[2] - b.e[2] || a.i - b.i).map(c => edgeName(c.e)).join("、");
+    steps.push({ S: [...S], status: { ...status }, cand: cross.map(c => c.i), pick: best.i, text: `跨越 cut (S, V−S) 的邊（橙色虛線）：${listed}。Light edge 是 ${edgeName(best.e)}。` });
+    S.add(nv); status[best.i] = "ok"; total += w; added.push(edgeName(best.e));
+    steps.push({ S: [...S], status: { ...status }, cand: [], text: `加入 ${edgeName(best.e)}，${nv} 進入 S。總重 ${fmt(total)}。` });
+  }
+  steps.push({ S: [...S], status: { ...status }, cand: [], text: `完成：加邊次序 ${added.join(" → ")}，MST 總重 = ${fmt(total)}。` });
+  return { steps, order: g.edges.map((e, i) => ({ e, i })) };
+}
+function mstToSteps(g, alg) {
+  const r = alg === "k" ? kruskalSteps(g) : primSteps(g);
+  return r.steps.map(s => {
+    const st = { edge: {}, node: {} };
+    for (const i in s.status) st.edge[i] = s.status[i] === "ok" ? "chosen" : "rej";
+    if (alg === "k") {
+      for (const i in s.status) if (s.status[i] === "ok") { st.node[g.edges[i][0]] = "in"; st.node[g.edges[i][1]] = "in"; }
+      if (s.cur != null && s.status[s.cur] === "ok") st.edge[s.cur] = "pick";
+    } else {
+      s.S.forEach(v => st.node[v] = "in");
+      (s.cand || []).forEach(i => { if (!st.edge[i]) st.edge[i] = "cand"; });
+      if (s.pick != null) st.edge[s.pick] = "pick";
+    }
+    const chips = alg === "k"
+      ? r.order.map(({ e, i }) => `<span class="${s.status[i] === "ok" ? "ok" : s.status[i] === "rej" ? "rej" : ""}${s.cur === i ? " now" : ""}">${esc(edgeName(e))}</span>`).join("")
+      : `<span>S = {${s.S.map(esc).join(", ")}}</span>`;
+    return { text: esc(s.text), draw: svg => drawGraph(svg, g, st, false), extra: `<div class="edgelist" aria-label="邊的狀態">${chips}</div>` };
+  });
+}
+const EU_LAYOUTS = [];
+const EX = {};
+EX["eu-vs-ham"] = () => {
+  const L = { w: 400, h: 280, nodes: { a: [50, 50], b: [50, 230], c: [200, 140], d: [350, 50], e: [350, 230] } };
+  const g = euGraph(parseEdges("ab bc ca cd de ec"), L);
+  const deg = { a: "deg 2", b: "deg 2", c: "deg 4", d: "deg 2", e: "deg 2" };
+  return { steps: [
+    { text: "左右兩個三角形只在 c 相接。a、b、d、e 的 degree 是 2，c 是 4：全部 even，而且 connected。", draw: svg => drawGraph(svg, g, { sub: deg }, false) },
+    { text: "<strong>Euler circuit</strong>（每條<strong>邊</strong>剛好一次）：a→b→c→d→e→c→a，邊上數字是次序。c 經過兩次是允許的。", draw: svg => drawGraph(svg, g, { edge: { 0: "chosen", 1: "chosen", 2: "chosen", 3: "chosen", 4: "chosen", 5: "chosen" }, label: { 0: 1, 1: 2, 3: 3, 4: 4, 5: 5, 2: 6 } }, false) },
+    { text: "<strong>Hamiltonian cycle</strong>（每個<strong>頂點</strong>剛好一次）：由左邊三角形去右邊、再回到左邊，來回都一定要經過 c（橙色的邊都接著 c），c 會出現兩次 → <strong>沒有</strong> Hamiltonian cycle。", draw: svg => drawGraph(svg, g, { node: { c: "bad" }, edge: { 1: "pick", 2: "pick", 3: "pick", 5: "pick" } }, false) }
+  ] };
+};
+EX["eu-proof"] = () => {
+  const g = { w: 420, h: 250, nodes: { v: [210, 125], u: [50, 40], w: [370, 40], x: [50, 210], y: [370, 210] }, edges: [["u", "v", null], ["v", "w", null], ["x", "v", null], ["v", "y", null]] };
+  return { steps: [
+    { text: "沿 circuit 走，第一次經過 v：由一條邊<strong>入</strong>，再由另一條邊<strong>出</strong> → 用了 v 的 2 條邊。", draw: svg => drawGraph(svg, g, { edge: { 0: "chosen", 1: "chosen" }, label: { 0: "入 1", 1: "出 1" }, node: { v: "cur" } }, true) },
+    { text: "第二次經過 v，又是一入一出，再用 2 條。每條邊只用一次，所以 deg(v) = 2 × 經過次數，一定是 even。起點也一樣：第一條出去的邊和最後一條回來的邊配成一對。", draw: svg => drawGraph(svg, g, { edge: { 0: "chosen", 1: "chosen", 2: "pick", 3: "pick" }, label: { 0: "入 1", 1: "出 1", 2: "入 2", 3: "出 2" }, node: { v: "cur" }, sub: { v: "deg 4" } }, true) }
+  ] };
+};
+EX["iv-exchange"] = () => {
+  const G = [[0, 2, "i1"], [3, 5, "i2"], [6, 8, "i3"]], O = [[0, 2, "j1"], [2, 6, "j2"], [6, 8, "j3"]], O2 = [[0, 2, "j1"], [3, 5, "i2"], [6, 8, "j3"]];
+  const row = (label, arr, cls) => ({ label, bars: arr.map(([s, f, t], k) => ({ s, f, text: t, cls: cls[k] || "" })) });
+  const fig = (rows, marks) => svg => drawTimeline(svg, rows, 0, 8, { marks });
+  return { size: "wide", steps: [
+    { text: "G（greedy）和 OPT 都按 finish time 排好。頭 r = 1 份一樣：i1 = j1（綠色）。", draw: fig([row("G", G, ["ok"]), row("OPT", O, ["ok"])]) },
+    { text: "第 r+1 份開始不同：i2 ≠ j2（黃色）。Greedy 揀的是 compatible 而 finish time 最早的 job，所以 f(i2) = 5 ≤ f(j2) = 6。", draw: fig([row("G", G, ["ok", "cur"]), row("OPT", O, ["ok", "cur"])], [{ t: 5, text: "f(i2)" }, { t: 6, text: "f(j2)" }]) },
+    { text: "在 OPT 裡把 j2 換成 i2，得到 OPT′。i2 比 j2 早完成，所以仍然和 j3 compatible；份數沒有變 → OPT′ 也是 optimal，而且和 G 頭 r+1 份一樣。", draw: fig([row("G", G, ["ok", "ok"]), row("OPT", O, ["ok", "skip"]), row("OPT′", O2, ["ok", "sel"])]) },
+    { text: "一直這樣換，OPT 會變成 i1, …, ik, j(k+1), …。如果 OPT 比 G 多，j(k+1) 在 ik 完成之後才開始，greedy 一定會揀它，矛盾。所以 |G| = |OPT|。", draw: fig([row("G", G, ["ok", "ok", "ok"]), row("OPT′′", G, ["ok", "ok", "ok"])]) }
+  ] };
+};
+EX["cut"] = () => {
+  const g = { w: 400, h: 360, nodes: { a: [70, 60], b: [150, 180], c: [70, 300], d: [330, 60], e: [250, 180], f: [330, 300] },
+    edges: [["a","b",2],["b","c",3],["a","c",5],["d","e",3],["e","f",1],["d","f",5],["a","d",4],["b","e",4],["c","f",6]] };
+  const base = { region: { rect: [8, 8, 184, 344] }, cut: "M200,6 L200,354", tags: [[24, 30, "S", "start"], [392, 30, "V − S", "end"]] };
+  const A = { 0: "chosen", 4: "chosen" }, T = { 0: "chosen", 4: "chosen", 1: "tree", 3: "tree", 6: "tree" };
+  const l = [200, 160, "ℓ"], l2 = [200, 40, "ℓ′"];
+  const draw = st => svg => drawGraph(svg, g, { ...base, ...st }, false);
+  return { steps: [
+    { text: "A = {ab, ef}（藍色）是 good：A 在某棵 MST 裡面。Cut (S, V−S)：S = {a, b, c}（淺藍區），虛線是 cut。A 沒有邊跨過這個 cut。", draw: draw({ edge: A }) },
+    { text: "跨過 cut 的邊：ad(4)、be(4)、cf(6)（橙色虛線）。最輕是 4，取 ℓ = be(4) 做 light edge（橙色粗線）。", draw: draw({ edge: { ...A, 6: "cand", 8: "cand", 7: "pick" }, notes: [l] }) },
+    { text: "設 T 是一棵包含 A 的 MST：T = {ab, ef, bc, de, ad}（藍 + 綠），總重 13。ℓ = be 不在 T 裡。", draw: draw({ edge: { ...T, 7: "pick" }, notes: [l] }) },
+    { text: "把 ℓ 加入 T，會形成一個 cycle：b → e → d → a → b（橙色）。", draw: draw({ edge: { ...T, 7: "pick", 3: "pick", 6: "pick", 0: "pick" }, notes: [l] }) },
+    { text: "這個 cycle 由 S 過去 V−S 再回來，所以一定還有另一條邊跨過 cut：ℓ′ = ad(4)（紅色虛線）。A 沒有邊跨 cut，所以 ℓ′ ∉ A；ℓ 是 light edge，所以 w(ℓ) = 4 ≤ w(ℓ′) = 4。", draw: draw({ edge: { ...T, 7: "pick", 6: "rej" }, notes: [l, l2] }) },
+    { text: "T′ = T − ℓ′ + ℓ = {ab, ef, bc, de, be}：仍然是 spanning tree，w(T′) = 13 − 4 + 4 = 13 ≤ w(T)，所以 T′ 也是 MST，而且包含 A ∪ {be} → be 是 <strong>safe edge</strong>。", draw: draw({ edge: { 0: "chosen", 4: "chosen", 7: "chosen", 1: "tree", 3: "tree", 6: "ghost" } }) }
+  ] };
+};
+/* ---- end of copied engine ---- */
+
+/* ============================ quiz ============================ */
+const KEY = "cs4335-quiz-l1-3";
+const saved = store.get(KEY, {});
+const persist = () => store.set(KEY, saved);
+const jobsOf = arr => arr.map(([s, f], i) => ({ s, f, i, n: "J" + (i + 1), name: `(${fmt(s)},${fmt(f)})` }));
+const greedyBy = (jobs, key) => {
+  const out = [];
+  for (const j of [...jobs].sort((a, b) => key(a) - key(b) || a.i - b.i)) if (out.every(o => j.f <= o.s || o.f <= j.s)) out.push(j);
+  return out;
+};
+const roomsOf = jobs => {
+  const ends = [];
+  for (const j of [...jobs].sort((a, b) => a.s - b.s || a.i - b.i)) { const k = ends.findIndex(e => e <= j.s); if (k < 0) ends.push(j.f); else ends[k] = j.f; }
+  return ends.length;
+};
+const depthOf = jobs => {
+  const ev = [];
+  jobs.forEach(j => { ev.push([j.s, 1]); ev.push([j.f, -1]); });
+  ev.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  let cur = 0, d = 0, at = 0;
+  for (const [t, x] of ev) { cur += x; if (cur > d) { d = cur; at = t; } }
+  return { d, at };
+};
+const plainTimeline = (jobs, sel) => svg => drawTimeline(svg, jobs.map(j => ({ label: j.n, bars: [{ s: j.s, f: j.f, text: j.name, cls: sel && sel.includes(j.i) ? "sel" : "" }] })), ...ivRange(jobs));
+const pairsIn = (v, letters) => (String(v).match(new RegExp(`[${letters}]\\s*[-–—]?\\s*[${letters}]`, "gi")) || []).map(t => t.replace(new RegExp(`[^${letters}]`, "gi"), "").split(""));
+const keyOf = (a, b) => [a, b].sort().join("");
+
+/* checkers that accept every correct answer */
+function checkEuler(edges, seq) {
+  if (seq.length < 3) return { ok: false, msg: "請輸入頂點次序，例如 a b c a。" };
+  if (seq[0] !== seq[seq.length - 1]) return { ok: false, msg: "Circuit 要回到起點：第一個和最後一個頂點要相同。" };
+  const all = edges.map(([a, b]) => keyOf(a, b)), left = [...all];
+  for (let i = 0; i + 1 < seq.length; i++) {
+    const k = keyOf(seq[i], seq[i + 1]), at = left.indexOf(k);
+    if (at < 0) return { ok: false, msg: all.includes(k) ? `${seq[i]}–${seq[i + 1]} 已經用過了：每條邊只可以用一次。` : `${seq[i]}–${seq[i + 1]} 不是圖中的邊。` };
+    left.splice(at, 1);
+  }
+  if (left.length) return { ok: false, msg: `還有 ${left.length} 條邊沒有用：${left.join("、")}。Euler circuit 要用到每一條邊。` };
+  return { ok: true, msg: `每條邊剛好用一次（共 ${edges.length} 條），而且回到起點。` };
+}
+function checkMst(g, seq, prim) {
+  const V = Object.keys(g.nodes), W = Object.fromEntries(g.edges.map(e => [keyOf(e[0], e[1]), e[2]]));
+  if (!seq.length) return { ok: false, msg: "請輸入邊，例如 AD CE …。" };
+  const parent = Object.fromEntries(V.map(v => [v, v]));
+  const find = v => parent[v] === v ? v : (parent[v] = find(parent[v]));
+  const S = new Set([g.root]);
+  for (let k = 0; k < seq.length; k++) {
+    const [u, v] = seq[k], kk = keyOf(u, v), tag = `第 ${k + 1} 條 ${u}${v}`;
+    if (!(kk in W)) return { ok: false, msg: `${tag} 不是圖中的邊。` };
+    if (prim) {
+      if (S.has(u) && S.has(v)) return { ok: false, msg: `${tag}：兩端都已經在 tree 裏，加入會形成 cycle。` };
+      if (!S.has(u) && !S.has(v)) return { ok: false, msg: `${tag}：兩端都不在 tree 裏。Prim 每一步只加一條「一端在 S、一端在 V − S」的邊。` };
+      const cross = g.edges.filter(e => S.has(e[0]) !== S.has(e[1])), best = cross.reduce((a, e) => e[2] < a[2] ? e : a);
+      if (W[kk] > best[2]) return { ok: false, msg: `${tag}(${W[kk]})：這時跨過 cut 最輕的邊是 ${best[0]}${best[1]}(${best[2]})，Prim 要先加它。` };
+      S.add(S.has(u) ? v : u);
+    } else {
+      if (find(u) === find(v)) return { ok: false, msg: `${tag}：${u}、${v} 已經連通，加入會形成 cycle。` };
+      const best = g.edges.filter(e => find(e[0]) !== find(e[1])).reduce((a, e) => e[2] < a[2] ? e : a);
+      if (W[kk] > best[2]) return { ok: false, msg: `${tag}(${W[kk]})：還有更輕、又不成 cycle 的邊 ${best[0]}${best[1]}(${best[2]})，Kruskal 要先加它。` };
+      parent[find(u)] = find(v);
+    }
+  }
+  if (seq.length < V.length - 1) return { ok: false, msg: `到這裏都對，但只有 ${seq.length} 條；MST 要 |V| − 1 = ${V.length - 1} 條，請繼續。` };
+  return { ok: true, msg: `${V.length - 1} 條邊，次序合法。` };
+}
+
+/* ---------- data ---------- */
+const G1L = { w: 460, h: 280, nodes: { p: [40, 140], q: [160, 50], r: [160, 230], s: [300, 50], t: [300, 230], u: [420, 140] } };
+const G1E = parseEdges("pq pr qr qs rs rt st su tu");
+const G2L = { w: 560, h: 260, nodes: { a: [40, 60], b: [40, 220], c: [160, 140], d: [280, 40], e: [400, 140], f: [520, 60], g: [520, 220] } };
+const G2E = parseEdges("ab bc ca cd de ec ef fg ge");
+const G3L = { w: 420, h: 360, nodes: { a: [60, 60], b: [220, 60], c: [220, 200], d: [60, 200], e: [370, 200], f: [60, 330] } };
+const G3E = parseEdges("ab bc cd da ac ce df");
+const G4 = { root: "G", w: 430, h: 350,
+  nodes: { A: [50, 60], B: [210, 40], C: [370, 60], D: [90, 190], E: [260, 180], F: [170, 310], G: [370, 300] },
+  edges: [["A","B",7],["A","D",5],["B","C",8],["B","D",9],["B","E",7],["C","E",5],["D","E",15],["D","F",6],["E","F",8],["E","G",9],["F","G",11]] };
+const Q6J = jobsOf([[1, 4], [2, 6], [5, 7], [3, 9], [8, 10], [6, 11], [9, 12], [11, 14], [12, 15]]);
+const Q7J = jobsOf([[0, 5], [1, 4], [2, 6], [3, 7], [5, 9], [6, 8], [7, 10], [8, 11]]);
+const Q8J = jobsOf([[0, 10], [1, 4], [3, 5], [4, 8], [8, 11]]).map((j, k) => ({ ...j, n: "ABCDE"[k] }));
+const q6best = greedyBy(Q6J, j => j.f), q7rooms = roomsOf(Q7J), q7depth = depthOf(Q7J);
+const q8 = [greedyBy(Q8J, j => j.s), greedyBy(Q8J, j => j.f - j.s), greedyBy(Q8J, j => j.f)];
+const graphFig = (L, edges) => svg => drawGraph(svg, euGraph(edges, L), {}, false);
+const TF = ["True", "False"], EH = ["Euler circuit", "Hamiltonian cycle"];
+
+/* ---------- questions ---------- */
+const QUIZ = [
+  { id: "q1", lec: 1, level: "Basic",
+    stem: "<p>Consider the undirected graph G₁ below.</p>",
+    fig: () => graphFig(G1L, G1E), cap: "G₁",
+    parts: [
+      { type: "radio", prompt: "Does G₁ have an Euler circuit?", options: ["Yes", "No"], answer: 1, hint: "先數每個頂點的 degree，再對照 Euler's theorem。" },
+      { type: "checks", prompt: "Select <strong>every</strong> vertex of odd degree.", options: ["p", "q", "r", "s", "t", "u"], answer: [1, 4], hint: "逐個數：每條接住那個頂點的邊算 1。" }
+    ],
+    model: "<p>deg(p) = 2, deg(q) = 3, deg(r) = 4, deg(s) = 4, deg(t) = 3, deg(u) = 2. Vertices q and t have odd degree. By Euler's theorem (a connected graph has an Euler circuit iff every vertex has even degree), G₁ has <strong>no</strong> Euler circuit.</p>",
+    sol: () => ({ steps: eulerSteps(G1E, G1L) }) },
+
+  { id: "q2", lec: 1, level: "Basic",
+    stem: "<p>Find an Euler circuit of G₂. Write it as a sequence of vertices that starts and ends at the same vertex, e.g. <code>a b c … a</code>.</p>",
+    fig: () => graphFig(G2L, G2E), cap: "G₂",
+    parts: [{ type: "text", label: "Euler circuit", placeholder: "a b c … a", check: v => checkEuler(G2E, (String(v).toLowerCase().match(/[a-g]/g) || [])) }],
+    model: "<p>Every vertex has even degree (deg(c) = deg(e) = 4, all others 2) and G₂ is connected, so an Euler circuit exists. Start at a: C₁ = a→b→c→a. Vertex c still has unused edges, so walk C₂ = c→d→e→c and merge at c: a→b→c→d→e→c→a. Vertex e still has unused edges: C₃ = e→f→g→e; merge at e: <strong>a→b→c→d→e→f→g→e→c→a</strong>. Any circuit that uses every edge exactly once is correct.</p>",
+    sol: () => ({ steps: eulerSteps(G2E, G2L) }) },
+
+  { id: "q3", lec: 1, level: "Moderate",
+    stem: "<p>Edges may be added to G₃ (parallel edges are allowed).</p>",
+    fig: () => graphFig(G3L, G3E), cap: "G₃",
+    parts: [
+      { type: "number", prompt: "What is the <strong>minimum</strong> number of edges that must be added so that the graph has an Euler circuit?", answer: 2, hint: "數 odd degree 的頂點有幾個。每加一條邊，最多令兩個 odd 頂點變 even。" },
+      { type: "text", prompt: "Give one set of edges that achieves this minimum, e.g. <code>ab cd</code>.", label: "Edges to add", placeholder: "ab cd",
+        check: v => {
+          const add = pairsIn(v, "a-f").map(p => p.map(x => x.toLowerCase()));
+          if (!add.length) return { ok: false, msg: "請輸入要加的邊，例如 ab cd。" };
+          if (add.some(([a, b]) => a === b)) return { ok: false, msg: "不要加 loop（同一個頂點到自己）：loop 令 degree 加 2，odd 仍然是 odd。" };
+          const deg = {};
+          [...G3E, ...add].forEach(([a, b]) => { deg[a] = (deg[a] || 0) + 1; deg[b] = (deg[b] || 0) + 1; });
+          const odd = Object.keys(deg).filter(x => deg[x] % 2).sort();
+          if (odd.length) return { ok: false, msg: `加了之後 ${odd.join("、")} 的 degree 仍然是 odd。` };
+          if (add.length > 2) return { ok: false, msg: `這樣全部變 even，但用了 ${add.length} 條，不是最少。` };
+          return { ok: true, msg: "全部 degree 變 even，graph 仍然 connected，而且只加了 2 條。" };
+        } }
+    ],
+    model: "<p>Odd-degree vertices: a (3), d (3), e (1), f (1). An added edge changes the degree of its two endpoints by one, so it can fix at most two odd vertices; four odd vertices need at least 4 / 2 = <strong>2</strong> edges. Adding a–d (a parallel edge) and e–f makes every degree even, and the graph stays connected, so 2 edges suffice (a–e with d–f also works).</p>",
+    sol: () => {
+      const aug = [...G3E, ["a", "d"], ["e", "f"]], g = euGraph(aug, G3L);
+      return { steps: [...eulerSteps(G3E, G3L),
+        { text: "odd 頂點有 a、d、e、f 四個。一條邊最多令兩個 odd 頂點變 even，所以最少要 2 條。加 a–d（parallel edge）和 e–f（橙色），全部 degree 變 even。", draw: svg => drawGraph(svg, g, { edge: { 7: "pick", 8: "pick" }, sub: { a: "deg 4", b: "deg 2", c: "deg 4", d: "deg 4", e: "deg 2", f: "deg 2" } }, false) },
+        ...eulerSteps(aug, G3L).slice(1)] };
+    } },
+
+  { id: "q4", lec: 1, level: "Basic",
+    stem: "<p>For each situation, decide which graph problem it is.</p>",
+    parts: [
+      { type: "radio", prompt: "(a) A snowplow must clear every street of a town exactly once and return to the depot.", options: EH, answer: 0, hint: "街道是邊還是頂點？" },
+      { type: "radio", prompt: "(b) A tourist wants to visit each of 8 museums exactly once and return to the hotel.", options: EH, answer: 1, hint: "博物館是邊還是頂點？" },
+      { type: "radio", prompt: "(c) Trace a figure without lifting the pen and without drawing any line twice, finishing where you started.", options: EH, answer: 0, hint: "每條「線」只畫一次。" },
+      { type: "radio", prompt: "(d) Which of the two problems has an NP-complete decision version?", options: EH, answer: 1, hint: "Lecture 1 p.24：哪一個沒有已知的 polynomial-time algorithm？" }
+    ],
+    model: "<p>Euler circuit = use every <em>edge</em> exactly once (streets, lines of a drawing). Hamiltonian cycle = visit every <em>vertex</em> exactly once (museums). Euler circuit is in P: Euler's theorem gives a polynomial-time test and construction. The Hamiltonian-cycle decision problem is NP-complete.</p>",
+    sol: () => EX["eu-vs-ham"]() },
+
+  { id: "q5", lec: 1, level: "Moderate",
+    stem: "<p>Questions about the proof of Euler's theorem.</p>",
+    parts: [
+      { type: "radio", col: true, prompt: "(a) (⇒) If a graph has an Euler circuit, why is every degree even?", answer: 0, hint: "想一想 circuit 每次「經過」一個頂點時用了幾條邊。",
+        options: ["Each time the circuit passes through a vertex it uses two of that vertex's edges: one to enter and one to leave.", "Because the graph is connected.", "Because every vertex lies on a cycle of even length.", "Because an Euler circuit has exactly |V| edges."] },
+      { type: "radio", col: true, prompt: "(b) (⇐) The algorithm starts a walk at v₀ and keeps following unused edges. Why can the walk only get stuck at v₀?", answer: 1, hint: "走進一個頂點 v ≠ v₀ 時，v 已經用了單數條還是雙數條邊？",
+        options: ["Because the graph has no parallel edges.", "When the walk enters a vertex v ≠ v₀, it has used an odd number of v's edges; since deg(v) is even, an unused edge is left to leave v.", "Because the total number of edges is even.", "Because v₀ has the largest degree."] }
+    ],
+    model: "<p>(a) Walking along the circuit, every visit to a vertex enters by one edge and leaves by another, and each edge is used once, so deg(v) = 2 × (number of visits), which is even. (b) Each time the walk passes through v ≠ v₀ it uses two edges of v; when it enters v, it has used an odd number of v's edges, and since deg(v) is even an unused edge remains. So the walk can only stop at v₀, and it forms a circuit.</p>",
+    sol: () => EX["eu-proof"]() },
+
+  { id: "q6", lec: 2, level: "Basic",
+    stem: "<p>Jobs (s<sub>j</sub>, f<sub>j</sub>) are shown below. Two jobs are compatible if they do not overlap (a job may start exactly when another finishes). Tick a <strong>maximum</strong> set of mutually compatible jobs. The timeline updates as you tick.</p>",
+    fig: vals => plainTimeline(Q6J, vals && vals[0]), size: "wide", cap: "藍色 = 你揀了的 job",
+    parts: [{ type: "jobs", jobs: Q6J,
+      check: sel => {
+        if (!sel.length) return { ok: false, msg: "請揀 job。" };
+        const js = sel.map(k => Q6J[k]);
+        for (const a of js) for (const b of js) if (a !== b && a.s < b.f && b.s < a.f) return { ok: false, msg: `${a.n} ${a.name} 和 ${b.n} ${b.name} 重疊，不是 compatible。` };
+        return js.length === q6best.length ? { ok: true, msg: `${js.length} 份互相 compatible，已經是最多。` } : { ok: false, msg: `這 ${js.length} 份互相 compatible，但最多可以揀 ${q6best.length} 份。試試 earliest finish time first。` };
+      } }],
+    model: (() => {
+      const s = [...Q6J].sort((a, b) => a.f - b.f || a.i - b.i);
+      return `<p>Earliest finish time first. Sort by finish time: ${s.map(j => `${j.n}(${j.f})`).join(", ")}. Scan in this order and select a job if it starts no earlier than the finish time of the last selected job. Selected: <strong>${q6best.map(j => j.n).join(", ")}</strong>, so the maximum is ${q6best.length}. Running time O(n log n).</p>`;
+    })(),
+    sol: () => ({ size: "wide", steps: ivSchedSteps(Q6J) }) },
+
+  { id: "q7", lec: 2, level: "Basic",
+    stem: `<p>Lectures (s<sub>j</sub>, f<sub>j</sub>): ${Q7J.map(j => j.name).join(", ")}.</p>`,
+    fig: () => plainTimeline(Q7J), size: "wide", cap: "Lectures",
+    parts: [
+      { type: "number", prompt: "Minimum number of classrooms needed:", answer: q7rooms, hint: "按 start time 排序，逐堂放入可以用的課室，放不下才開新課室。" },
+      { type: "number", prompt: "Depth of this set of intervals:", answer: q7depth.d, hint: "找一個時間點，數最多有幾堂同時進行。" }
+    ],
+    model: `<p>Sort by start time and put each lecture into any free classroom, opening a new one only when none is free. Greedy uses <strong>${q7rooms}</strong> classrooms. Depth = <strong>${q7depth.d}</strong>: at time ${q7depth.at}, ${q7depth.d} lectures are in progress at once. Every schedule needs at least depth classrooms, and greedy uses exactly depth, so it is optimal.</p>`,
+    sol: () => ({ size: "wide", steps: ivPartSteps(Q7J) }) },
+
+  { id: "q8", lec: 2, level: "Moderate",
+    stem: "<p>Jobs: A = (0,10), B = (1,4), C = (3,5), D = (4,8), E = (8,11). For each greedy rule (repeatedly take the next job in the order that is compatible with all jobs taken so far), how many jobs are selected?</p>",
+    fig: () => drawJobs(Q8J), size: "wide", cap: "Jobs A–E",
+    parts: [
+      { type: "number", prompt: "(a) Earliest start time first:", answer: q8[0].length, hint: "最早開始的是哪一份？它和誰重疊？" },
+      { type: "number", prompt: "(b) Shortest job first:", answer: q8[1].length, hint: "最短的 job 長度是 2。" },
+      { type: "number", prompt: "(c) Earliest finish time first:", answer: q8[2].length, hint: "按 finish time 排序。" }
+    ],
+    model: `<p>(a) Earliest start takes A = (0,10), which overlaps every other job: <strong>${q8[0].length}</strong> job. (b) Shortest first takes C = (3,5) (length 2), which removes A, B and D; then E: <strong>${q8[1].length}</strong> jobs. (c) Earliest finish takes B, D, E: <strong>${q8[2].length}</strong> jobs, which is optimal. So (a) and (b) are counterexamples showing those rules are not optimal.</p>`,
+    sol: () => ({ size: "wide", steps: [
+      { text: "五份 job。", draw: drawJobs(Q8J) },
+      { text: "<strong>Earliest start</strong>：先揀 A = (0,10)（橙色），其他全部和它重疊 → 只得 1 份。", draw: drawJobs(Q8J, { 0: "bad" }, "skip") },
+      { text: "<strong>Shortest job</strong>：先揀最短的 C = (3,5)，刪掉和它重疊的 A、B、D；再揀 E → 2 份。", draw: drawJobs(Q8J, { 2: "bad", 4: "bad" }, "skip") },
+      { text: "<strong>Earliest finish</strong>：B(4) → D(4,8) → E(8,11) → 3 份（綠色），這是最優。", draw: drawJobs(Q8J, { 1: "ok", 3: "ok", 4: "ok" }, "skip") }
+    ] }) },
+
+  { id: "q9", lec: 2, level: "Hard",
+    stem: "<p>Put the steps of the exchange-argument proof that <em>earliest finish time first</em> is optimal into the correct order (1 = first).</p>",
+    parts: [{ type: "order", show: [2, 4, 0, 3, 1], hint: "先定義 G 和 OPT，再找第一個不同的位置，再比較、交換，最後重複。",
+      items: [
+        "Let G = i₁, …, i<sub>k</sub> be the greedy solution and OPT = j₁, …, j<sub>m</sub> an optimal solution, both sorted by finish time.",
+        "Let r be the largest index such that i₁ = j₁, …, i<sub>r</sub> = j<sub>r</sub>, so i<sub>r+1</sub> ≠ j<sub>r+1</sub>.",
+        "Greedy picks the compatible job that finishes earliest, so f(i<sub>r+1</sub>) ≤ f(j<sub>r+1</sub>).",
+        "Replacing j<sub>r+1</sub> by i<sub>r+1</sub> in OPT keeps all jobs compatible and the size m, giving an optimal solution that agrees with G on r + 1 jobs.",
+        "Repeating, we get an optimal solution i₁, …, i<sub>k</sub>, j<sub>k+1</sub>, …; any job j<sub>k+1</sub> would have been selected by greedy, so m = k and G is optimal."] }],
+    model: "<ol><li>Let G = i₁, …, i<sub>k</sub> be the greedy solution and OPT = j₁, …, j<sub>m</sub> an optimal solution, both sorted by finish time.</li><li>Let r be the largest index with i₁ = j₁, …, i<sub>r</sub> = j<sub>r</sub>.</li><li>Greedy picks the compatible job that finishes earliest, so f(i<sub>r+1</sub>) ≤ f(j<sub>r+1</sub>).</li><li>Replacing j<sub>r+1</sub> by i<sub>r+1</sub> keeps OPT feasible and the same size, so it stays optimal and agrees with G on r + 1 jobs.</li><li>Repeating, OPT becomes i₁, …, i<sub>k</sub>, j<sub>k+1</sub>, …; an extra job j<sub>k+1</sub> would have been chosen by greedy, so m = k.</li></ol>",
+    sol: () => EX["iv-exchange"]() },
+
+  { id: "q10", lec: 2, level: "Moderate",
+    stem: "<p>Interval partitioning: greedy sorts lectures by start time, puts each lecture into any free classroom, and opens a new classroom only when none is free.</p>",
+    parts: [
+      { type: "radio", col: true, prompt: "(a) Greedy uses d classrooms. Why is d optimal?", answer: 0, hint: "Lecture 2 的 structural bound：depth。",
+        options: ["Classroom d is opened only when d lectures overlap at that start time, so d ≤ depth; and every schedule needs at least depth classrooms.", "Because the lectures are sorted by finish time.", "Because greedy never leaves a classroom empty.", "Because d is at most n / 2."] },
+      { type: "radio", prompt: "(b) Running time with a priority queue keyed by each classroom's finish time:", options: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"], answer: 1, hint: "排序 + 每堂一次 priority queue 操作。" }
+    ],
+    model: "<p>(a) Let d be the number of classrooms greedy allocates. Classroom d is opened because lecture j cannot use any of the first d − 1 classrooms; since lectures are processed by start time, each of them holds a lecture that started no later than s<sub>j</sub> and ends after s<sub>j</sub>. With j, d lectures overlap at s<sub>j</sub>, so d ≤ depth. Every schedule needs at least depth classrooms, so greedy is optimal. (b) Sorting takes O(n log n) and each lecture needs O(log n) priority-queue work: <strong>O(n log n)</strong>.</p>",
+    sol: () => ({ size: "wide", steps: ivPartSteps(Q7J) }) },
+
+  { id: "q11", lec: 3, level: "Basic",
+    stem: "<p>Run <strong>Kruskal's algorithm</strong> on the weighted graph G₄.</p>",
+    fig: () => svg => drawGraph(svg, G4, {}, false), cap: "G₄",
+    parts: [
+      { type: "text", prompt: "(a) List the edges in the order Kruskal adds them, e.g. <code>AB CD …</code> (for equal weights either order is fine).", label: "Edges", placeholder: "AD CE …", check: v => checkMst(G4, pairsIn(String(v).toUpperCase(), "A-G"), false) },
+      { type: "number", prompt: "(b) Total weight of the MST:", answer: 39, hint: "把 (a) 的邊的重量加起來。" }
+    ],
+    model: "<p>Sort the edges: AD 5, CE 5, DF 6, AB 7, BE 7, BC 8, EF 8, BD 9, EG 9, FG 11, DE 15. Add AD, CE, DF, AB, BE. Reject BC (B and C are already connected through E), EF and BD (they would form cycles). Add EG. Now there are |V| − 1 = 6 edges: <strong>AD, CE, DF, AB, BE, EG</strong>, total weight <strong>39</strong>.</p>",
+    sol: () => ({ steps: mstToSteps(G4, "k") }) },
+
+  { id: "q12", lec: 3, level: "Basic",
+    stem: "<p>Run <strong>Prim's algorithm</strong> on G₄ (same graph as Q11) starting from vertex <strong>G</strong>.</p>",
+    fig: () => svg => drawGraph(svg, G4, { node: { G: "cur" } }, false), cap: "G₄，由 G 開始",
+    parts: [{ type: "text", prompt: "List the edges in the order Prim adds them.", label: "Edges", placeholder: "EG …", check: v => checkMst(G4, pairsIn(String(v).toUpperCase(), "A-G"), true) }],
+    model: "<p>S = {G}. Each step adds the lightest edge crossing (S, V − S): EG (9) → CE (5) → BE (7) → AB (7) → AD (5) → DF (6). Total weight 39, the same as Kruskal.</p>",
+    sol: () => ({ steps: mstToSteps(G4, "p") }) },
+
+  { id: "q13", lec: 3, level: "Moderate",
+    stem: "<p>In G₄, consider the cut (S, V − S) with S = {A, B, D} (blue vertices). Let A₀ = {AB, AD}; no edge of A₀ crosses the cut.</p>",
+    fig: () => svg => drawGraph(svg, G4, { node: { A: "in", B: "in", D: "in" }, edge: { 0: "chosen", 1: "chosen" } }, false), cap: "S = {A, B, D}；藍色粗線 = A₀",
+    parts: [
+      { type: "radio", prompt: "(a) Which edge is the light edge crossing this cut?", options: ["BC (8)", "BE (7)", "DE (15)", "DF (6)"], answer: 3, hint: "只看一端在 S、一端在 V − S 的邊。" },
+      { type: "radio", col: true, prompt: "(b) What does the cut property say about this light edge?", answer: 1, hint: "Cut property：light edge is safe。",
+        options: ["It is in every spanning tree of G₄.", "It is safe for A₀: A₀ ∪ {light edge} is contained in some MST.", "It is never in an MST.", "It is only in the MST built by Prim's algorithm."] }
+    ],
+    model: "<p>The edges crossing the cut are BC (8), BE (7), DE (15) and DF (6), so the light edge is <strong>DF</strong>. A₀ = {AB, AD} is good (it is contained in the MST found in Q11) and does not cross the cut, so by the cut property DF is safe: A₀ ∪ {DF} is contained in some MST.</p>",
+    sol: () => {
+      const base = { node: { A: "in", B: "in", D: "in" } };
+      return { steps: [
+        { text: "S = {A, B, D}（藍色）。A₀ = {AB, AD}（藍色粗線）沒有跨過 cut。", draw: svg => drawGraph(svg, G4, { ...base, edge: { 0: "chosen", 1: "chosen" } }, false) },
+        { text: "跨過 cut 的邊（橙色虛線）：BC(8)、BE(7)、DE(15)、DF(6)。", draw: svg => drawGraph(svg, G4, { ...base, edge: { 0: "chosen", 1: "chosen", 2: "cand", 4: "cand", 6: "cand", 7: "cand" } }, false) },
+        { text: "最輕的是 DF(6) → light edge（橙色粗線）。Cut property：DF 對 A₀ 是 safe，A₀ ∪ {DF} 在某棵 MST 裏。", draw: svg => drawGraph(svg, G4, { ...base, edge: { 0: "chosen", 1: "chosen", 2: "cand", 4: "cand", 6: "cand", 7: "pick" } }, false) }
+      ] };
+    } },
+
+  { id: "q14", lec: 3, level: "Moderate",
+    stem: "<p>True or false?</p>",
+    parts: [
+      { type: "radio", prompt: "(a) If all edge weights are distinct, the MST is unique.", options: TF, answer: 0, hint: "Lecture 3 的 challenge。" },
+      { type: "radio", prompt: "(b) During Kruskal's algorithm, the chosen edges always form a single tree.", options: TF, answer: 1, hint: "Kruskal 的 A 是 forest 還是 tree？" },
+      { type: "radio", prompt: "(c) If an edge is the unique heaviest edge on some cycle, it is not in any MST.", options: TF, answer: 0, hint: "如果它在 T 裏，可以換走它嗎？" },
+      { type: "radio", prompt: "(d) A spanning tree of a connected graph with n vertices has exactly n edges.", options: TF, answer: 1, hint: "Tree 的邊數是多少？" },
+      { type: "radio", prompt: "(e) Prim's algorithm with a binary heap runs in O(|E| log |V|) time.", options: TF, answer: 0, hint: "見 Lecture 3 的 running time。" }
+    ],
+    model: "<ol type=\"a\"><li><strong>True.</strong> With distinct weights every cut has a unique light edge, so the MST is unique.</li><li><strong>False.</strong> Kruskal's A is a forest; it becomes one tree only at the end (Prim keeps a single tree).</li><li><strong>True.</strong> If e were in an MST T, removing e splits T into two parts; another edge e′ of the cycle reconnects them and is lighter, so T − e + e′ would be lighter, a contradiction.</li><li><strong>False.</strong> A tree on n vertices has n − 1 edges.</li><li><strong>True.</strong> Each of the O(|E|) key updates and |V| extract-min operations costs O(log |V|).</li></ol>",
+    sol: () => null },
+
+  { id: "q15", lec: 3, level: "Hard",
+    stem: "<p>Put the steps of the proof of the <strong>cut property</strong> into the correct order (1 = first). Setting: A is good, the cut (S, V − S) is crossed by no edge of A, and ℓ is a light edge crossing it.</p>",
+    parts: [{ type: "order", show: [3, 0, 4, 2, 1], hint: "先設 T；ℓ 不在 T 時加入 ℓ 得 cycle；找另一條跨 cut 的邊；比較重量；換邊。",
+      items: [
+        "Let ℓ = (u, v) and let T be an MST that contains A.",
+        "If ℓ ∈ T we are done; otherwise adding ℓ to T creates exactly one cycle.",
+        "The path in T from u to v must cross the cut at another edge ℓ′, and ℓ′ ∉ A because no edge of A crosses the cut.",
+        "Since ℓ is a light edge, w(ℓ) ≤ w(ℓ′).",
+        "T′ = T − ℓ′ + ℓ is a spanning tree containing A ∪ {ℓ} with w(T′) ≤ w(T), so T′ is an MST and ℓ is safe for A."] }],
+    model: "<ol><li>Let ℓ = (u, v) and let T be an MST that contains A.</li><li>If ℓ ∈ T we are done; otherwise adding ℓ to T creates exactly one cycle.</li><li>The path in T from u to v crosses the cut at another edge ℓ′, and ℓ′ ∉ A because no edge of A crosses the cut.</li><li>Since ℓ is light, w(ℓ) ≤ w(ℓ′).</li><li>T′ = T − ℓ′ + ℓ is a spanning tree containing A ∪ {ℓ} with w(T′) ≤ w(T), so T′ is an MST and ℓ is safe.</li></ol>",
+    sol: () => EX["cut"]() }
+];
+function drawJobs(jobs, cls = {}, rest = "") {
+  return svg => drawTimeline(svg, jobs.map((j, k) => ({ label: j.n, bars: [{ s: j.s, f: j.f, text: j.name, cls: cls[k] || rest }] })), ...ivRange(jobs));
+}
+
+/* ---------- rendering ---------- */
+const nParts = q => q.parts.length;
+function partHtml(q, p, i) {
+  const name = `${q.id}-p${i}`;
+  let h = p.prompt ? `<p class="qz-prompt">${p.prompt.replace(/^\([a-e]\)\s*/, "")}</p>` : "";
+  if (p.type === "radio" || p.type === "checks") {
+    const t = p.type === "radio" ? "radio" : "checkbox";
+    h += `<div class="opts${p.col ? " col" : ""}">${p.options.map((o, k) => `<label><input type="${t}" name="${name}" value="${k}"><span>${o}</span></label>`).join("")}</div>`;
+  } else if (p.type === "jobs") {
+    h += `<div class="opts">${p.jobs.map((j, k) => `<label><input type="checkbox" name="${name}" value="${k}"><span>${j.n} ${j.name}</span></label>`).join("")}</div>`;
+  } else if (p.type === "number") {
+    h += `<label class="fld">答案<input type="number" step="any" inputmode="decimal" name="${name}"></label>`;
+  } else if (p.type === "text") {
+    h += `<label class="fld">${p.label || "答案"}<input type="text" name="${name}" placeholder="${esc(p.placeholder || "")}" autocomplete="off" spellcheck="false"></label>`;
+  } else if (p.type === "order") {
+    h += p.show.map((idx, r) => `<div class="order-row"><select name="${name}-${r}" aria-label="第幾步"><option value="">?</option>${p.items.map((_, k) => `<option value="${k + 1}">${k + 1}</option>`).join("")}</select><span>${p.items[idx]}</span></div>`).join("");
+  }
+  return h + '<span class="pf" aria-live="polite"></span>';
+}
+function readPart(li, p) {
+  if (p.type === "radio") { const c = li.querySelector("input:checked"); return c ? +c.value : null; }
+  if (p.type === "checks" || p.type === "jobs") return [...li.querySelectorAll("input:checked")].map(x => +x.value);
+  if (p.type === "order") return [...li.querySelectorAll("select")].map(s => s.value);
+  return li.querySelector("input").value;
+}
+function writePart(li, p, v) {
+  if (v == null) return;
+  if (p.type === "radio") li.querySelectorAll("input").forEach(x => { x.checked = +x.value === v; });
+  else if (p.type === "checks" || p.type === "jobs") li.querySelectorAll("input").forEach(x => { x.checked = v.includes(+x.value); });
+  else if (p.type === "order") li.querySelectorAll("select").forEach((s, k) => { s.value = v[k] || ""; });
+  else li.querySelector("input").value = v;
+}
+function judge(p, v) {
+  if (p.type === "radio") return v === null ? { ok: false, msg: "請揀一個答案。" } : v === p.answer ? { ok: true, msg: "正確。" } : { ok: false, msg: p.hint };
+  if (p.type === "checks") return [...v].sort().join() === [...p.answer].sort().join() ? { ok: true, msg: "正確。" } : { ok: false, msg: v.length ? p.hint : "請剔選答案。" };
+  if (p.type === "number") return v === "" ? { ok: false, msg: "請輸入數字。" } : Math.abs(+v - p.answer) < 1e-9 ? { ok: true, msg: "正確。" } : { ok: false, msg: p.hint };
+  if (p.type === "order") {
+    if (v.some(x => !x)) return { ok: false, msg: "每一句都要揀次序。" };
+    if (new Set(v).size !== v.length) return { ok: false, msg: "每個數字只可以用一次。" };
+    const right = p.show.filter((idx, r) => +v[r] === idx + 1).length;
+    return right === v.length ? { ok: true, msg: "次序正確。" } : { ok: false, msg: `有 ${right} / ${v.length} 句位置正確。${p.hint}` };
+  }
+  return p.check(v);
+}
+const total = QUIZ.reduce((a, q) => a + nParts(q), 0);
+function updateScore() {
+  let pts = 0, done = 0;
+  QUIZ.forEach(q => { const s = saved[q.id]; if (s && s.res) { done++; pts += s.res.filter(Boolean).length; } });
+  $("#sc-pts").textContent = pts; $("#sc-max").textContent = total;
+  $("#sc-done").textContent = done; $("#sc-n").textContent = QUIZ.length;
+}
+function mount(q, n) {
+  const art = document.createElement("article");
+  art.className = "qz"; art.id = q.id; art.dataset.lec = q.lec;
+  art.innerHTML = `<header class="qz-head"><span class="qz-no">Q${n}</span><span class="qz-meta">Lecture ${q.lec} · ${q.level} · ${nParts(q)} 分</span><span class="qz-status"></span></header>
+    <div class="qz-stem">${q.stem}</div>
+    ${q.fig ? `<figure><div class="figwrap"><svg class="fig ${q.size || "narrow"}" role="img" aria-label="${esc(q.cap || "題目的圖")}"></svg></div><figcaption>${q.cap || ""}</figcaption></figure>` : ""}
+    <ol class="qz-parts${q.parts.length === 1 ? " single" : ""}" type="a">${q.parts.map((p, i) => `<li>${partHtml(q, p, i)}</li>`).join("")}</ol>
+    <div class="controls"><button class="btn primary" type="button" data-act="check">檢查答案</button><button class="btn" type="button" data-act="sol" aria-expanded="false">看詳解</button><button class="btn" type="button" data-act="clear">清除</button></div>
+    <div class="qz-sol" hidden></div>`;
+  const lis = [...art.querySelectorAll(".qz-parts>li")], svg = art.querySelector("svg.fig"), status = art.querySelector(".qz-status"), sol = art.querySelector(".qz-sol");
+  const vals = () => q.parts.map((p, i) => readPart(lis[i], p));
+  const drawFig = () => {
+    if (!svg) return;
+    svg.innerHTML = "";
+    q.fig(vals())(svg);
+    const vb = svg.viewBox.baseVal;
+    if (vb && vb.width) svg.style.maxWidth = Math.round(vb.width * 1.3) + "px";
+  };
+  const showResult = res => {
+    lis.forEach((li, i) => {
+      li.classList.toggle("ok", !!res && res[i].ok);
+      li.classList.toggle("no", !!res && !res[i].ok);
+      li.querySelector(".pf").textContent = res ? (res[i].ok ? "✓ " : "✗ ") + res[i].msg : "";
+    });
+    const got = res ? res.filter(r => r.ok).length : 0;
+    status.className = "qz-status" + (res ? (got === res.length ? " ok" : got ? " part" : " no") : "");
+    status.textContent = res ? `${got} / ${res.length}` : "";
+  };
+  const check = () => {
+    const res = q.parts.map((p, i) => judge(p, readPart(lis[i], p)));
+    saved[q.id] = { vals: vals(), res: res.map(r => r.ok) };
+    persist(); showResult(res); updateScore();
+  };
+  let solBuilt = false;
+  art.addEventListener("click", e => {
+    const b = e.target.closest("[data-act]");
+    if (!b) return;
+    if (b.dataset.act === "check") check();
+    else if (b.dataset.act === "clear") {
+      lis.forEach((li, i) => { const p = q.parts[i]; writePart(li, p, p.type === "radio" ? -1 : p.type === "order" ? [] : p.type === "checks" || p.type === "jobs" ? [] : ""); });
+      delete saved[q.id]; persist(); showResult(null); drawFig(); updateScore();
+    } else {
+      const open = sol.hidden;
+      sol.hidden = !open; b.setAttribute("aria-expanded", String(open)); b.textContent = open ? "收起詳解" : "看詳解";
+      if (open && !solBuilt) {
+        solBuilt = true;
+        sol.innerHTML = `<div class="model"><b>Model answer</b>${q.model}</div>`;
+        const s = q.sol();
+        if (s) { const host = document.createElement("div"); host.className = "ex"; host.innerHTML = '<p class="ex-title">逐步圖解</p><div class="ex-body"></div>'; sol.appendChild(host); stepper(host.querySelector(".ex-body"), s.steps, { size: s.size || "narrow", label: "詳解" }); }
+      }
+    }
+  });
+  art.addEventListener("change", () => {
+    saved[q.id] = { ...(saved[q.id] || {}), vals: vals() };
+    persist();
+    if (q.parts.some(p => p.type === "jobs")) drawFig();
+  });
+  const s = saved[q.id];
+  if (s && s.vals) s.vals.forEach((v, i) => writePart(lis[i], q.parts[i], v));
+  drawFig();
+  if (s && s.res) showResult(q.parts.map((p, i) => judge(p, readPart(lis[i], p))));
+  $(`#sec-${q.lec} .qlist`).appendChild(art);
+}
+QUIZ.forEach((q, i) => mount(q, i + 1));
+updateScore();
+
+$$(".scorebar .tab").forEach(t => t.addEventListener("click", () => {
+  $$(".scorebar .tab").forEach(x => x.setAttribute("aria-selected", String(x === t)));
+  $$("main section[data-lec]").forEach(s => { s.hidden = t.dataset.lec !== "all" && s.dataset.lec !== t.dataset.lec; });
+}));
+$("#clear-all").addEventListener("click", () => { $$('.qz [data-act="clear"]').forEach(b => b.click()); });
+})();
+</script>
+</body>
+</html>

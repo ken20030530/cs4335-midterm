@@ -268,7 +268,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
   <div class="inner">
     <a href="#top">考試</a><a href="#map">2022 卷</a><a href="#plan">7 日計劃</a>
     <a href="#l1">L1 Euler</a><a href="#l2">L2 Interval</a><a href="#l3">L3 MST</a><a href="#l4">L4 Dijkstra</a><a href="#l5">L5 Greedy++</a><a href="#l6">L6 D&amp;C</a>
-    <a href="#proof">證明模板</a><a href="#cheat">時間複雜度</a><a href="#mock">模擬題</a><a href="#files">檔案</a>
+    <a href="#proof">證明模板</a><a href="#cheat">時間複雜度</a><a href="#mock">模擬題</a><a href="practice-l1-3.html">L1–3 練習卷</a><a href="#files">檔案</a>
   </div>
 </nav>
 
@@ -337,7 +337,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
     <li><input type="checkbox" id="p5" aria-label="10/21 完成"><span class="day"><b>10/21</b>Wed</span><div><strong>L6</strong>：Merge sort recurrence 展開；merge-and-count；D&amp;C 設計題：max、最大＋第二大、max subarray。
       <div class="todo"><span>練習：</span><a href="#w6-ex1">W6 Recurrence</a><a href="#t5-1">Tutorial 5 Q1</a><a href="#t5-x">Tutorial 5 Extra</a><a href="#ex-22q4">2022 Q4(a)</a><a href="#ex-rec">Q4(b)</a><a href="#ex-22q5">Q5</a><a href="#m5">M5</a><a href="#m6">M6</a><a href="#m11">M11</a></div></div></li>
     <li><input type="checkbox" id="p6" aria-label="10/22 完成"><span class="day"><b>10/22</b>Thu</span><div><strong>模擬考</strong>：限時 2 小時做 2022 卷（遮住答案），跳過 Q2(b)；再做本頁模擬題。
-      <div class="todo"><span>練習：</span><a href="#map">2022 卷拆解</a><a href="#mock">模擬題 M1–M13</a></div></div></li>
+      <div class="todo"><span>練習：</span><a href="#map">2022 卷拆解</a><a href="#mock">模擬題 M1–M13</a><a href="practice-l1-3.html">L1–3 練習卷（英文）</a></div></div></li>
     <li class="exam"><input type="checkbox" id="p7" aria-label="10/23 完成"><span class="day"><b>10/23</b>Fri</span><div>早上看一遍 <a href="#cheat">時間複雜度表</a> 和 <a href="#proof">證明模板</a>。<strong>3:00 pm 開考。</strong></div></li>
   </ul>
 </section>
@@ -940,6 +940,7 @@ Comparisons: g(n) = 2g(n/2) + 2
 <section id="mock">
   <header><p class="eyebrow">仿 2022 卷題型 · 答案收起</p><h2>模擬題</h2></header>
   <p>這些是按 2022 卷和今年 tutorial 題型出的練習題，不是真題。先自己寫，再打開答案。</p>
+  <p class="box write" style="padding:10px 14px"><strong>另有可互動的 <a href="practice-l1-3.html">Lecture 1–3 練習卷</a></strong>：15 題英文新題，即時檢查答案，錯了會說錯在哪裏，附 model answer 和逐步圖解。</p>
 
   <div class="q" id="m1"><p><span class="pts">M1 · L2</span><br>Jobs (s, f)：(1,4), (3,5), (0,6), (5,7), (3,9), (5,9), (6,10), (8,11), (8,12), (2,14), (12,16)。用 greedy 求最多 compatible jobs，寫出主要步驟和 running time。</p>
     <details class="answer"><summary>答案</summary><p>按 f 排序：(1,4) (3,5) (0,6) (5,7) (3,9) (5,9) (6,10) (8,11) (8,12) (2,14) (12,16)。選 (1,4) → (5,7) → (8,11) → (12,16)，共 <strong>4</strong> 份。O(n log n)。</p><div class="ex" data-ex="iv-s" data-in="(1,4),(3,5),(0,6),(5,7),(3,9),(5,9),(6,10),(8,11),(8,12),(2,14),(12,16)" data-title="M1 圖解"></div></details></div>
