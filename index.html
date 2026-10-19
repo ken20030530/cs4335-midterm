@@ -186,6 +186,8 @@ tr.now td{background:var(--mark)}
 .g-edge.tree{stroke:var(--ok);stroke-width:4.5}
 .g-edge.ghost{stroke:var(--line);stroke-width:1.5;stroke-dasharray:3 4}
 .g-region{fill:var(--blue-soft);opacity:.6}
+.g-map{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.g-maplbl{font:700 18px var(--f-display);fill:var(--ink)}
 .g-cut{stroke:var(--warn);stroke-width:2;stroke-dasharray:8 6;fill:none}
 .g-tag{font:700 15px var(--f-display);fill:var(--blue)}
 .g-note{font:700 16px var(--f-display);fill:var(--warn)}
@@ -243,6 +245,11 @@ details.answer[open]>summary{margin-bottom:6px}
 .plan .day b{display:block;font-family:var(--f-display);font-size:15px;color:var(--ink)}
 .plan li.exam{border-color:var(--blue);background:var(--blue-soft)}
 .plan input:checked~div{color:var(--muted);text-decoration:line-through}
+.plan .todo{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;margin-top:6px;font-size:13px;text-decoration:none}
+.plan .todo>span{color:var(--muted)}
+.plan .todo a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:1px 9px;background:var(--paper)}
+.plan .todo a:hover{border-color:var(--blue)}
+.q .ex{margin:.6em 0}
 
 .files{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .files>div{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
@@ -317,14 +324,20 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
 
 <section id="plan">
   <header><p class="eyebrow">今日 10 月 17 日（六）→ 10 月 23 日（五）</p><h2>7 日溫習計劃</h2></header>
-  <p class="small muted">剔完會記在這部機的瀏覽器裡。</p>
+  <p class="small muted">每天下面的練習題都可以按，會直接跳到題目：先自己做，再打開「答案」看逐步圖解。剔完會記在這部機的瀏覽器裡。</p>
   <ul class="plan">
-    <li><input type="checkbox" id="p1" aria-label="10/17 完成"><span class="day"><b>10/17</b>Sat</span><div><strong>L1 + L2</strong>：Euler theorem 與證明；interval scheduling／partitioning。用 Lab 做 Tutorial 1 兩題和 2022 Q1。</div></li>
-    <li><input type="checkbox" id="p2" aria-label="10/18 完成"><span class="day"><b>10/18</b>Sun</span><div><strong>L3 MST</strong>：背熟 cut property 證明；Kruskal 和 Prim 各手做兩次（lecture 圖、M3）。</div></li>
-    <li><input type="checkbox" id="p3" aria-label="10/19 完成"><span class="day"><b>10/19</b>Mon</span><div><strong>L4</strong>：Dijkstra 表格做 3 幅圖（lecture、In-lecture Ex.4、2022 Q3）；correctness 歸納證明；Boat rescue。</div></li>
-    <li><input type="checkbox" id="p4" aria-label="10/20 完成"><span class="day"><b>10/20</b>Tue</span><div><strong>L5</strong>：Fractional knapsack、EDF lateness、SJF waiting time。背 inversion／adjacent swap 證明。</div></li>
-    <li><input type="checkbox" id="p5" aria-label="10/21 完成"><span class="day"><b>10/21</b>Wed</span><div><strong>L6</strong>：Merge sort recurrence 展開；merge-and-count（2022 Q4）；D&amp;C 設計題：max、最大＋第二大、max subarray。</div></li>
-    <li><input type="checkbox" id="p6" aria-label="10/22 完成"><span class="day"><b>10/22</b>Thu</span><div><strong>模擬考</strong>：限時 2 小時做 2022 卷（遮住答案），跳過 Q2(b)；再做本頁 <a href="#mock">模擬題</a>。</div></li>
+    <li><input type="checkbox" id="p1" aria-label="10/17 完成"><span class="day"><b>10/17</b>Sat</span><div><strong>L1 + L2</strong>：Euler theorem 與證明；interval scheduling／partitioning。
+      <div class="todo"><span>練習：</span><a href="#w1-ex1">W1 Euler</a><a href="#w1-x1">W1 Extra 1</a><a href="#w1-x2">W1 Extra 2 地圖</a><a href="#w2-ex1">W2 Interval</a><a href="#t1-1">Tutorial 1 Ex.1</a><a href="#t1-2">Ex.2</a><a href="#t1-3">Ex.3</a><a href="#ex-22q1a">2022 Q1(a)</a><a href="#ex-22q1b">Q1(b)(c)</a><a href="#m1">M1</a><a href="#m2">M2</a><a href="#m13">M13</a></div></div></li>
+    <li><input type="checkbox" id="p2" aria-label="10/18 完成"><span class="day"><b>10/18</b>Sun</span><div><strong>L3 MST</strong>：背熟 cut property 證明；Kruskal 和 Prim 各手做兩次。
+      <div class="todo"><span>練習：</span><a href="#fig-cut">Cut property 證明</a><a href="#w3-ex1">W3 Kruskal</a><a href="#t2">Tutorial 2</a><a href="#ex-22q2a">2022 Q2(a)</a><a href="#m3">M3</a></div></div></li>
+    <li><input type="checkbox" id="p3" aria-label="10/19 完成"><span class="day"><b>10/19</b>Mon</span><div><strong>L4</strong>：Dijkstra 表格（每步一行 d/π）；correctness 歸納證明；Boat rescue。
+      <div class="todo"><span>練習：</span><a href="#w4-ex1">W4 Dijkstra</a><a href="#t3">Tutorial 3</a><a href="#ex-22q3">2022 Q3</a><a href="#fig-djproof">Correctness 證明</a><a href="#fig-djneg">Negative edge 反例</a><a href="#ex-boat">Boat rescue</a><a href="#m4">M4</a><a href="#m10">M10</a></div></div></li>
+    <li><input type="checkbox" id="p4" aria-label="10/20 完成"><span class="day"><b>10/20</b>Tue</span><div><strong>L5</strong>：Fractional knapsack、EDF lateness、SJF waiting time。背 inversion／adjacent swap 證明。
+      <div class="todo"><span>練習：</span><a href="#w5-1">W5 Exe1 Knapsack</a><a href="#w5-2">Exe2 EDF</a><a href="#w5-3">Exe3 SJF</a><a href="#t4">Tutorial 4</a><a href="#fig-swap">Swap 證明</a><a href="#ex-22q6">2022 Q6</a><a href="#m7">M7</a><a href="#m8">M8</a><a href="#m9">M9</a><a href="#m12">M12</a></div></div></li>
+    <li><input type="checkbox" id="p5" aria-label="10/21 完成"><span class="day"><b>10/21</b>Wed</span><div><strong>L6</strong>：Merge sort recurrence 展開；merge-and-count；D&amp;C 設計題：max、最大＋第二大、max subarray。
+      <div class="todo"><span>練習：</span><a href="#w6-ex1">W6 Recurrence</a><a href="#t5-1">Tutorial 5 Q1</a><a href="#t5-x">Tutorial 5 Extra</a><a href="#ex-22q4">2022 Q4(a)</a><a href="#ex-rec">Q4(b)</a><a href="#ex-22q5">Q5</a><a href="#m5">M5</a><a href="#m6">M6</a><a href="#m11">M11</a></div></div></li>
+    <li><input type="checkbox" id="p6" aria-label="10/22 完成"><span class="day"><b>10/22</b>Thu</span><div><strong>模擬考</strong>：限時 2 小時做 2022 卷（遮住答案），跳過 Q2(b)；再做本頁模擬題。
+      <div class="todo"><span>練習：</span><a href="#map">2022 卷拆解</a><a href="#mock">模擬題 M1–M13</a></div></div></li>
     <li class="exam"><input type="checkbox" id="p7" aria-label="10/23 完成"><span class="day"><b>10/23</b>Fri</span><div>早上看一遍 <a href="#cheat">時間複雜度表</a> 和 <a href="#proof">證明模板</a>。<strong>3:00 pm 開考。</strong></div></li>
   </ul>
 </section>
@@ -386,6 +399,22 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
     </ul>
   </div>
   <div class="ex" data-ex="eu-map" data-title="地圖題：區域 → 頂點，共同邊界 → 邊"></div>
+
+  <h3 id="pr-l1">Week 1 練習題</h3>
+  <p class="small muted">題目來自 Canvas 的 in-lecture exercise（W01 ex1、W01 extra）。先看題目的圖自己做，再打開「答案」看逐步圖解。</p>
+  <div class="q" id="w1-ex1"><p><span class="pts">Week 1 In-lecture Exercise · Basic</span><br>Find an Euler circuit in the following graph.</p>
+    <div class="ex" data-ex="q-graph" data-eu="12 23 37 71 13 34 47 78 81 45 59 94 97 76 69" data-caption="題目的圖：9 個頂點、15 條邊。"></div>
+    <details class="answer"><summary>答案</summary><p>Degree：1 = 4、2 = 2、3 = 4、4 = 4、5 = 2、6 = 2、7 = 6、8 = 2、9 = 4，全部 even 而且 connected，所以有 Euler circuit。例如 1→3→4→5→9→7→6→9→4→7→8→1→2→3→7→1（答案不唯一）。</p>
+      <div class="ex" data-ex="eu" data-in="12 23 37 71 13 34 47 78 81 45 59 94 97 76 69" data-title="一步一步找 Euler circuit"></div></details></div>
+  <div class="q" id="w1-x1"><p><span class="pts">Week 1 Extra Exercise 1 · Basic</span><br>Use the learned algorithm to produce an Euler circuit for the following graph.（原題的頂點沒有名字，這裡標了 a–f。）</p>
+    <div class="ex" data-ex="q-graph" data-eu="ab ac bc bd ce be cd de df ef" data-caption="題目的圖：6 個頂點、10 條邊。"></div>
+    <details class="answer"><summary>答案</summary><p>a、f 的 degree 是 2，b、c、d、e 是 4，全部 even。例如 a→b→d→e→f→d→c→e→b→c→a（答案不唯一）。</p>
+      <div class="ex" data-ex="eu" data-in="ab ac bc bd ce be cd de df ef" data-title="一步一步找 Euler circuit"></div></details></div>
+  <div class="q" id="w1-x2"><p><span class="pts">Week 1 Extra Exercise 2 · Moderate</span><br>In a map, two countries are neighbors if they share a common border. Is there a tour that starts from a country, goes across each border once and comes back to the starting country? Give an algorithm to solve the problem. Two countries share only one segment of border.（Hint: construct a new graph.）</p>
+    <div class="ex" data-ex="map8" data-q="1"></div>
+    <details class="answer"><summary>答案</summary><p>B、E 的 degree 是 5，G、H 是 3（odd），所以<strong>沒有</strong>這樣的路線。</p>
+      <div class="ex" data-ex="map8" data-title="地圖 → graph → 數 degree"></div></details></div>
+  <p class="small">還有：<a href="#m13">模擬題 M13</a>（最少加幾條邊才有 Euler circuit）。</p>
 </section>
 
 <!-- ============================ L2 ============================ -->
@@ -451,13 +480,23 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
   <div class="ex" id="ex-22q1a" data-ex="iv-s" data-in="(0,2),(1,3),(3,6),(3,4),(6,9),(4,12),(5,8),(6,7)" data-title="2022 Q1(a)：Interval scheduling（答案 3 份）"></div>
   <div class="ex" id="ex-22q1b" data-ex="iv-p" data-in="(0,1),(0,3),(1,4),(2,6),(3,4),(4,5),(5,8)" data-title="2022 Q1(b)(c)：Interval partitioning 與 depth（答案 3 間）"></div>
 
-  <details class="answer"><summary>Tutorial 1 答案（先自己做）</summary>
-    <p><strong>Ex.1</strong> 按 f 排序：(1,2) (0,5) (2,5) (6,7) (6,7) (3,8) (4,11) (3,13)。選 (1,2) → (2,5) → (6,7)，共 <strong>3</strong> 份。</p>
-    <div class="ex" data-ex="iv-s" data-in="(0,5),(1,2),(3,8),(2,5),(6,7),(4,11),(3,13),(6,7)" data-title="Tutorial 1 Ex.1"></div>
-    <p><strong>Ex.2</strong> 按 s 排序：(1,2) (2,3) (2,7) (3,6) (4,6) (5,7) (5,8)。Room 1：(1,2)(2,3)(3,6)；Room 2：(2,7)；Room 3：(4,6)；Room 4：(5,7)；Room 5：(5,8)。需要 <strong>5</strong> 間，因為時間 5.5 有 5 堂重疊（depth = 5）。</p>
-    <div class="ex" data-ex="iv-p" data-in="(5,7),(2,3),(1,2),(2,7),(3,6),(5,8),(4,6)" data-title="Tutorial 1 Ex.2"></div>
-    <p><strong>2022 Q1</strong>：(a) 選 (0,2), (3,4), (6,7) 共 3 份，O(n log n)；(b) 3 間課室；(c) depth = 3，例如時間在 (2,4) 之間。圖解在上面。</p>
-  </details>
+  <h3 id="pr-l2">Week 2 練習題</h3>
+  <p class="small muted">題目來自 in-class exercise（W02 E2）和 Tutorial 1。2022 Q1 的圖解在上面。</p>
+  <div class="q" id="w2-ex1"><p><span class="pts">Week 2 In-class Exercise · Basic</span><br>For the interval scheduling problem, the set of jobs (s<sub>i</sub>, f<sub>i</sub>) are: (0, 3), (2, 4), (4, 8), (1, 6), (2, 5), (7, 8), (5, 7), (9, 10), (10, 11). Find a maximum subset of mutually compatible jobs using the greedy algorithm.</p>
+    <details class="answer"><summary>答案</summary><p>按 f 排序：(0,3) (2,4) (2,5) (1,6) (5,7) (4,8) (7,8) (9,10) (10,11)。選 (0,3) → (5,7) → (7,8) → (9,10) → (10,11)，共 <strong>5</strong> 份。O(n log n)。</p>
+      <div class="ex" data-ex="iv-s" data-in="(0,3),(2,4),(4,8),(1,6),(2,5),(7,8),(5,7),(9,10),(10,11)" data-title="Week 2 In-class Exercise"></div></details></div>
+  <div class="q" id="t1-1"><p><span class="pts">Tutorial 1 Exercise 1 · Basic</span><br>For the interval scheduling problem, the set of jobs (s<sub>i</sub>, f<sub>i</sub>) are: (0, 5), (1, 2), (3, 8), (2, 5), (6, 7), (4, 11), (3, 13), (6, 7). Use the greedy algorithm to give the maximum number of compatible jobs.</p>
+    <details class="answer"><summary>答案</summary><p>按 f 排序：(1,2) (0,5) (2,5) (6,7) (6,7) (3,8) (4,11) (3,13)。選 (1,2) → (2,5) → (6,7)，共 <strong>3</strong> 份。</p>
+      <div class="ex" data-ex="iv-s" data-in="(0,5),(1,2),(3,8),(2,5),(6,7),(4,11),(3,13),(6,7)" data-title="Tutorial 1 Ex.1"></div></details></div>
+  <div class="q" id="t1-2"><p><span class="pts">Tutorial 1 Exercise 2 · Basic</span><br>For the interval partitioning problem, the set of lectures (s<sub>i</sub>, f<sub>i</sub>) are: (5, 7), (2, 3), (1, 2), (2, 7), (3, 6), (5, 8), (4, 6). Use the greedy algorithm to give the minimum number of classrooms.</p>
+    <details class="answer"><summary>答案</summary><p>按 s 排序：(1,2) (2,3) (2,7) (3,6) (4,6) (5,7) (5,8)。Room 1：(1,2)(2,3)(3,6)；Room 2：(2,7)；Room 3：(4,6)；Room 4：(5,7)；Room 5：(5,8)。需要 <strong>5</strong> 間，因為時間 5 有 5 堂同時進行（depth = 5）。</p>
+      <div class="ex" data-ex="iv-p" data-in="(5,7),(2,3),(1,2),(2,7),(3,6),(5,8),(4,6)" data-title="Tutorial 1 Ex.2"></div></details></div>
+  <div class="q" id="t1-3"><p><span class="pts">Tutorial 1 Exercise 3 · 不用交</span><br><strong>Selecting breakpoints</strong>：沿固定路線由 Princeton 開車去 Palo Alto，沿途有油站，滿油可以走 C。目標是停最少次加油。Greedy：<em>go as far as you can before refueling</em>（能走多遠就走多遠，走不到下一個油站之前才加油）。理解這個 greedy，並證明它 optimal。</p>
+    <details class="answer"><summary>答案</summary>
+      <div class="ex" data-ex="breakpoints" data-title="例子：能走多遠就走多遠"></div>
+      <div class="proof"><p><strong>Proof (greedy stays ahead).</strong> Let g<sub>1</sub> &lt; … &lt; g<sub>p</sub> be the greedy stops and f<sub>1</sub> &lt; … &lt; f<sub>q</sub> the stops of an optimal solution. Claim: g<sub>r</sub> ≥ f<sub>r</sub> for every r. For r = 1, f<sub>1</sub> is within C of the start and greedy picks the farthest such station, so g<sub>1</sub> ≥ f<sub>1</sub>. If g<sub>r</sub> ≥ f<sub>r</sub>, then f<sub>r+1</sub> − g<sub>r</sub> ≤ f<sub>r+1</sub> − f<sub>r</sub> ≤ C, so f<sub>r+1</sub> is reachable from g<sub>r</sub> and greedy goes at least as far: g<sub>r+1</sub> ≥ f<sub>r+1</sub>. The destination is within C of f<sub>q</sub> ≤ g<sub>q</sub>, so greedy needs no stop after g<sub>q</sub>, i.e. p ≤ q. Hence greedy is optimal.</p></div>
+    </details></div>
+  <p class="small">還有：<a href="#ex-22q1a">2022 Q1(a)</a>、<a href="#ex-22q1b">2022 Q1(b)(c)</a>、<a href="#m1">M1</a>、<a href="#m2">M2</a>。</p>
 </section>
 
 <!-- ============================ L3 ============================ -->
@@ -504,6 +543,8 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
       <span class="muted small">圖：</span>
       <button class="btn" id="mst-g-lecture" aria-pressed="true">Lecture 3（A–J）</button>
       <button class="btn" id="mst-g-q22" aria-pressed="false">2022 Q2(a)</button>
+      <button class="btn" id="mst-g-ex3" aria-pressed="false">Week 3 練習</button>
+      <button class="btn" id="mst-g-tut2" aria-pressed="false">Tutorial 2</button>
       <button class="btn" id="mst-g-mock" aria-pressed="false">模擬題 M3</button>
     </div>
     <div id="mst-host"></div>
@@ -517,6 +558,19 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
       <li>Challenge：所有重量都不同時 MST 唯一；把 min 換成 max，Kruskal 和 Prim 都可以求 maximum spanning tree。</li>
     </ul>
   </div>
+
+  <h3 id="pr-l3">Week 3 練習題</h3>
+  <p class="small muted">題目來自 in-lecture exercise（W03 ex3inL2026）和 Tutorial 2。</p>
+  <div class="q" id="w3-ex1"><p><span class="pts">Week 3 In-lecture Exercise · Basic</span><br>Given the following graph and the weights of the edges, use Kruskal's algorithm to find a MST.</p>
+    <div class="ex" data-ex="q-graph" data-mst="ex3" data-caption="題目的圖：7 個頂點、12 條邊。"></div>
+    <details class="answer"><summary>答案</summary><p>排序後逐條看：加 be(2)、ac(3)、ef(3)、bc(4)、fg(4)；<strong>拒絕 ab(5)</strong>（a、b 已經經 c 連通）；加 cd(5)。已有 6 = |V| − 1 條，停。MST 總重 <strong>21</strong>。</p>
+      <div class="ex" data-ex="mst" data-g="ex3" data-alg="k" data-title="Kruskal 逐步"></div></details></div>
+  <div class="q" id="t2"><p><span class="pts">Tutorial 2 Q1 + Q2 · Basic</span><br>Q1：Use Kruskal's algorithm to find a MST for the following graph. Q2：Use Prim's algorithm with priority queue to compute a MST for the same graph.</p>
+    <div class="ex" data-ex="q-graph" data-mst="tut2" data-caption="題目的圖：7 個頂點、10 條邊。"></div>
+    <details class="answer"><summary>答案</summary><p>Q1 Kruskal：AB(1)、DF(1)、EG(1)、BD(2)、DE(2)、BC(3)，總重 <strong>10</strong>。Q2 Prim 由 A 開始，每步由 priority queue 取出 key 最小的頂點：AB(1) → BD(2) → DF(1) → DE(2) → EG(1) → BC(3)，總重同樣是 10。</p>
+      <div class="ex" data-ex="mst" data-g="tut2" data-alg="k" data-title="Q1 Kruskal 逐步"></div>
+      <div class="ex" data-ex="mst" data-g="tut2" data-alg="p" data-title="Q2 Prim 由 A 開始"></div></details></div>
+  <p class="small">還有：<a href="#ex-22q2a">2022 Q2(a)</a>、<a href="#m3">M3</a>。</p>
 </section>
 
 <!-- ============================ L4 ============================ -->
@@ -562,7 +616,7 @@ DIJKSTRA(G, w, s)
       <p class="small">s→u = 2，s→v = 1，u→v = −10。Dijkstra 先定 d[v] = 1，但 s→u→v = −8 更短。</p>
     </div>
   </div>
-  <div class="ex" data-ex="dj-neg" data-title="反例：有 negative edge 時 Dijkstra 會錯"></div>
+  <div class="ex" id="fig-djneg" data-ex="dj-neg" data-title="反例：有 negative edge 時 Dijkstra 會錯"></div>
 
   <h3>Boat Rescue（Lecture 4 尾段）</h3>
   <p>每隻船最多載 2 人，載重上限 W。求最少船數。</p>
@@ -574,7 +628,19 @@ DIJKSTRA(G, w, s)
     <p><strong>Case 2</strong>: w<sub>l</sub> + w<sub>r</sub> ≤ W. If OPT pairs (w<sub>r</sub>, w<sub>k</sub>) and (w<sub>l</sub>, w<sub>m</sub>), exchange to (w<sub>r</sub>, w<sub>l</sub>) and (w<sub>k</sub>, w<sub>m</sub>). This is feasible since w<sub>m</sub> ≤ w<sub>r</sub> gives w<sub>k</sub> + w<sub>m</sub> ≤ w<sub>k</sub> + w<sub>r</sub> ≤ W, and the boat count is unchanged. Remove the pair and apply induction.</p>
   </div>
   <p class="small">例子：[30, 40, 60, 70]，W = 100 → {30, 70}、{40, 60}，共 2 隻船。可以在 <a href="#l5">L5 的 Greedy Lab</a> 試其他數字。</p>
-  <div class="ex" data-ex="boat" data-in="30, 40, 60, 70" data-w="100" data-title="例子：[30, 40, 60, 70]，W = 100"></div>
+  <div class="ex" id="ex-boat" data-ex="boat" data-in="30, 40, 60, 70" data-w="100" data-title="例子：[30, 40, 60, 70]，W = 100"></div>
+
+  <h3 id="pr-l4">Week 4 練習題</h3>
+  <p class="small muted">題目來自 in-lecture exercise（W04 ex4inL26）和 Tutorial 3。上面的 Dijkstra Lab 也有這兩幅圖的按鈕。</p>
+  <div class="q" id="w4-ex1"><p><span class="pts">Week 4 In-lecture Exercise · Basic</span><br>Given the following directed graph and the weights of the edges, use Dijkstra's algorithm to find the shortest path from s to v. Backtracking is required.</p>
+    <div class="ex" data-ex="q-graph" data-dj="ex4" data-caption="題目的圖（有向）。"></div>
+    <details class="answer"><summary>答案</summary><p>取出次序 s(0) → x(5) → y(7) → u(8) → v(9)。Backtracking：v ← u ← x ← s，最短路徑 s → x → u → v，長度 <strong>9</strong>。</p>
+      <div class="ex" data-ex="dj" data-g="ex4" data-title="Dijkstra 逐步（每步一行 d/π 表）"></div></details></div>
+  <div class="q" id="t3"><p><span class="pts">Tutorial 3 Q1 · Basic</span><br>Use Dijkstra's algorithm to find the shortest path from s to v for the following graph. Backtracking is required.（原題中間的頂點沒有名字，這裡標了 a–g。）</p>
+    <div class="ex" data-ex="q-graph" data-dj="tut3" data-caption="題目的圖（有向）。"></div>
+    <details class="answer"><summary>答案</summary><p>最後的 d：a = 1、b = 2、c = 2、d = 2、e = 3、f = 3、v = 5、g = 9。Backtracking：v ← d ← a ← s，最短路徑 s → a → d → v，長度 <strong>5</strong>。</p>
+      <div class="ex" data-ex="dj" data-g="tut3" data-title="Dijkstra 逐步（每步一行 d/π 表）"></div></details></div>
+  <p class="small">還有：<a href="#ex-22q3">2022 Q3</a>、<a href="#m4">M4</a>、<a href="#m10">M10</a>（Boat rescue）。</p>
 </section>
 
 <!-- ============================ L5 ============================ -->
@@ -662,14 +728,21 @@ DIJKSTRA(G, w, s)
     <div class="out" id="gr-out"></div>
   </div>
 
-  <details class="answer"><summary>In-lecture Ex.5 與 Tutorial 4 答案</summary>
-    <p><strong>Exe1</strong> unit price：0.05, 0.0495, 0.4, 1.875, 2.75, 4。拿 ($12, 3kg)、($11, 4kg)、($15, 8kg) 的 3kg → 總值 <strong>$28.625</strong>。圖解在上面 Fractional Knapsack。</p>
-    <p><strong>Exe2</strong> 按 deadline：J3(6), J2(7), J1(8), J4(10), J5(10), J6(13)。J4 在 11 完成遲 1，J5 在 13 完成遲 3，J6 在 16 完成遲 3 → 最大 lateness <strong>3</strong>。圖解在上面 Lateness。</p>
-    <p><strong>Exe3</strong> 按 processing time：J6(1), J3(2), J2(3), J1(4), J4(5), J5(6)。Waiting 0, 1, 3, 6, 10, 15 → total <strong>35</strong>。</p>
-    <div class="ex" data-ex="sjf" data-in="4, 3, 2, 5, 6, 1" data-title="Exe3：SJF"></div>
-    <p><strong>Tutorial 4</strong> [1.5, 3.5]、[5.8, 7.8]、[10, 12]，共 3 個。證明：設 greedy 和 OPT 首個不同的是第 r+1 個 interval。Greedy 由最小的未覆蓋點開始，所以 OPT 的那個 interval 開始得更早或一樣，換成 greedy 的 interval 仍然覆蓋所有點，數量不變。重複即得 greedy = OPT。</p>
-    <div class="ex" data-ex="cover" data-in="1.5, 1.56, 1.9, 2.9, 3.4, 5.8, 5.99, 6.32, 10" data-l="2" data-title="Tutorial 4：用長度 2 的 interval 覆蓋所有點"></div>
-  </details>
+  <h3 id="pr-l5">Week 5 練習題</h3>
+  <p class="small muted">題目來自 In-lecture Exercise 5 和 Tutorial 4。</p>
+  <div class="q" id="w5-1"><p><span class="pts">In-lecture Ex.5 Exe1 · Fractional knapsack</span><br>6 items ($1, 20kg), ($5, 101kg), ($2, 5kg), ($15, 8kg), ($11, 4kg), ($12, 3kg); the total weight allowed is 10kg. Give an optimal solution using the greedy algorithm.</p>
+    <details class="answer"><summary>答案</summary><p>Unit price：0.05、0.0495、0.4、1.875、2.75、4。拿 ($12, 3kg)、($11, 4kg)、($15, 8kg) 的 3kg → 總值 <strong>$28.625</strong>。</p>
+      <div class="ex" data-ex="knap" data-in="(1,20),(5,101),(2,5),(15,8),(11,4),(12,3)" data-w="10" data-title="Exe1 逐步"></div></details></div>
+  <div class="q" id="w5-2"><p><span class="pts">In-lecture Ex.5 Exe2 · Minimize lateness</span><br>6 jobs: t<sub>j</sub> = 3, 2, 1, 5, 2, 3 and d<sub>j</sub> = 8, 7, 6, 10, 10, 13 (J1–J6). Give an optimal solution using the greedy algorithm.</p>
+    <details class="answer"><summary>答案</summary><p>按 deadline：J3(6), J2(7), J1(8), J4(10), J5(10), J6(13)。J4 在 11 完成遲 1，J5 在 13 完成遲 3，J6 在 16 完成遲 3 → 最大 lateness <strong>3</strong>。</p>
+      <div class="ex" data-ex="edf" data-in="(3,8),(2,7),(1,6),(5,10),(2,10),(3,13)" data-title="Exe2 逐步"></div></details></div>
+  <div class="q" id="w5-3"><p><span class="pts">In-lecture Ex.5 Exe3 · Minimize waiting time</span><br>Jobs J1–J6 with processing times 4, 3, 2, 5, 6, 1. Give an optimal solution (minimum average waiting time) using the greedy algorithm.</p>
+    <details class="answer"><summary>答案</summary><p>按 processing time：J6(1), J3(2), J2(3), J1(4), J4(5), J5(6)。Waiting 0, 1, 3, 6, 10, 15 → total <strong>35</strong>。</p>
+      <div class="ex" data-ex="sjf" data-in="4, 3, 2, 5, 6, 1" data-title="Exe3 逐步"></div></details></div>
+  <div class="q" id="t4"><p><span class="pts">Tutorial 4 Q1 · Moderate + Hard</span><br>Given points X = {x<sub>1</sub>, …, x<sub>n</sub>} on the real line, find a smallest set of intervals of length 2 that contains all the points. (a) Describe a greedy algorithm (pseudocode). (b) Give an optimal solution for X = {1.5, 1.56, 1.9, 2.9, 3.4, 5.8, 5.99, 6.32, 10}. (c) Prove that the algorithm is correct.</p>
+    <details class="answer"><summary>答案</summary><p>(a) 排序；設 y 是最左未覆蓋的點，放 [y, y+2]，刪掉它覆蓋的點，重複。O(n log n)。(b) [1.5, 3.5]、[5.8, 7.8]、[10, 12]，共 <strong>3</strong> 個。(c) Exchange argument：設 greedy 和 OPT 首個不同的是第 r+1 個 interval。Greedy 由最小的未覆蓋點 y 開始，OPT 那個 interval 一定要覆蓋 y，所以開始得更早或一樣；換成 greedy 的 interval 仍然覆蓋所有點，數量不變。重複即得 |greedy| = |OPT|。證明圖解見 <a href="#m12">M12</a>。</p>
+      <div class="ex" data-ex="cover" data-in="1.5, 1.56, 1.9, 2.9, 3.4, 5.8, 5.99, 6.32, 10" data-l="2" data-title="(b) 逐步"></div></details></div>
+  <p class="small">還有：<a href="#ex-22q6">2022 Q6</a>、<a href="#m7">M7</a>、<a href="#m8">M8</a>、<a href="#m9">M9</a>。</p>
 </section>
 
 <!-- ============================ L6 ============================ -->
@@ -786,6 +859,25 @@ Comparisons: g(n) = 2g(n/2) + 2
   <p class="small">例子 A = [−2, 1, −3, 4, −1, 2, 1, −5, 4] → 最大和 <strong>6</strong>，subarray [4, −1, 2, 1]，即 index 4 至 7（由 1 開始數）。</p>
   <div class="ex" data-ex="msub" data-in="-2 1 -3 4 -1 2 1 -5 4" data-title="例子：A = [−2, 1, −3, 4, −1, 2, 1, −5, 4]"></div>
   <p class="small muted">Karatsuba multiplication 是 Fun part，不考。</p>
+
+  <h3 id="pr-l6">Week 6 練習題</h3>
+  <p class="small muted">題目來自 In-lecture Exercise 6 和 Tutorial 5。</p>
+  <div class="q" id="w6-ex1"><p><span class="pts">Week 6 In-lecture Exercise · Basic</span><br>Suppose T(1) = 1, T(k) = T(k−1) + 2 for k = 2, 3, …. Prove that T(n) = O(n).</p>
+    <details class="answer"><summary>答案</summary>
+<pre><code>T(n) = T(n−1) + 2
+     = T(n−2) + 2 + 2
+     = …
+     = T(1) + 2(n−1)
+     = 2n − 1 ≤ 2n   for n ≥ 1</code></pre>
+      <p>取 c = 2、n₀ = 1：T(n) ≤ c·n，所以 T(n) = O(n)。</p>
+      <div class="ex" data-ex="rec" data-keys="plus2" data-title="遞迴鏈：每層 2，共 n − 1 層"></div></details></div>
+  <div class="q" id="t5-1"><p><span class="pts">Tutorial 5 Q1 · Moderate</span><br>Design an O(n) time divide-and-conquer algorithm that takes an array of integers as input and outputs the largest element. The recursive function f(l, h, A) returns an integer.</p>
+    <details class="answer"><summary>答案</summary><p>Pseudo-code 見上面「(1) 找最大值」：分半、各自遞迴、return max(a, b)。T(n) = 2T(n/2) + c = O(n)。</p>
+      <div class="ex" data-ex="dc" data-kind="max" data-in="3 9 2 7 5 1 8 6" data-title="例子：A = [3, 9, 2, 7, 5, 1, 8, 6]"></div></details></div>
+  <div class="q" id="t5-x"><p><span class="pts">Tutorial 5 Extra · 不用交</span><br>Maximum subarray sum：A[1..n] 是整數（可正可負），subarray 是連續的一段 A[l..r]，至少要有一個元素。用 divide-and-conquer 求最大的 subarray sum。</p>
+    <details class="answer"><summary>答案</summary><p>在 mid 切開，答案是「左半最大」「右半最大」「跨過 mid 最大」三者之一；跨 mid 的部分由 mid 向兩邊掃，O(n)。T(n) = 2T(n/2) + O(n) = O(n log n)。</p>
+      <div class="ex" data-ex="msub" data-in="-2 1 -3 4 -1 2 1 -5 4" data-title="例子：A = [−2, 1, −3, 4, −1, 2, 1, −5, 4]"></div></details></div>
+  <p class="small">還有：<a href="#ex-22q4">2022 Q4(a)</a>、<a href="#ex-rec">2022 Q4(b)</a>（遞迴樹揀 T(n−2)+n）、<a href="#ex-22q5">2022 Q5</a>、<a href="#m5">M5</a>、<a href="#m6">M6</a>、<a href="#m11">M11</a>。</p>
 </section>
 
 <!-- ============================ proofs ============================ -->
@@ -842,37 +934,37 @@ Comparisons: g(n) = 2g(n/2) + 2
   <header><p class="eyebrow">仿 2022 卷題型 · 答案收起</p><h2>模擬題</h2></header>
   <p>這些是按 2022 卷和今年 tutorial 題型出的練習題，不是真題。先自己寫，再打開答案。</p>
 
-  <div class="q"><p><span class="pts">M1 · L2</span><br>Jobs (s, f)：(1,4), (3,5), (0,6), (5,7), (3,9), (5,9), (6,10), (8,11), (8,12), (2,14), (12,16)。用 greedy 求最多 compatible jobs，寫出主要步驟和 running time。</p>
+  <div class="q" id="m1"><p><span class="pts">M1 · L2</span><br>Jobs (s, f)：(1,4), (3,5), (0,6), (5,7), (3,9), (5,9), (6,10), (8,11), (8,12), (2,14), (12,16)。用 greedy 求最多 compatible jobs，寫出主要步驟和 running time。</p>
     <details class="answer"><summary>答案</summary><p>按 f 排序：(1,4) (3,5) (0,6) (5,7) (3,9) (5,9) (6,10) (8,11) (8,12) (2,14) (12,16)。選 (1,4) → (5,7) → (8,11) → (12,16)，共 <strong>4</strong> 份。O(n log n)。</p><div class="ex" data-ex="iv-s" data-in="(1,4),(3,5),(0,6),(5,7),(3,9),(5,9),(6,10),(8,11),(8,12),(2,14),(12,16)" data-title="M1 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M2 · L2</span><br>Lectures：(0,3), (1,4), (2,5), (3,6), (4,7), (5,8), (6,9)。求最少課室數和 depth。</p>
+  <div class="q" id="m2"><p><span class="pts">M2 · L2</span><br>Lectures：(0,3), (1,4), (2,5), (3,6), (4,7), (5,8), (6,9)。求最少課室數和 depth。</p>
     <details class="answer"><summary>答案</summary><p>按 s 已排好。Room 1：(0,3)(3,6)(6,9)；Room 2：(1,4)(4,7)；Room 3：(2,5)(5,8)。<strong>3</strong> 間。Depth = 3（例如時間 2.5 有 (0,3)(1,4)(2,5) 重疊），所以 optimal。</p><div class="ex" data-ex="iv-p" data-in="(0,3),(1,4),(2,5),(3,6),(4,7),(5,8),(6,9)" data-title="M2 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M3 · L3</span><br>無向圖邊：AB 4, AC 2, BC 1, BD 5, CD 8, CE 10, DE 2, DF 6, EF 3。(a) 用 Kruskal 求 MST，寫出加邊次序。(b) 用 Prim 由 A 開始。</p>
+  <div class="q" id="m3"><p><span class="pts">M3 · L3</span><br>無向圖邊：AB 4, AC 2, BC 1, BD 5, CD 8, CE 10, DE 2, DF 6, EF 3。(a) 用 Kruskal 求 MST，寫出加邊次序。(b) 用 Prim 由 A 開始。</p>
     <details class="answer"><summary>答案</summary><p>(a) 排序：BC1, AC2, DE2, EF3, AB4, BD5, DF6, CD8, CE10。加 BC、AC、DE、EF；<strong>拒絕 AB</strong>（A、B 已經經 C 連通）；加 BD，已有 5 條 = |V|−1，停。(b) AC(2) → BC(1) → BD(5) → DE(2) → EF(3)。MST 總重 <strong>13</strong>。可用 <a href="#mst-lab">MST Lab</a> 的「模擬題 M3」逐步檢查。</p><div class="ex" data-ex="mst" data-g="mock" data-alg="k" data-title="M3(a) Kruskal"></div><div class="ex" data-ex="mst" data-g="mock" data-alg="p" data-title="M3(b) Prim 由 A 開始"></div></details></div>
 
-  <div class="q"><p><span class="pts">M4 · L4</span><br>有向圖：s→a 4, s→b 1, b→a 2, a→c 1, b→c 5, c→t 3, b→t 8。用 Dijkstra 求 s 到 t 的最短路徑，要有表格和 backtracking。</p>
+  <div class="q" id="m4"><p><span class="pts">M4 · L4</span><br>有向圖：s→a 4, s→b 1, b→a 2, a→c 1, b→c 5, c→t 3, b→t 8。用 Dijkstra 求 s 到 t 的最短路徑，要有表格和 backtracking。</p>
     <details class="answer"><summary>答案</summary><p>取出次序 s(0) → b(1) → a(3/b) → c(4/a) → t(7/c)。中途 a 由 4 降到 3，c 由 6 降到 4，t 由 9 降到 7。Backtracking：t ← c ← a ← b ← s，路徑 s→b→a→c→t，長度 <strong>7</strong>。<a href="#dj-lab">Dijkstra Lab</a> 有這幅圖。</p><div class="ex" data-ex="dj" data-g="m4" data-title="M4 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M5 · L6</span><br>兩個已排序的半邊 A = 2, 4, 7, 9 和 B = 1, 3, 8, 10。用 O(n) 方法數一個在 A、一個在 B 的 inversions，寫出中間步驟。</p>
+  <div class="q" id="m5"><p><span class="pts">M5 · L6</span><br>兩個已排序的半邊 A = 2, 4, 7, 9 和 B = 1, 3, 8, 10。用 O(n) 方法數一個在 A、一個在 B 的 inversions，寫出中間步驟。</p>
     <details class="answer"><summary>答案</summary><p>拿 1（B）→ +4；拿 2；拿 3（B）→ +3；拿 4；拿 7；拿 8（B）→ +1；拿 9；拿 10（B）→ +0。Total = 4 + 3 + 1 = <strong>8</strong>。</p><div class="ex" data-ex="mc" data-l="2 4 7 9" data-r="1 3 8 10" data-title="M5 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M6 · L6</span><br>用 big-O 表示：(a) T(n) = 2T(n/2) + 1　(b) T(n) = T(n/2) + n　(c) T(n) = T(n−1) + n　(d) T(n) = T(n−2) + n。T(1) = T(2) = 1。</p>
+  <div class="q" id="m6"><p><span class="pts">M6 · L6</span><br>用 big-O 表示：(a) T(n) = 2T(n/2) + 1　(b) T(n) = T(n/2) + n　(c) T(n) = T(n−1) + n　(d) T(n) = T(n−2) + n。T(1) = T(2) = 1。</p>
     <details class="answer"><summary>答案</summary><p>(a) 2<sup>k</sup>T(1) + (2<sup>k</sup> − 1) = 2n − 1 → <strong>O(n)</strong>。(b) n + n/2 + … ≤ 2n → <strong>O(n)</strong>。(c) n(n+1)/2 → <strong>O(n²)</strong>。(d) 約 n²/4 → <strong>O(n²)</strong>。考試要寫展開步驟。</p><div class="ex" data-ex="rec" data-keys="c1,half,minus1,minus2" data-title="M6 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M7 · L5</span><br>Fractional knapsack，W = 12 kg：a($20, 4kg)、b($18, 6kg)、c($15, 5kg)、d($8, 4kg)。</p>
+  <div class="q" id="m7"><p><span class="pts">M7 · L5</span><br>Fractional knapsack，W = 12 kg：a($20, 4kg)、b($18, 6kg)、c($15, 5kg)、d($8, 4kg)。</p>
     <details class="answer"><summary>答案</summary><p>Unit price：a 5、b 3、c 3、d 2。拿 a 全部（4kg）、b 全部（6kg）、c 的 2kg（$6）→ <strong>$44</strong>。b、c 同價，次序可對調，總值一樣。</p><div class="ex" data-ex="knap" data-in="(20,4),(18,6),(15,5),(8,4)" data-w="12" data-title="M7 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M8 · L5</span><br>Jobs (t, d)：J1(2, 3)、J2(1, 2)、J3(3, 7)、J4(2, 5)。求最小 maximum lateness 的 schedule。</p>
+  <div class="q" id="m8"><p><span class="pts">M8 · L5</span><br>Jobs (t, d)：J1(2, 3)、J2(1, 2)、J3(3, 7)、J4(2, 5)。求最小 maximum lateness 的 schedule。</p>
     <details class="answer"><summary>答案</summary><p>EDF：J2 [0,1]、J1 [1,3]、J4 [3,5]、J3 [5,8]。只有 J3 遲 1 → L = <strong>1</strong>。</p><div class="ex" data-ex="edf" data-in="(2,3),(1,2),(3,7),(2,5)" data-title="M8 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M9 · L5</span><br>p = 5, 2, 8, 1, 4（J1–J5）。求令 total waiting time 最小的次序，並證明 algorithm 正確。</p>
+  <div class="q" id="m9"><p><span class="pts">M9 · L5</span><br>p = 5, 2, 8, 1, 4（J1–J5）。求令 total waiting time 最小的次序，並證明 algorithm 正確。</p>
     <details class="answer"><summary>答案</summary><p>SJF：J4, J2, J5, J1, J3。Waiting 0, 1, 3, 7, 12 → total <strong>23</strong>，average 4.6。證明用 <a href="#l5">L5</a> 的 adjacent swap。</p><div class="ex" data-ex="sjf" data-in="5, 2, 8, 1, 4" data-title="M9 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M10 · L4</span><br>Boat rescue：weights 20, 50, 50, 70, 80, 90，W = 100。</p>
+  <div class="q" id="m10"><p><span class="pts">M10 · L4</span><br>Boat rescue：weights 20, 50, 50, 70, 80, 90，W = 100。</p>
     <details class="answer"><summary>答案</summary><p>20+90 &gt; 100 → 90 獨自；20+80 = 100 → 一船；50+70 &gt; 100 → 70 獨自；50+50 = 100 → 一船。共 <strong>4</strong> 隻。</p><div class="ex" data-ex="boat" data-in="20, 50, 50, 70, 80, 90" data-w="100" data-title="M10 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M11 · L6</span><br>寫一個 O(n) 的 divide-and-conquer algorithm，同時找出 array 的最小值和最大值。寫出 comparison 數目的 recurrence 並求解。</p>
+  <div class="q" id="m11"><p><span class="pts">M11 · L6</span><br>寫一個 O(n) 的 divide-and-conquer algorithm，同時找出 array 的最小值和最大值。寫出 comparison 數目的 recurrence 並求解。</p>
     <details class="answer"><summary>答案</summary>
 <pre><code>f(low, high)                       // returns (min, max)
   if low == high: return (A[low], A[low])
@@ -882,10 +974,10 @@ Comparisons: g(n) = 2g(n/2) + 2
 g(n) = 2g(n/2) + 2,  g(1) = 0
      = 2^k g(n/2^k) + 2(2^k − 1) = 2(n − 1)  ⇒  O(n)</code></pre><div class="ex" data-ex="dc" data-kind="minmax" data-in="7 2 9 4 1 8 6 3" data-title="M11 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M12 · L2/L5</span><br>證明 Tutorial 4 的 interval cover greedy（由最左未覆蓋點 y 放 [y, y+2]）是 optimal。</p>
+  <div class="q" id="m12"><p><span class="pts">M12 · L2/L5</span><br>證明 Tutorial 4 的 interval cover greedy（由最左未覆蓋點 y 放 [y, y+2]）是 optimal。</p>
     <details class="answer"><summary>答案</summary><p>Let G = G<sub>1</sub>, …, G<sub>m</sub> be the greedy intervals and OPT = O<sub>1</sub>, …, O<sub>p</sub> sorted by left endpoint. Suppose G<sub>i</sub> = O<sub>i</sub> for i ≤ r and G<sub>r+1</sub> = [y, y+2] ≠ O<sub>r+1</sub> = [o, o+2]. y is the smallest uncovered point, and O<sub>r+1</sub> must cover it, so o ≤ y. Every point covered by O<sub>r+1</sub> but not by earlier intervals lies in [y, o+2] ⊆ [y, y+2]. Replacing O<sub>r+1</sub> with G<sub>r+1</sub> still covers all points and keeps p intervals. Repeating, OPT becomes G, so m = p.</p><div class="ex" data-ex="cover-proof" data-title="M12 圖解"></div></details></div>
 
-  <div class="q"><p><span class="pts">M13 · L1</span><br>邊：ab, ac, bc, bd, cd, ce, de。有沒有 Euler circuit？如果沒有，最少加幾條邊（可以是 parallel edge）？</p>
+  <div class="q" id="m13"><p><span class="pts">M13 · L1</span><br>邊：ab, ac, bc, bd, cd, ce, de。有沒有 Euler circuit？如果沒有，最少加幾條邊（可以是 parallel edge）？</p>
     <details class="answer"><summary>答案</summary><p>Degree：a 2、b 3、c 4、d 3、e 2。b、d 是 odd，所以<strong>沒有</strong>。加一條 bd（parallel edge），全部變 even，就有 Euler circuit。在 <a href="#eu-lab">Euler 檢查器</a> 加入 <code>bd</code> 試試。</p><div class="ex" data-ex="eu-m13" data-title="M13 圖解"></div></details></div>
 </section>
 
@@ -1034,6 +1126,10 @@ function drawGraph(svg, g, st, directed) {
     if (r.ellipse) svgEl("ellipse", { cx: r.ellipse[0], cy: r.ellipse[1], rx: r.ellipse[2], ry: r.ellipse[3], class: "g-region" }, svg);
     else svgEl("rect", { x: r.rect[0], y: r.rect[1], width: r.rect[2], height: r.rect[3], rx: 12, class: "g-region" }, svg);
   }
+  (st.rects || []).forEach(([x, y, w, h, t]) => {
+    svgEl("rect", { x, y, width: w, height: h, class: "g-map" }, svg);
+    if (t) svgText(svg, x + w / 2, y + h / 2, t, "g-maplbl", "middle", true);
+  });
   if (st.cut) svgEl("path", { d: st.cut, class: "g-cut" }, svg);
   (st.tags || []).forEach(([x, y, t, a]) => svgText(svg, x, y, t, "g-tag", a || "middle"));
   if (directed) {
@@ -1177,7 +1273,9 @@ function parseEdges(str) {
 const EU_LAYOUTS = [
   { w: 540, h: 320, nodes: { a: [40, 150], b: [160, 70], c: [160, 230], d: [280, 24], e: [400, 70], f: [280, 125], g: [300, 200], h: [320, 292], i: [500, 140], j: [470, 262] } },
   { w: 400, h: 300, nodes: { a: [200, 150], b: [200, 36], c: [200, 264], d: [360, 150] } },
-  { w: 380, h: 330, nodes: { a: [50, 140], b: [180, 50], c: [180, 230], d: [320, 140], e: [320, 296] } }
+  { w: 380, h: 330, nodes: { a: [50, 140], b: [180, 50], c: [180, 230], d: [320, 140], e: [320, 296] } },
+  { w: 570, h: 360, nodes: { 1: [40, 150], 2: [156, 32], 3: [300, 50], 4: [480, 40], 5: [530, 215], 6: [340, 335], 7: [210, 315], 8: [40, 285], 9: [455, 150] } },
+  { w: 540, h: 220, nodes: { a: [40, 110], b: [150, 40], c: [150, 180], d: [390, 40], e: [390, 180], f: [500, 110] } }
 ];
 function euLayout(V) {
   const key = [...V].sort().join(" ");
@@ -1258,6 +1356,7 @@ $("#eu-run").addEventListener("click", eulerRun);
 eulerRun();
 
 const EX = {};
+EX["eu"] = d => ({ steps: eulerSteps(parseEdges(d.in)) });
 EX["eu-vs-ham"] = () => {
   const L = { w: 400, h: 280, nodes: { a: [50, 50], b: [50, 230], c: [200, 140], d: [350, 50], e: [350, 230] } };
   const g = euGraph(parseEdges("ab bc ca cd de ec"), L);
@@ -1283,6 +1382,26 @@ EX["eu-map"] = () => {
     { text: "每個區域變成一個頂點，每段共同邊界變成一條邊（這是一個 degree 和 slides 地圖相同的例子）。", draw: svg => drawGraph(svg, g, {}, false) },
     { text: "數 degree：A = 2、B = 3、C = 2、D = 3。", draw: svg => drawGraph(svg, g, { sub: deg }, false) },
     { text: "B、D 是 odd（紅色）→ <strong>沒有 Euler circuit</strong>。", draw: svg => drawGraph(svg, g, { sub: deg, node: { B: "bad", D: "bad" } }, false) }
+  ] };
+};
+EX["map8"] = d => {
+  const R = { A: [20, 20, 84, 70], B: [104, 20, 126, 140], C: [230, 20, 125, 70], D: [20, 90, 84, 208], E: [104, 160, 126, 69], F: [230, 90, 125, 97], G: [104, 229, 126, 69], H: [230, 187, 125, 111] };
+  const nodes = Object.fromEntries(Object.entries(R).map(([k, [x, y, w, h]]) => [k, [x + w / 2, y + h / 2]]));
+  const edges = parseEdges("AB AD BD DE DG BE BC BF EG EF EH GH CF FH");
+  const g = { w: 375, h: 318, nodes, edges: edges.map(([a, b]) => [a, b, null]) };
+  const rects = lab => Object.entries(R).map(([k, r]) => [...r, lab ? k : ""]);
+  const deg = {};
+  edges.forEach(([a, b]) => { deg[a] = (deg[a] || 0) + 1; deg[b] = (deg[b] || 0) + 1; });
+  const sub = Object.fromEntries(Object.keys(R).map(k => [k, "deg " + deg[k]]));
+  const odd = Object.keys(R).filter(k => deg[k] % 2), bad = Object.fromEntries(odd.map(k => [k, "bad"]));
+  const map = { text: "題目的地圖：8 個國家 A–H。要找一條路線，每條國界剛好穿過一次，最後回到起點。", draw: svg => drawGraph(svg, { w: 375, h: 318, nodes: {}, edges: [] }, { rects: rects(true) }, false) };
+  if (d.q) return { steps: [map] };
+  return { steps: [
+    map,
+    { text: "Hint 的「新 graph」：每個國家變成一個頂點，每段共同國界變成一條邊（兩國只共用一段國界，所以沒有 parallel edge）。題目變成：這個 graph 有沒有 Euler circuit？", draw: svg => drawGraph(svg, g, { rects: rects(false) }, false) },
+    { text: `數 degree：${Object.keys(R).map(k => `${k} = ${deg[k]}`).join("、")}。`, draw: svg => drawGraph(svg, g, { rects: rects(false), sub }, false) },
+    { text: `${odd.join("、")} 的 degree 是 odd（紅色）→ <strong>沒有 Euler circuit，所以這樣的路線不存在</strong>。`, draw: svg => drawGraph(svg, g, { rects: rects(false), sub, node: bad }, false) },
+    { text: "Algorithm：(1) 每個國家一個頂點，每段國界一條邊；(2) 檢查 graph 是否 connected 而且每個 degree 都是 even；(3) 是就用 Euler circuit algorithm 造出路線，否則答「不存在」。O(|V| + |E|)。", draw: svg => drawGraph(svg, g, { rects: rects(false), sub, node: bad }, false) }
   ] };
 };
 EX["eu-m13"] = () => {
@@ -1429,6 +1548,12 @@ const MST_G = {
   q22: { root: "s", w: 500, h: 280,
     nodes: { s: [45, 140], a: [190, 50], b: [330, 50], d: [190, 230], c: [330, 230], v: [455, 140] },
     edges: [["s","a",16],["s","d",13],["a","b",5],["a","d",1],["b","d",9],["b","c",10],["b","v",20],["d","c",15],["c","v",8]] },
+  ex3: { root: "a", w: 520, h: 275,
+    nodes: { a: [30, 135], b: [165, 32], c: [165, 240], d: [258, 140], e: [350, 32], f: [350, 245], g: [488, 135] },
+    edges: [["b","e",2],["a","c",3],["e","f",3],["b","c",4],["f","g",4],["a","b",5],["c","d",5],["e","g",5],["b","d",6],["c","f",6],["d","e",6],["d","f",6]] },
+  tut2: { root: "A", w: 420, h: 300,
+    nodes: { A: [40, 35], B: [120, 105], C: [255, 105], D: [120, 215], E: [255, 215], F: [40, 262], G: [370, 185] },
+    edges: [["A","B",1],["D","F",1],["E","G",1],["B","D",2],["D","E",2],["B","C",3],["B","E",4],["C","E",4],["A","F",5],["A","G",6,{ bend: -80 }]] },
   mock: { root: "A", w: 460, h: 340,
     nodes: { A: [50, 70], B: [230, 40], C: [140, 190], D: [330, 170], E: [260, 300], F: [420, 290] },
     edges: [["B","C",1],["A","C",2],["D","E",2],["E","F",3],["A","B",4],["B","D",5],["D","F",6],["C","D",8],["C","E",10]] }
@@ -1494,7 +1619,7 @@ function mstToSteps(g, alg) {
 }
 let mstAlg = "k", mstKey = "lecture";
 function mstLoad() { stepper($("#mst-host"), mstToSteps(MST_G[mstKey], mstAlg), { label: "MST 圖" }); }
-const mstAlgBtns = [$("#mst-a-k"), $("#mst-a-p")], mstGBtns = [$("#mst-g-lecture"), $("#mst-g-q22"), $("#mst-g-mock")];
+const mstAlgBtns = [$("#mst-a-k"), $("#mst-a-p")], mstGBtns = $$("[id^=mst-g-]");
 mstAlgBtns.forEach(b => b.addEventListener("click", () => { mstAlg = b.id.endsWith("k") ? "k" : "p"; press(mstAlgBtns, b); mstLoad(); }));
 mstGBtns.forEach(b => b.addEventListener("click", () => { mstKey = b.id.replace("mst-g-", ""); press(mstGBtns, b); mstLoad(); }));
 mstLoad();
@@ -1527,6 +1652,9 @@ const DJ_G = [
   { key: "mid22", label: "2022 Q3", src: "s", dst: "v", w: 460, h: 270,
     nodes: { s: [40, 135], a: [160, 45], b: [310, 45], d: [160, 225], c: [310, 225], v: [420, 135] },
     edges: [["s","a",16],["s","d",13],["a","b",5],["a","d",10],["d","a",4],["b","d",9],["d","c",15],["c","b",10],["b","v",20],["c","v",4]] },
+  { key: "tut3", label: "Tutorial 3", src: "s", dst: "v", w: 460, h: 262,
+    nodes: { s: [35, 130], a: [125, 42], b: [160, 130], c: [125, 218], d: [270, 42], e: [270, 130], f: [270, 218], g: [400, 218], v: [405, 85] },
+    edges: [["s","a",1],["s","b",2],["s","c",2],["a","d",1],["b","d",1],["b","e",1],["b","f",1],["c","f",3],["e","d",1],["d","v",3],["e","v",5],["f","g",6],["g","v",1]] },
   { key: "m4", label: "模擬題 M4", src: "s", dst: "t", w: 440, h: 260,
     nodes: { s: [40, 130], a: [180, 45], b: [180, 215], c: [320, 45], t: [400, 180] },
     edges: [["s","a",4],["s","b",1],["b","a",2],["a","c",1],["b","c",5],["c","t",3],["b","t",8]] }
@@ -1591,6 +1719,14 @@ DJ_G.forEach((g, k) => {
 });
 djLoad();
 EX["dj"] = d => ({ steps: djToSteps(DJ_G.find(g => g.key === d.g)) });
+/* the question's own picture, with nothing solved yet */
+EX["q-graph"] = d => {
+  let g, directed = false;
+  if (d.eu) { const es = parseEdges(d.eu); g = euGraph(es, euLayout([...new Set(es.flat())])); }
+  else if (d.mst) g = MST_G[d.mst];
+  else { g = DJ_G.find(x => x.key === d.dj); directed = true; }
+  return { steps: [{ text: d.caption || "題目的圖。", draw: svg => drawGraph(svg, g, {}, directed) }] };
+};
 EX["dj-neg"] = () => {
   const g = { w: 380, h: 230, nodes: { s: [50, 115], u: [210, 40], v: [210, 190] }, edges: [["s","u",2],["s","v",1],["u","v",-10]] };
   const draw = st => svg => drawGraph(svg, g, st, true);
@@ -1807,6 +1943,29 @@ EX["cover-proof"] = () => {
     { text: "第一個不同的是 G1 = [1.5, 3.5] 和 O1 = [1.4, 3.4]（黃色）。y = 1.5 是最左未覆蓋的點，O1 一定要覆蓋 y，所以 O1 的左端 o = 1.4 ≤ y。", draw: fig([{ label: "G", bars: bars(G, ["cur", "sel", "sel"]) }, { label: "OPT", bars: bars(O, ["cur", "ok", "ok"]) }], [{ t: 1.5, text: "y" }]) },
     { text: "O1 覆蓋、而前面未覆蓋的點，都在 [y, o + 2] = [1.5, 3.4] 裡面，而 [1.5, 3.4] ⊆ G1 = [1.5, 3.5]。所以把 O1 換成 G1，仍然覆蓋所有點，數目不變。", draw: fig([gRow, { label: "OPT′", bars: bars([G[0], O[1], O[2]], ["sel", "ok", "ok"]) }]) },
     { text: "對 O2、O3 重複同樣的交換，OPT 變成 G，數目一直沒有變 → |G| = |OPT|，greedy 是 optimal。", draw: fig([gRow, { label: "OPT′′", bars: bars(G, ["sel", "sel", "sel"]) }]) }
+  ] };
+};
+
+EX["breakpoints"] = () => {
+  const S = [3, 5, 7, 10, 12, 15, 17], end = 20, C = 6, legs = [];
+  let at = 0;
+  while (at + C < end) { const nxt = Math.max(...S.filter(s => s > at && s <= at + C)); legs.push([at, nxt]); at = nxt; }
+  legs.push([at, end]);
+  const stops = legs.slice(0, -1).map(l => l[1]);
+  const fig = k => svg => {
+    svg.innerHTML = "";
+    const done = stops.slice(0, k), cur = k >= 1 && k <= stops.length ? stops[k - 1] : null;
+    const rows = [{ label: "油站", pts: S.map(s => ({ t: s, cls: s === cur ? "cur" : done.includes(s) ? "sel" : "" })) },
+      ...legs.slice(0, k).map(([a, b], i) => ({ label: `第 ${i + 1} 程`, bars: [{ s: a, f: b, text: `${fmt(a)}→${fmt(b)}`, cls: i === k - 1 ? "cur" : "sel" }, ...(b < end ? [{ s: b, f: Math.min(a + C, end), text: "", cls: "wait" }] : [])] }))];
+    const r = tlBlock(svg, { rows, lo: 0, hi: end, marks: [{ t: 0, text: "起點" }, { t: end, text: "終點" }] });
+    setView(svg, 640, r.h);
+  };
+  return { size: "wide", steps: [
+    { text: `例子：由 0 去 ${end}，滿油可以走 C = ${C}。油站在 ${S.join("、")}。Greedy：能走多遠就走多遠，走不到下一個油站之前才加油。`, draw: fig(0) },
+    ...legs.map(([a, b], i) => ({ text: b === end
+      ? `在 ${fmt(a)} 加滿油，最遠可到 ${fmt(a + C)} ≥ ${end} → 直接到終點。`
+      : `在 ${fmt(a)} ${i ? "加滿油" : "出發"}，最遠可到 ${fmt(a + C)}（虛線）。這範圍內最遠的油站是 ${fmt(b)} → 在 ${fmt(b)} 停（黃色）。`, draw: fig(i + 1) })),
+    { text: `答案：停 <strong>${stops.length}</strong> 次（${stops.join("、")}）。`, draw: fig(legs.length) }
   ] };
 };
 
@@ -2106,6 +2265,10 @@ const REC = {
     levels: [[1, "n", "size n", "n"], [1, "n−1", "size n−1", "n − 1"], [1, "n−2", "size n−2", "n − 2"], null, [1, "1", "size 1", "1"]],
     says: ["第 0 層：n。", "每次只細 1 → n − 1。", "→ n − 2。", "一共 n 層。", "最底 T(1) = 1。"],
     total: "n + (n − 1) + … + 1 = n(n + 1)/2 → <strong>O(n²)</strong>。" },
+  plus2: { name: "T(n−1) + 2", a: 1,
+    levels: [[1, "2", "size n", "2"], [1, "2", "size n−1", "2"], [1, "2", "size n−2", "2"], null, [1, "T(1)", "size 1", "1"]],
+    says: ["第 0 層：自己做 2。", "T(n−1) 也做 2。", "每一層都是 2。", "由 n 減到 2，一共 n − 1 層，每層 2。", "最底 T(1) = 1。"],
+    total: "T(n) = 2(n − 1) + 1 = 2n − 1 ≤ 2n（n ≥ 1）→ <strong>O(n)</strong>，取 c = 2、n₀ = 1。" },
   minus2: { name: "T(n−2) + n", a: 1,
     levels: [[1, "n", "size n", "n"], [1, "n−2", "size n−2", "n − 2"], [1, "n−4", "size n−4", "n − 4"], null, [1, "T(2)", "size 2", "1"]],
     says: ["第 0 層：n。", "每次細 2 → n − 2。", "→ n − 4。", "n 是偶數時一共約 n/2 層。", "最底 T(2) = 1。"],
