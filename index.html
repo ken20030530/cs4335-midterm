@@ -494,7 +494,14 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
   <div class="q" id="t1-3"><p><span class="pts">Tutorial 1 Exercise 3 · 不用交</span><br><strong>Selecting breakpoints</strong>：沿固定路線由 Princeton 開車去 Palo Alto，沿途有油站，滿油可以走 C。目標是停最少次加油。Greedy：<em>go as far as you can before refueling</em>（能走多遠就走多遠，走不到下一個油站之前才加油）。理解這個 greedy，並證明它 optimal。</p>
     <details class="answer"><summary>答案</summary>
       <div class="ex" data-ex="breakpoints" data-title="例子：能走多遠就走多遠"></div>
+      <div class="ex" id="fig-ahead" data-ex="bp-proof" data-title="證明圖解：greedy 每一站都不落後"></div>
       <div class="proof"><p><strong>Proof (greedy stays ahead).</strong> Let g<sub>1</sub> &lt; … &lt; g<sub>p</sub> be the greedy stops and f<sub>1</sub> &lt; … &lt; f<sub>q</sub> the stops of an optimal solution. Claim: g<sub>r</sub> ≥ f<sub>r</sub> for every r. For r = 1, f<sub>1</sub> is within C of the start and greedy picks the farthest such station, so g<sub>1</sub> ≥ f<sub>1</sub>. If g<sub>r</sub> ≥ f<sub>r</sub>, then f<sub>r+1</sub> − g<sub>r</sub> ≤ f<sub>r+1</sub> − f<sub>r</sub> ≤ C, so f<sub>r+1</sub> is reachable from g<sub>r</sub> and greedy goes at least as far: g<sub>r+1</sub> ≥ f<sub>r+1</sub>. The destination is within C of f<sub>q</sub> ≤ g<sub>q</sub>, so greedy needs no stop after g<sub>q</sub>, i.e. p ≤ q. Hence greedy is optimal.</p></div>
+      <div class="proof"><p><strong>中文版（意思一樣）</strong>：設 greedy 停的油站是 g<sub>1</sub> &lt; … &lt; g<sub>p</sub>，最優方案停的是 f<sub>1</sub> &lt; … &lt; f<sub>q</sub>。要證每一站 g<sub>r</sub> ≥ f<sub>r</sub>。</p>
+        <ol>
+          <li><strong>第一站</strong>：f<sub>1</sub> 一定在起點 C 範圍內；greedy 揀 C 範圍內最遠的油站，所以 g<sub>1</sub> ≥ f<sub>1</sub>。</li>
+          <li><strong>下一站</strong>：如果 g<sub>r</sub> ≥ f<sub>r</sub>，則 f<sub>r+1</sub> − g<sub>r</sub> ≤ f<sub>r+1</sub> − f<sub>r</sub> ≤ C：對手的下一站離 greedy 更近，greedy 一定開得到；greedy 揀開得到的最遠站，所以 g<sub>r+1</sub> ≥ f<sub>r+1</sub>。</li>
+          <li><strong>終點</strong>：終點在 f<sub>q</sub> 的 C 範圍內，而 g<sub>q</sub> ≥ f<sub>q</sub> 離終點更近，greedy 由 g<sub>q</sub> 直接到得了終點，不用再停，所以 p ≤ q，greedy 是 optimal。</li>
+        </ol></div>
     </details></div>
   <p class="small">還有：<a href="#ex-22q1a">2022 Q1(a)</a>、<a href="#ex-22q1b">2022 Q1(b)(c)</a>、<a href="#m1">M1</a>、<a href="#m2">M2</a>。</p>
 </section>
@@ -1966,6 +1973,29 @@ EX["breakpoints"] = () => {
       ? `在 ${fmt(a)} 加滿油，最遠可到 ${fmt(a + C)} ≥ ${end} → 直接到終點。`
       : `在 ${fmt(a)} ${i ? "加滿油" : "出發"}，最遠可到 ${fmt(a + C)}（虛線）。這範圍內最遠的油站是 ${fmt(b)} → 在 ${fmt(b)} 停（黃色）。`, draw: fig(i + 1) })),
     { text: `答案：停 <strong>${stops.length}</strong> 次（${stops.join("、")}）。`, draw: fig(legs.length) }
+  ] };
+};
+
+/* proof picture: greedy and any other plan drive side by side; after every stop greedy is not behind */
+EX["bp-proof"] = () => {
+  const S = [3, 5, 7, 10, 12, 15, 17], end = 20, opp = [0, 3, 7, 12, 17, 20], gre = [0, 5, 10, 15, 20];
+  const legs = (stops, k, cur) => stops.slice(0, k).map((a, i) => ({ s: a, f: stops[i + 1], text: `${a}→${stops[i + 1]}`, cls: i === cur ? "cur" : "sel" }));
+  const fig = (ko, kg, cur, extra = [], marks = []) => svg => {
+    svg.innerHTML = "";
+    const rows = [{ label: "油站", pts: S.map(t => ({ t })) }, { label: "對手", bars: legs(opp, ko, cur) }, { label: "Greedy", bars: legs(gre, kg, cur) }, ...extra];
+    const r = tlBlock(svg, { rows, lo: 0, hi: end, marks, labelW: 92 });
+    setView(svg, 640, r.h);
+  };
+  const compare = (from, to, g) => [
+    { label: `對手 ${from}→${to}`, bars: [{ s: from, f: to, text: `要走 ${to - from} ≤ C`, cls: "wait" }] },
+    { label: `Greedy ${g}→${to}`, bars: [{ s: g, f: to, text: `只要 ${to - g}`, cls: "wait" }] }];
+  return { size: "wide", steps: [
+    { text: "兩個人同時由 0 出發去 20，滿油可以走 C = 6。「對手」可以是<strong>任何</strong>方案（包括最優方案），這裏用 3、7、12、17。Greedy 能走多遠就走多遠。下面逐站比較兩人的位置。", draw: fig(0, 0, -1) },
+    { text: "<strong>第 1 站</strong>：對手第 1 站一定在 C = 6 以內（否則開不到）。Greedy 揀 6 以內<strong>最遠</strong>的油站 5 → g₁ = 5 ≥ f₁ = 3。Greedy 領先。", draw: fig(1, 1, 0, [], [{ t: 6, text: "C 範圍到 6" }]) },
+    { text: "<strong>第 2 站（關鍵一步）</strong>：對手由 3 開到 7，要走 4，對手開得到所以 4 ≤ C。Greedy 停在更前的 5，去 7 只要 2，<strong>距離更短，一定開得到</strong>。Greedy 揀開得到的最遠站 10 → g₂ = 10 ≥ f₂ = 7。仍然領先。", draw: fig(2, 2, 1, compare(3, 7, 5)) },
+    { text: "<strong>第 3 站</strong>：同一個道理。對手 7→12 要走 5 ≤ C；greedy 在 10，去 12 只要 2，一定開得到；再揀最遠的 15 → g₃ = 15 ≥ f₃ = 12。", draw: fig(3, 3, 2, compare(7, 12, 10)) },
+    { text: "<strong>終點</strong>：greedy 在 15，可以開到 21 ≥ 20 → 直接到終點，不用再停。對手還要在 17 停第 4 次。", draw: fig(4, 4, 3, [], [{ t: end, text: "終點" }]) },
+    { text: "<strong>結論</strong>：每一站 greedy 都不落後（g_r ≥ f_r）。對手最後一站之後到得了終點，greedy 同一站數時更前，也一定到得了 → greedy 停的次數 ≤ 任何方案，包括最優方案 → <strong>greedy 是 optimal</strong>。", draw: fig(5, 4, -1, [], [{ t: end, text: "終點" }]) }
   ] };
 };
 
