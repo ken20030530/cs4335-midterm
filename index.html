@@ -333,7 +333,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
     <li><input type="checkbox" id="p3" aria-label="10/19 完成"><span class="day"><b>10/19</b>Mon</span><div><strong>L4</strong>：Dijkstra 表格（每步一行 d/π）；correctness 歸納證明；Boat rescue。
       <div class="todo"><span>練習：</span><a href="#w4-ex1">W4 Dijkstra</a><a href="#t3">Tutorial 3</a><a href="#ex-22q3">2022 Q3</a><a href="#fig-djproof">Correctness 證明</a><a href="#fig-djneg">Negative edge 反例</a><a href="#ex-boat">Boat rescue</a><a href="#m4">M4</a><a href="#m10">M10</a></div></div></li>
     <li><input type="checkbox" id="p4" aria-label="10/20 完成"><span class="day"><b>10/20</b>Tue</span><div><strong>L5</strong>：Fractional knapsack、EDF lateness、SJF waiting time。背 inversion／adjacent swap 證明。
-      <div class="todo"><span>練習：</span><a href="#w5-1">W5 Exe1 Knapsack</a><a href="#w5-2">Exe2 EDF</a><a href="#w5-3">Exe3 SJF</a><a href="#t4">Tutorial 4</a><a href="#fig-swap">Swap 證明</a><a href="#ex-22q6">2022 Q6</a><a href="#m7">M7</a><a href="#m8">M8</a><a href="#m9">M9</a><a href="#m12">M12</a></div></div></li>
+      <div class="todo"><span>練習：</span><a href="#ex-knap-slides">Slides 背包例子</a><a href="#ex-lat-slides">Slides lateness 例子</a><a href="#w5-1">W5 Exe1 Knapsack</a><a href="#w5-2">Exe2 EDF</a><a href="#w5-3">Exe3 SJF</a><a href="#t4">Tutorial 4</a><a href="#fig-swap">Swap 證明</a><a href="#ex-22q6">2022 Q6</a><a href="#m7">M7</a><a href="#m8">M8</a><a href="#m9">M9</a><a href="#m12">M12</a></div></div></li>
     <li><input type="checkbox" id="p5" aria-label="10/21 完成"><span class="day"><b>10/21</b>Wed</span><div><strong>L6</strong>：Merge sort recurrence 展開；merge-and-count；D&amp;C 設計題：max、最大＋第二大、max subarray。
       <div class="todo"><span>練習：</span><a href="#w6-ex1">W6 Recurrence</a><a href="#t5-1">Tutorial 5 Q1</a><a href="#t5-x">Tutorial 5 Extra</a><a href="#ex-22q4">2022 Q4(a)</a><a href="#ex-rec">Q4(b)</a><a href="#ex-22q5">Q5</a><a href="#m5">M5</a><a href="#m6">M6</a><a href="#m11">M11</a></div></div></li>
     <li><input type="checkbox" id="p6" aria-label="10/22 完成"><span class="day"><b>10/22</b>Thu</span><div><strong>模擬考</strong>：限時 2 小時做 2022 卷（遮住答案），跳過 Q2(b)；再做本頁模擬題。
@@ -662,6 +662,7 @@ DIJKSTRA(G, w, s)
   <div class="proof">
     <p>Assume distinct unit prices (merge items with equal unit price). An optimal X must satisfy <strong>P1</strong>: its total weight is W; <strong>P2</strong>: no item outside X has a higher unit price than an item in X. If X differs from greedy at item i, replacing part of a cheaper item k by the same weight of i increases the value (exchange argument). The greedy solution is the only one with P1 and P2, so it is optimal.</p>
   </div>
+  <div class="ex" id="ex-knap-slides" data-ex="knap" data-in="(3,11),(6,3),(35,4),(8,58),(28,8),(66,88)" data-w="20" data-title="Slides p.6 例子：W = 20kg，items a–f"></div>
   <div class="ex" data-ex="knap" data-in="(1,20),(5,101),(2,5),(15,8),(11,4),(12,3)" data-w="10" data-title="In-lecture Ex.5 Exe1：W = 10kg"></div>
   <div class="box trap"><span class="tag">0–1 knapsack 不能用 greedy</span>
     <p class="small">W = 20：a($10, 10kg)、b($10, 10kg)、c($12, 11kg)。Greedy 拿 c 得 $12，最優是 a + b 得 $20。</p>
@@ -678,6 +679,7 @@ DIJKSTRA(G, w, s)
       <p class="small"><strong>Shortest processing time</strong>：t = (1, 10)、d = (100, 10) → 先做 1 令 job 2 遲 1。<br><strong>Smallest slack d−t</strong>：t = (1, 10)、d = (2, 10) → 先做 2 令 job 1 遲 9。</p>
     </div>
   </div>
+  <div class="ex" id="ex-lat-slides" data-ex="lat-slides" data-title="Slides p.15 / p.20 例子：隨便排 L = 6，EDF L = 1"></div>
   <div class="ex" data-ex="lat-wrong-spt" data-title="反例：Shortest processing time"></div>
   <div class="ex" data-ex="lat-wrong-slack" data-title="反例：Smallest slack"></div>
   <div class="ex" data-ex="edf" data-in="(3,8),(2,7),(1,6),(5,10),(2,10),(3,13)" data-title="In-lecture Ex.5 Exe2：EDF（答案 L = 3）"></div>
@@ -1863,6 +1865,11 @@ EX["lat-wrong-slack"] = () => latStages([{ n: "J1", t: 1, d: 2 }, { n: "J2", t: 
   ["兩份 job：J1（t = 1, d = 2）、J2（t = 10, d = 10）。", null],
   ["<strong>Smallest slack</strong>：slack = d − t，J1 = 1、J2 = 0，所以先做 J2：J2 [0,10] 準時，J1 [10,11] 遲 9 → L = <strong>9</strong>。", [1, 0], "bad"],
   ["EDF 先做 J1（d = 2）：J1 [0,1] 準時，J2 [1,11] 遲 1 → L = <strong>1</strong>，比 9 好。", [0, 1], "ok"]
+]);
+EX["lat-slides"] = () => latStages([{ n: "J1", t: 3, d: 6 }, { n: "J2", t: 2, d: 8 }, { n: "J3", t: 1, d: 9 }, { n: "J4", t: 4, d: 9 }, { n: "J5", t: 3, d: 14 }, { n: "J6", t: 2, d: 15 }], 15, [
+  ["Slides p.15 的 6 份 job。紅線是 deadline。", null],
+  ["隨便一個次序 J3, J2, J6, J1, J5, J4：J1 在 8 完成，遲 8 − 6 = 2；J4 在 15 完成，遲 15 − 9 = <strong>6</strong>（紅色）→ L = 6。", [2, 1, 5, 0, 4, 3], "bad"],
+  ["EDF 按 deadline 排：J1(6), J2(8), J3(9), J4(9), J5(14), J6(15)，一份接一份做。只有 J4 在 10 完成、遲 1 → L = <strong>1</strong>（slides p.20）。", [0, 1, 2, 3, 4, 5], "ok"]
 ]);
 EX["lat-swap"] = () => {
   const fig = (j, i, marks) => svg => drawTimeline(svg, [
