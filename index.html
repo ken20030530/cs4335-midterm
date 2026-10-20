@@ -271,7 +271,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
   <div class="inner">
     <a href="#top">考試</a><a href="#map">2022 卷</a><a href="#plan">7 日計劃</a>
     <a href="#l1">L1 Euler</a><a href="#l2">L2 Interval</a><a href="#l3">L3 MST</a><a href="#l4">L4 Dijkstra</a><a href="#l5">L5 Greedy++</a><a href="#l6">L6 D&amp;C</a>
-    <a href="#proof">證明模板</a><a href="#cheat">時間複雜度</a><a href="#mock">模擬題</a><a href="practice-l1-3.html">L1–3 練習卷</a><a href="#files">檔案</a>
+    <a href="#proof">證明模板</a><a href="#cheat">時間複雜度</a><a href="#mock">模擬題</a><a href="practice-l1-3.html">L1–3 練習卷</a><a href="practice-recurrence.html">遞迴練習</a><a href="#files">檔案</a>
   </div>
 </nav>
 
@@ -338,7 +338,7 @@ footer{max-width:900px;margin:40px auto 0;font-size:13.5px;color:var(--muted)}
     <li><input type="checkbox" id="p4" aria-label="10/20 完成"><span class="day"><b>10/20</b>Tue</span><div><strong>L5</strong>：Fractional knapsack、EDF lateness、SJF waiting time。背 inversion／adjacent swap 證明。
       <div class="todo"><span>練習：</span><a href="#ex-knap-slides">Slides 背包例子</a><a href="#ex-lat-slides">Slides lateness 例子</a><a href="#w5-1">W5 Exe1 Knapsack</a><a href="#w5-2">Exe2 EDF</a><a href="#w5-3">Exe3 SJF</a><a href="#t4">Tutorial 4</a><a href="#fig-swap">Swap 證明</a><a href="#ex-22q6">2022 Q6</a><a href="#m7">M7</a><a href="#m8">M8</a><a href="#m9">M9</a><a href="#m12">M12</a></div></div></li>
     <li><input type="checkbox" id="p5" aria-label="10/21 完成"><span class="day"><b>10/21</b>Wed</span><div><strong>L6</strong>：Merge sort recurrence 展開；merge-and-count；D&amp;C 設計題：max、最大＋第二大、max subarray。
-      <div class="todo"><span>練習：</span><a href="#w6-ex1">W6 Recurrence</a><a href="#t5-1">Tutorial 5 Q1</a><a href="#t5-x">Tutorial 5 Extra</a><a href="#ex-22q4">2022 Q4(a)</a><a href="#ex-rec">Q4(b)</a><a href="#ex-22q5">Q5</a><a href="#m5">M5</a><a href="#m6">M6</a><a href="#m11">M11</a></div></div></li>
+      <div class="todo"><span>練習：</span><a href="practice-recurrence.html">遞迴展開練習（16 題）</a><a href="#w6-ex1">W6 Recurrence</a><a href="#t5-1">Tutorial 5 Q1</a><a href="#t5-x">Tutorial 5 Extra</a><a href="#ex-22q4">2022 Q4(a)</a><a href="#ex-rec">Q4(b)</a><a href="#ex-22q5">Q5</a><a href="#m5">M5</a><a href="#m6">M6</a><a href="#m11">M11</a></div></div></li>
     <li><input type="checkbox" id="p6" aria-label="10/22 完成"><span class="day"><b>10/22</b>Thu</span><div><strong>模擬考</strong>：限時 2 小時做 2022 卷（遮住答案），跳過 Q2(b)；再做本頁模擬題。
       <div class="todo"><span>練習：</span><a href="#map">2022 卷拆解</a><a href="#mock">模擬題 M1–M13</a><a href="practice-l1-3.html">L1–3 練習卷（英文）</a></div></div></li>
     <li class="exam"><input type="checkbox" id="p7" aria-label="10/23 完成"><span class="day"><b>10/23</b>Fri</span><div>早上看一遍 <a href="#cheat">時間複雜度表</a> 和 <a href="#proof">證明模板</a>。<strong>3:00 pm 開考。</strong></div></li>
@@ -812,6 +812,7 @@ T(n) = n²T(1) + n² − n = O(n²)</code></pre>
     </tbody>
   </table></div>
   <div class="ex" id="ex-rec" data-ex="rec" data-keys="c,n,4n,half,one,minus1,minus2" data-title="表中每條 recurrence 的遞迴樹（按上面的掣切換）"></div>
+  <p class="box write" style="padding:10px 14px"><strong>想多練展開？</strong>做 <a href="practice-recurrence.html">遞迴展開練習</a>：16 題由用數字代入開始，一步一步填空，即時檢查。</p>
 
   <h3>Counting Inversions</h3>
   <p>排名 a<sub>1</sub>, …, a<sub>n</sub> 中，i &lt; j 但 a<sub>i</sub> &gt; a<sub>j</sub> 就是一個 inversion。暴力檢查所有 pair 要 Θ(n²)。</p>
@@ -963,7 +964,7 @@ Comparisons: g(n) = 2g(n/2) + 2
     <details class="answer"><summary>答案</summary><p>拿 1（B）→ +4；拿 2；拿 3（B）→ +3；拿 4；拿 7；拿 8（B）→ +1；拿 9；拿 10（B）→ +0。Total = 4 + 3 + 1 = <strong>8</strong>。</p><div class="ex" data-ex="mc" data-l="2 4 7 9" data-r="1 3 8 10" data-title="M5 圖解"></div></details></div>
 
   <div class="q" id="m6"><p><span class="pts">M6 · L6</span><br>用 big-O 表示：(a) T(n) = 2T(n/2) + 1　(b) T(n) = T(n/2) + n　(c) T(n) = T(n−1) + n　(d) T(n) = T(n−2) + n。T(1) = T(2) = 1。</p>
-    <details class="answer"><summary>答案</summary><p>(a) 2<sup>k</sup>T(1) + (2<sup>k</sup> − 1) = 2n − 1 → <strong>O(n)</strong>。(b) n + n/2 + … ≤ 2n → <strong>O(n)</strong>。(c) n(n+1)/2 → <strong>O(n²)</strong>。(d) 約 n²/4 → <strong>O(n²)</strong>。考試要寫展開步驟。</p><div class="ex" data-ex="rec" data-keys="c1,half,minus1,minus2" data-title="M6 圖解"></div></details></div>
+    <details class="answer"><summary>答案</summary><p>(a) 2<sup>k</sup>T(1) + (2<sup>k</sup> − 1) = 2n − 1 → <strong>O(n)</strong>。(b) n + n/2 + … ≤ 2n → <strong>O(n)</strong>。(c) n(n+1)/2 → <strong>O(n²)</strong>。(d) 約 n²/4 → <strong>O(n²)</strong>。考試要寫展開步驟。更多同類題：<a href="practice-recurrence.html">遞迴展開練習</a>。</p><div class="ex" data-ex="rec" data-keys="c1,half,minus1,minus2" data-title="M6 圖解"></div></details></div>
 
   <div class="q" id="m7"><p><span class="pts">M7 · L5</span><br>Fractional knapsack，W = 12 kg：a($20, 4kg)、b($18, 6kg)、c($15, 5kg)、d($8, 4kg)。</p>
     <details class="answer"><summary>答案</summary><p>Unit price：a 5、b 3、c 3、d 2。拿 a 全部（4kg）、b 全部（6kg）、c 的 2kg（$6）→ <strong>$44</strong>。b、c 同價，次序可對調，總值一樣。</p><div class="ex" data-ex="knap" data-in="(20,4),(18,6),(15,5),(8,4)" data-w="12" data-title="M7 圖解"></div></details></div>
