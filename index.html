@@ -215,6 +215,9 @@ tr.now td{background:var(--mark)}
 .c-box.hl{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2}
 .c-box.ok{fill:var(--ok);stroke:var(--ok)}
 .c-box.empty{fill:none;stroke:var(--line);stroke-dasharray:3 3}
+.c-box.ghost{fill:none;stroke:var(--line);stroke-dasharray:4 4}
+.alg-head{font-size:13px;color:var(--muted);margin:0 0 -4px}
+pre.alg{margin:.4em 0 0;font-size:13.5px;line-height:1.7;background:var(--card);border:1px solid var(--line)}
 .c-txt{font:600 14px var(--f-mono);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
 .c-txt.sm{font-size:12.5px}
 .c-txt.done{fill:var(--edge)}
@@ -2312,14 +2315,37 @@ const REC = {
     says: ["第 0 層：n。", "每次細 2 → n − 2。", "→ n − 4。", "n 是偶數時一共約 n/2 層。", "最底 T(2) = 1。"],
     total: "n + (n − 2) + … + 4 + T(2) = (n²/4 + n/2 − 2) + 1 = n²/4 + n/2 − 1 → <strong>O(n²)</strong>。2022 官方答案把每一項都當作 ≤ n：T(2) + (n/2 − 1)n = 1 + n²/2 − n，一樣是 O(n²)。" }
 };
+/* the written expansion for each recurrence: one more line per step, exactly as in an exam answer */
+const ALG = {
+  c: ["T(n) = 2T(n/2) + c", "     = 2[2T(n/4) + c] + c = 2²T(n/2²) + 2c + c", "     = 2³T(n/2³) + 4c + 2c + c", "     = 2^k T(n/2^k) + c(1 + 2 + … + 2^(k−1))      ← 第 k 次",
+    "令 n/2^k = 1 ⇒ n = 2^k ⇒ k = log₂n：\nT(n) = n·T(1) + c(2^k − 1)", "     = n·T(1) + c(n − 1) = O(n)"],
+  c1: ["T(n) = 2T(n/2) + 1", "     = 2[2T(n/4) + 1] + 1 = 2²T(n/2²) + 2 + 1", "     = 2³T(n/2³) + 4 + 2 + 1", "     = 2^k T(n/2^k) + (1 + 2 + … + 2^(k−1))      ← 第 k 次",
+    "令 n/2^k = 1 ⇒ 2^k = n：\nT(n) = n·T(1) + (2^k − 1)", "     = n + n − 1 = 2n − 1 = O(n)        （T(1) = 1）"],
+  n: ["T(n) = 2T(n/2) + n", "     = 2[2T(n/4) + n/2] + n = 2²T(n/2²) + 2n", "     = 2³T(n/2³) + 3n", "     = 2^k T(n/2^k) + kn                         ← 第 k 次",
+    "令 n/2^k = 1 ⇒ k = log₂n，2^k = n：\nT(n) = n·T(1) + n·log₂n", "     = O(n log n)"],
+  "4n": ["T(n) = 4T(n/2) + n", "     = 4[4T(n/4) + n/2] + n = 4²T(n/2²) + 2n + n", "     = 4³T(n/2³) + 4n + 2n + n", "     = 4^k T(n/2^k) + n(1 + 2 + … + 2^(k−1)) = 4^k T(n/2^k) + n(2^k − 1)",
+    "令 n/2^k = 1 ⇒ 2^k = n，4^k = (2^k)² = n²：\nT(n) = n²·T(1) + n(n − 1)", "     = O(n²)"],
+  half: ["T(n) = T(n/2) + n", "     = [T(n/4) + n/2] + n = T(n/2²) + n/2 + n", "     = T(n/2³) + n/4 + n/2 + n", "     = T(n/2^k) + n/2^(k−1) + … + n/2 + n         ← 第 k 次",
+    "令 n/2^k = 1 ⇒ k = log₂n：\nT(n) = T(1) + n(1 + 1/2 + 1/4 + …)", "     ≤ 1 + 2n = O(n)        （1 + 1/2 + 1/4 + … 永遠 < 2）"],
+  one: ["T(n) = T(n/2) + 1", "     = [T(n/4) + 1] + 1 = T(n/2²) + 2", "     = T(n/2³) + 3", "     = T(n/2^k) + k                              ← 第 k 次",
+    "令 n/2^k = 1 ⇒ k = log₂n：\nT(n) = T(1) + log₂n", "     = O(log n)"],
+  minus1: ["T(n) = T(n−1) + n", "     = [T(n−2) + (n−1)] + n", "     = T(n−3) + (n−2) + (n−1) + n", "     = T(n−k) + (n−k+1) + … + (n−1) + n         ← 第 k 次",
+    "令 n − k = 1 ⇒ k = n − 1（不是 log！）：\nT(n) = T(1) + 2 + 3 + … + n", "     = 1 + 2 + … + n = n(n+1)/2 = O(n²)        （T(1) = 1）"],
+  plus2: ["T(n) = T(n−1) + 2", "     = [T(n−2) + 2] + 2", "     = T(n−3) + 2 + 2 + 2", "     = T(n−k) + 2k                               ← 第 k 次",
+    "令 n − k = 1 ⇒ k = n − 1：\nT(n) = T(1) + 2(n − 1)", "     = 2n − 1 = O(n)"],
+  minus2: ["T(n) = T(n−2) + n", "     = [T(n−4) + (n−2)] + n", "     = T(n−6) + (n−4) + (n−2) + n", "     = T(n−2k) + (n−2k+2) + … + (n−2) + n       ← 第 k 次",
+    "令 n − 2k = 2（n 是偶數）⇒ k = n/2 − 1：\nT(n) = T(2) + 4 + 6 + … + n", "     ≤ 1 + (n/2 − 1)·n = O(n²)        （k 個數，每個 ≤ n）"]
+};
 function costTree(svg, spec, upto) {
   svg.innerHTML = "";
   const W = 640, left = 96, right = 520, boxH = 28, lvH = 54, pos = [];
-  spec.levels.slice(0, upto).forEach((L, d) => {
-    const y = 8 + d * lvH;
+  spec.levels.forEach((L, d) => {
+    const y = 8 + d * lvH, ghost = d >= upto;
     if (!L) {
-      svgText(svg, (left + right) / 2, y + boxH / 2, "⋮", "c-txt");
-      svgText(svg, W - 8, y + boxH / 2, "⋮", "c-ret", "end", true);
+      if (!ghost) {
+        svgText(svg, (left + right) / 2, y + boxH / 2, "⋮", "c-txt");
+        svgText(svg, W - 8, y + boxH / 2, "⋮", "c-ret", "end", true);
+      }
       pos.push(null);
       return;
     }
@@ -2328,12 +2354,13 @@ function costTree(svg, spec, upto) {
     const x0 = left + (right - left - (slots * bw + (slots - 1) * gap)) / 2, centers = [];
     for (let s = 0; s < slots; s++) {
       const x = x0 + s * (bw + gap);
-      if (more && s === slots - 2) { svgText(svg, x + bw / 2, y + boxH / 2, "…", "c-txt"); continue; }
-      svgEl("rect", { x, y, width: bw, height: boxH, rx: 5, class: "c-box" }, svg);
-      svgText(svg, x + bw / 2, y + boxH / 2, label, "c-txt sm");
+      if (more && s === slots - 2) { if (!ghost) svgText(svg, x + bw / 2, y + boxH / 2, "…", "c-txt"); continue; }
+      svgEl("rect", { x, y, width: bw, height: boxH, rx: 5, class: "c-box" + (ghost ? " ghost" : "") }, svg);
+      if (!ghost) svgText(svg, x + bw / 2, y + boxH / 2, label, "c-txt sm");
       centers.push(x + bw / 2);
     }
-    pos.push(more ? null : centers);
+    pos.push(more || ghost ? null : centers);
+    if (ghost) return;
     svgText(svg, 4, y + boxH / 2, note, "c-lbl", "start");
     svgText(svg, W - 8, y + boxH / 2, "= " + total, "c-ret", "end", true);
     const prev = pos[d - 1];
@@ -2350,8 +2377,9 @@ function recWidget(host, keys) {
   host.append(tabs, body);
   const load = key => {
     const sp = REC[key];
-    const steps = sp.levels.map((L, d) => ({ text: `T(n) = ${sp.name}。${sp.says[d]}`, draw: svg => costTree(svg, sp, d + 1) }));
-    steps.push({ text: sp.total, draw: svg => costTree(svg, sp, sp.levels.length) });
+    const alg = n => ALG[key] ? `<p class="alg-head">展開到這一步（考試寫法）：</p><pre class="alg"><code>${ALG[key].slice(0, n).map(esc).join("\n")}</code></pre>` : "";
+    const steps = sp.levels.map((L, d) => ({ text: `T(n) = ${sp.name}。${sp.says[d]}`, draw: svg => costTree(svg, sp, d + 1), extra: alg(d + 1) }));
+    steps.push({ text: sp.total, draw: svg => costTree(svg, sp, sp.levels.length), extra: alg(sp.levels.length + 1) });
     stepper(body, steps, { size: "wide", label: "遞迴樹" });
   };
   if (keys.length > 1) keys.forEach((key, i) => {
